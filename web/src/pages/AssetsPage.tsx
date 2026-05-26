@@ -4,30 +4,67 @@ import { Plus, Filter, Download } from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
 import { MOCK_ASSETS } from '@/features/assets/mockData'
-import type { AssetStatus } from '@/features/assets/types'
+import type { AssetLifecycleState } from '@/features/assets/types'
 
-const STATUS_FILTERS: { value: AssetStatus | 'all'; label: string }[] = [
+type Filter = 'all' | 'active' | 'pipeline' | 'end_of_life' | 'exception'
+
+const FILTERS: { value: Filter; label: string }[] = [
   { value: 'all', label: 'All' },
-  { value: 'in_use', label: 'In use' },
-  { value: 'in_stock', label: 'In stock' },
-  { value: 'maintenance', label: 'Maintenance' },
-  { value: 'retired', label: 'Retired' },
+  { value: 'pipeline', label: 'Pipeline' },
+  { value: 'active', label: 'Active' },
+  { value: 'end_of_life', label: 'End of life' },
+  { value: 'exception', label: 'Exception' },
 ]
 
+const ACTIVE_STATES: AssetLifecycleState[] = [
+  'in_use',
+  'in_maintenance',
+  'leased_in',
+  'leased_out',
+  'assigned',
+]
+const PIPELINE_STATES: AssetLifecycleState[] = [
+  'requested',
+  'ordered',
+  'in_stock',
+]
+const EOL_STATES: AssetLifecycleState[] = [
+  'retired',
+  'disposed',
+  'returned_to_vendor',
+]
+const EXCEPTION_STATES: AssetLifecycleState[] = ['lost', 'stolen']
+
+function matchesFilter(state: AssetLifecycleState, filter: Filter): boolean {
+  switch (filter) {
+    case 'all':
+      return true
+    case 'active':
+      return ACTIVE_STATES.includes(state)
+    case 'pipeline':
+      return PIPELINE_STATES.includes(state)
+    case 'end_of_life':
+      return EOL_STATES.includes(state)
+    case 'exception':
+      return EXCEPTION_STATES.includes(state)
+  }
+}
+
 export function AssetsPage() {
-  const [filter, setFilter] = useState<AssetStatus | 'all'>('all')
+  const [filter, setFilter] = useState<Filter>('all')
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return MOCK_ASSETS.filter((asset) => {
-      if (filter !== 'all' && asset.status !== filter) return false
+      if (!matchesFilter(asset.lifecycleState, filter)) return false
       if (!q) return true
       return (
         asset.name.toLowerCase().includes(q) ||
         asset.assetTag.toLowerCase().includes(q) ||
         asset.serialNumber.toLowerCase().includes(q) ||
-        (asset.assignedTo?.toLowerCase().includes(q) ?? false)
+        (asset.currentAssignment?.assigneeName.toLowerCase().includes(q) ??
+          false)
       )
     })
   }, [filter, query])
@@ -36,7 +73,7 @@ export function AssetsPage() {
     <div>
       <PageHeader
         title="Assets"
-        description={`${MOCK_ASSETS.length} assets tracked across your organization.`}
+        description={`${MOCK_ASSETS.length} assets tracked across the lifecycle.`}
         actions={
           <>
             <button
@@ -61,7 +98,7 @@ export function AssetsPage() {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 p-4">
           <div className="flex items-center gap-2">
             <Filter className="h-4 w-4 text-slate-400" />
-            {STATUS_FILTERS.map((f) => (
+            {FILTERS.map((f) => (
               <button
                 key={f.value}
                 type="button"
@@ -91,10 +128,10 @@ export function AssetsPage() {
               <tr>
                 <th className="px-4 py-3">Asset</th>
                 <th className="px-4 py-3">Tag</th>
-                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3">Lifecycle</th>
                 <th className="px-4 py-3">Assigned to</th>
                 <th className="px-4 py-3">Location</th>
-                <th className="px-4 py-3">Warranty</th>
+                <th className="px-4 py-3">Ownership</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -115,18 +152,16 @@ export function AssetsPage() {
                     {asset.assetTag}
                   </td>
                   <td className="px-4 py-3">
-                    <StatusBadge status={asset.status} />
+                    <StatusBadge state={asset.lifecycleState} />
                   </td>
                   <td className="px-4 py-3 text-slate-700">
-                    {asset.assignedTo ?? (
+                    {asset.currentAssignment?.assigneeName ?? (
                       <span className="text-slate-400">Unassigned</span>
                     )}
                   </td>
                   <td className="px-4 py-3 text-slate-700">{asset.location}</td>
-                  <td className="px-4 py-3 text-slate-700">
-                    {asset.warrantyEndsAt ?? (
-                      <span className="text-slate-400">—</span>
-                    )}
+                  <td className="px-4 py-3 text-xs text-slate-600 capitalize">
+                    {asset.ownership.replace('_', ' ')}
                   </td>
                 </tr>
               ))}
