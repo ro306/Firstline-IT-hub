@@ -223,6 +223,58 @@
       "open_renewals": "Åbn fornyelser"
     }
   },
+  "asset_form": {
+    "create_title": "Opret nyt aktiv",
+    "edit_title": "Rediger aktiv",
+    "create_submit": "Opret aktiv",
+    "save_submit": "Gem ændringer",
+    "section_identity": "Identitet",
+    "section_purchase": "Køb",
+    "section_status": "Status & ejerskab",
+    "field": {
+      "name": "Navn",
+      "name_placeholder": "fx MacBook Pro 16″ M4",
+      "asset_tag": "Aktiv-tag",
+      "asset_tag_placeholder": "fx FL-LT-0010",
+      "serial_number": "Serienummer",
+      "serial_placeholder": "fx C02XK1ABCDEF",
+      "category": "Kategori",
+      "location": "Lokation",
+      "location_placeholder": "fx Copenhagen HQ",
+      "ownership": "Ejerskab",
+      "lifecycle_state": "Status ved oprettelse",
+      "vendor": "Leverandør",
+      "vendor_placeholder": "fx Humac Business",
+      "purchase_order": "Indkøbsordre (valgfri)",
+      "purchase_order_placeholder": "fx PO-2026-0042",
+      "purchase_date": "Købsdato",
+      "price": "Pris",
+      "currency": "Valuta"
+    },
+    "validation": {
+      "required": "Påkrævet",
+      "positive": "Skal være positiv",
+      "tag_in_use": "Aktiv-tag er allerede i brug"
+    }
+  },
+  "state_change": {
+    "title": "Skift status",
+    "current": "Nuværende status",
+    "next": "Ny status",
+    "no_transitions": "Ingen tilladte overgange fra denne status.",
+    "notes_placeholder": "Hvorfor ændres status?"
+  },
+  "delete_asset": {
+    "title": "Slet aktiv",
+    "confirm": "Slet aktiv",
+    "warning": "Du er ved at slette {name}. Det kan ikke fortrydes.",
+    "confirm_label": "Indtast aktiv-tag {tag} for at bekræfte"
+  },
+  "asset_actions": {
+    "edit": "Rediger",
+    "delete": "Slet",
+    "more": "Flere handlinger"
+  },
   "assets_page": {
     "title": "Aktiver",
     "description_one": "1 aktiv sporet i livscyklussen.",

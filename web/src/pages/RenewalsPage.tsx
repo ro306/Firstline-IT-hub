@@ -26,7 +26,7 @@ import {
 } from '@/features/lifecycle/expirations'
 import { useAlertStore } from '@/features/lifecycle/useAlertStore'
 import { effectiveStatus } from '@/features/lifecycle/alertStoreContext'
-import { MOCK_ASSETS } from '@/features/assets/mockData'
+import { useAssetStore } from '@/features/assets/useAssetStore'
 import { DEFAULT_WORKFLOW_RULES } from '@/features/lifecycle/mockRules'
 import { formatDate } from '@/features/assets/finance'
 import { useTranslation } from '@/lib/i18n/useTranslation'
@@ -54,6 +54,7 @@ function daysLabel(days: number, t: TranslateFn): string {
 export function RenewalsPage() {
   const { t } = useTranslation()
   const store = useAlertStore()
+  const { assets } = useAssetStore()
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('open')
   const [kindFilter, setKindFilter] = useState<KindFilter>('all')
   const [severityFilter, setSeverityFilter] = useState<SeverityFilter>('all')
@@ -63,8 +64,8 @@ export function RenewalsPage() {
   const [dialogAction, setDialogAction] = useState<ActionKind | null>(null)
 
   const periods = useMemo(
-    () => computeExpirations(MOCK_ASSETS, DEFAULT_WORKFLOW_RULES),
-    [],
+    () => computeExpirations(assets, DEFAULT_WORKFLOW_RULES),
+    [assets],
   )
 
   const actionable = useMemo(

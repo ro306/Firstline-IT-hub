@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, MoreHorizontal } from 'lucide-react'
+import { useState, useRef, useEffect } from 'react'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { ArrowLeft, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
 import { LifecycleStepper } from '@/features/assets/LifecycleStepper'
@@ -13,8 +13,11 @@ import {
   LeaseCard,
   DisposalCard,
 } from '@/features/assets/FinanceCards'
+import { AssetFormDialog } from '@/features/assets/AssetFormDialog'
+import { StateChangeDialog } from '@/features/assets/StateChangeDialog'
+import { DeleteAssetDialog } from '@/features/assets/DeleteAssetDialog'
+import { useAssetStore } from '@/features/assets/useAssetStore'
 import { AssetUpcomingPanel } from '@/features/lifecycle/AssetUpcomingPanel'
-import { MOCK_ASSETS } from '@/features/assets/mockData'
 import { formatDate } from '@/features/assets/finance'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { cn } from '@/lib/cn'
@@ -42,9 +45,27 @@ function DetailRow({
 
 export function AssetDetailPage() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
+  const { getAsset } = useAssetStore()
   const [tab, setTab] = useState<Tab>('overview')
-  const asset = MOCK_ASSETS.find((a) => a.id === id)
+  const [editing, setEditing] = useState(false)
+  const [changingState, setChangingState] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const asset = id ? getAsset(id) : undefined
+
+  useEffect(() => {
+    if (!menuOpen) return
+    function onDocClick(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', onDocClick)
+    return () => document.removeEventListener('mousedown', onDocClick)
+  }, [menuOpen])
 
   if (!asset) {
     return (
@@ -88,17 +109,54 @@ export function AssetDetailPage() {
             <StatusBadge state={asset.lifecycleState} />
             <button
               type="button"
+              onClick={() => setChangingState(true)}
               className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
               {t('asset.change_state')}
             </button>
-            <button
-              type="button"
-              className="rounded-md border border-slate-200 bg-white p-2 text-slate-500 hover:bg-slate-50"
-              aria-label={t('asset.more_actions')}
-            >
-              <MoreHorizontal className="h-4 w-4" />
-            </button>
+            <div className="relative" ref={menuRef}>
+              <button
+                type="button"
+                onClick={() => setMenuOpen((v) => !v)}
+                className="rounded-md border border-slate-200 bg-white p-2 text-slate-500 hover:bg-slate-50"
+                aria-label={t('asset.more_actions')}
+                aria-haspopup="menu"
+                aria-expanded={menuOpen}
+              >
+                <MoreHorizontal className="h-4 w-4" />
+              </button>
+              {menuOpen && (
+                <div
+                  role="menu"
+                  className="absolute right-0 z-30 mt-1 w-44 overflow-hidden rounded-md border border-slate-200 bg-white shadow-lg"
+                >
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setMenuOpen(false)
+                      setEditing(true)
+                    }}
+                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
+                  >
+                    <Pencil className="h-4 w-4" />
+                    {t('asset_actions.edit')}
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      setMenuOpen(false)
+                      setDeleting(true)
+                    }}
+                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-rose-700 hover:bg-rose-50"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    {t('asset_actions.delete')}
+                  </button>
+                </div>
+              )}
+            </div>
           </>
         }
       />
@@ -273,6 +331,23 @@ export function AssetDetailPage() {
           {asset.lease && <LeaseCard asset={asset} />}
           {asset.disposal && <DisposalCard asset={asset} />}
         </div>
+      )}
+
+      {editing && (
+        <AssetFormDialog onClose={() => setEditing(false)} asset={asset} />
+      )}
+      {changingState && (
+        <StateChangeDialog
+          asset={asset}
+          onClose={() => setChangingState(false)}
+        />
+      )}
+      {deleting && (
+        <DeleteAssetDialog
+          asset={asset}
+          onClose={() => setDeleting(false)}
+          onDeleted={() => navigate('/assets')}
+        />
       )}
     </div>
   )

@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { Plus, Filter, Download } from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
-import { MOCK_ASSETS } from '@/features/assets/mockData'
+import { AssetFormDialog } from '@/features/assets/AssetFormDialog'
+import { useAssetStore } from '@/features/assets/useAssetStore'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { AssetLifecycleState } from '@/features/assets/types'
 
@@ -53,12 +54,14 @@ function matchesFilter(state: AssetLifecycleState, filter: FilterKind): boolean 
 
 export function AssetsPage() {
   const { t } = useTranslation()
+  const { assets } = useAssetStore()
   const [filter, setFilter] = useState<FilterKind>('all')
   const [query, setQuery] = useState('')
+  const [creating, setCreating] = useState(false)
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
-    return MOCK_ASSETS.filter((asset) => {
+    return assets.filter((asset) => {
       if (!matchesFilter(asset.lifecycleState, filter)) return false
       if (!q) return true
       return (
@@ -69,12 +72,12 @@ export function AssetsPage() {
           false)
       )
     })
-  }, [filter, query])
+  }, [assets, filter, query])
 
   const description =
-    MOCK_ASSETS.length === 1
+    assets.length === 1
       ? t('assets_page.description_one')
-      : t('assets_page.description_other', { count: MOCK_ASSETS.length })
+      : t('assets_page.description_other', { count: assets.length })
 
   return (
     <div>
@@ -92,6 +95,7 @@ export function AssetsPage() {
             </button>
             <button
               type="button"
+              onClick={() => setCreating(true)}
               className="inline-flex items-center gap-2 rounded-md bg-brand-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-brand-700"
             >
               <Plus className="h-4 w-4" />
@@ -196,6 +200,8 @@ export function AssetsPage() {
           </table>
         </div>
       </div>
+
+      {creating && <AssetFormDialog onClose={() => setCreating(false)} />}
     </div>
   )
 }

@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PageHeader } from '@/components/PageHeader'
-import { MOCK_ASSETS } from '@/features/assets/mockData'
+import { useAssetStore } from '@/features/assets/useAssetStore'
 import { LIFECYCLE_STATE_CONFIG } from '@/features/assets/lifecycle'
 import { formatMoney } from '@/features/assets/finance'
 import { StatusBadge } from '@/features/assets/StatusBadge'
@@ -64,33 +64,31 @@ function StatCard({
 
 export function DashboardPage() {
   const { t } = useTranslation()
-  const total = MOCK_ASSETS.length
-  const active = MOCK_ASSETS.filter((a) =>
+  const { assets } = useAssetStore()
+  const total = assets.length
+  const active = assets.filter((a) =>
     ACTIVE.has(a.lifecycleState),
   ).length
-  const maintenance = MOCK_ASSETS.filter(
+  const maintenance = assets.filter(
     (a) => a.lifecycleState === 'in_maintenance',
   ).length
-  const leased = MOCK_ASSETS.filter(
+  const leased = assets.filter(
     (a) => a.ownership === 'leased_in' || a.ownership === 'leased_out',
   ).length
-  const eol = MOCK_ASSETS.filter((a) =>
+  const eol = assets.filter((a) =>
     ['retired', 'disposed', 'returned_to_vendor'].includes(a.lifecycleState),
   ).length
 
-  const upcomingPeriods = computeExpirations(
-    MOCK_ASSETS,
-    DEFAULT_WORKFLOW_RULES,
-  )
+  const upcomingPeriods = computeExpirations(assets, DEFAULT_WORKFLOW_RULES)
     .filter((p) => p.daysUntil <= 90)
     .sort((a, b) => a.daysUntil - b.daysUntil)
 
-  const totalMonthlyLease = MOCK_ASSETS.reduce(
+  const totalMonthlyLease = assets.reduce(
     (sum, a) => sum + (a.lease?.monthlyCost.amount ?? 0),
     0,
   )
 
-  const stateBreakdown = MOCK_ASSETS.reduce<Record<string, number>>(
+  const stateBreakdown = assets.reduce<Record<string, number>>(
     (acc, a) => {
       acc[a.lifecycleState] = (acc[a.lifecycleState] ?? 0) + 1
       return acc

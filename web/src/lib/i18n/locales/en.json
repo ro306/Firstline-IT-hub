@@ -223,6 +223,58 @@
       "open_renewals": "Open renewals"
     }
   },
+  "asset_form": {
+    "create_title": "Create new asset",
+    "edit_title": "Edit asset",
+    "create_submit": "Create asset",
+    "save_submit": "Save changes",
+    "section_identity": "Identity",
+    "section_purchase": "Purchase",
+    "section_status": "Status & ownership",
+    "field": {
+      "name": "Name",
+      "name_placeholder": "e.g. MacBook Pro 16″ M4",
+      "asset_tag": "Asset tag",
+      "asset_tag_placeholder": "e.g. FL-LT-0010",
+      "serial_number": "Serial number",
+      "serial_placeholder": "e.g. C02XK1ABCDEF",
+      "category": "Category",
+      "location": "Location",
+      "location_placeholder": "e.g. Copenhagen HQ",
+      "ownership": "Ownership",
+      "lifecycle_state": "Initial state",
+      "vendor": "Vendor",
+      "vendor_placeholder": "e.g. Humac Business",
+      "purchase_order": "Purchase order (optional)",
+      "purchase_order_placeholder": "e.g. PO-2026-0042",
+      "purchase_date": "Purchase date",
+      "price": "Price",
+      "currency": "Currency"
+    },
+    "validation": {
+      "required": "Required",
+      "positive": "Must be positive",
+      "tag_in_use": "Asset tag already in use"
+    }
+  },
+  "state_change": {
+    "title": "Change state",
+    "current": "Current state",
+    "next": "New state",
+    "no_transitions": "No allowed transitions from this state.",
+    "notes_placeholder": "Why the change?"
+  },
+  "delete_asset": {
+    "title": "Delete asset",
+    "confirm": "Delete asset",
+    "warning": "You're about to delete {name}. This cannot be undone.",
+    "confirm_label": "Type asset tag {tag} to confirm"
+  },
+  "asset_actions": {
+    "edit": "Edit",
+    "delete": "Delete",
+    "more": "More actions"
+  },
   "assets_page": {
     "title": "Assets",
     "description_one": "1 asset tracked across the lifecycle.",
