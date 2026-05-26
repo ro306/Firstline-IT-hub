@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { useTranslation } from '@/lib/i18n/useTranslation'
+import { usePreferences } from '@/lib/usePreferences'
 
 type NavItem = {
   to: string
@@ -31,17 +32,21 @@ const NAV_ITEMS: NavItem[] = [
 
 export function Sidebar() {
   const { t } = useTranslation()
+  const { prefs } = usePreferences()
+  const brandTitle = prefs.brandTitle || t('nav.brand_title')
+  const brandSubtitle = prefs.brandSubtitle || t('nav.brand_subtitle')
+  const initial = brandTitle.trim().charAt(0).toUpperCase() || 'J'
   return (
     <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-slate-200 md:bg-white">
       <div className="flex h-16 items-center gap-2 border-b border-slate-200 px-6">
         <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-600 text-white font-semibold">
-          J
+          {initial}
         </div>
         <div className="flex flex-col leading-tight">
           <span className="text-sm font-semibold text-slate-900">
-            {t('nav.brand_title')}
+            {brandTitle}
           </span>
-          <span className="text-xs text-slate-500">{t('nav.brand_subtitle')}</span>
+          <span className="text-xs text-slate-500">{brandSubtitle}</span>
         </div>
       </div>
       <nav className="flex-1 space-y-1 px-3 py-4">

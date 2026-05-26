@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Bell, Search } from 'lucide-react'
 import { useAuth } from '@/lib/auth'
@@ -7,6 +7,7 @@ import { effectiveStatus } from '@/features/lifecycle/alertStoreContext'
 import { computeExpirations } from '@/features/lifecycle/expirations'
 import { useAssetStore } from '@/features/assets/useAssetStore'
 import { useRulesStore } from '@/features/lifecycle/useRulesStore'
+import { SearchDialog } from '@/components/SearchDialog'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 
@@ -16,6 +17,18 @@ export function Header() {
   const { assets } = useAssetStore()
   const { rules } = useRulesStore()
   const { t } = useTranslation()
+  const [searchOpen, setSearchOpen] = useState(false)
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [])
   const initials = user?.name
     .split(' ')
     .map((part) => part[0])
@@ -33,14 +46,17 @@ export function Header() {
 
   return (
     <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6">
-      <div className="relative w-full max-w-md">
-        <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
-        <input
-          type="search"
-          placeholder={t('header.search_placeholder')}
-          className="w-full rounded-md border border-slate-200 bg-slate-50 py-2 pr-3 pl-9 text-sm placeholder-slate-400 focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
-        />
-      </div>
+      <button
+        type="button"
+        onClick={() => setSearchOpen(true)}
+        className="group flex w-full max-w-md items-center gap-2 rounded-md border border-slate-200 bg-slate-50 py-2 pr-3 pl-3 text-sm text-slate-400 hover:bg-white hover:text-slate-600"
+      >
+        <Search className="h-4 w-4" />
+        <span className="flex-1 text-left">{t('header.search_placeholder')}</span>
+        <kbd className="hidden rounded border border-slate-200 bg-white px-1.5 py-0.5 text-xs text-slate-500 sm:inline">
+          ⌘K
+        </kbd>
+      </button>
       <div className="flex items-center gap-4">
         <LanguageSwitcher />
         <Link
@@ -67,6 +83,7 @@ export function Header() {
           </div>
         </div>
       </div>
+      <SearchDialog open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   )
 }

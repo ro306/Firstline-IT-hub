@@ -6,10 +6,13 @@ import { useTranslation } from '@/lib/i18n/useTranslation'
 import { useRulesStore } from '@/features/lifecycle/useRulesStore'
 import { useAssetStore } from '@/features/assets/useAssetStore'
 import { useAlertStore } from '@/features/lifecycle/useAlertStore'
+import { useLicensesStore } from '@/features/licenses/useLicensesStore'
+import { useTicketsStore } from '@/features/maintenance/useTicketsStore'
 import { RuleEditorDialog } from '@/features/lifecycle/RuleEditorDialog'
 import { SeverityBadge } from '@/features/lifecycle/SeverityBadge'
 import { kindKey } from '@/features/lifecycle/expirations'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import { usePreferences } from '@/lib/usePreferences'
 import { cn } from '@/lib/cn'
 import type {
   ExpirationKind,
@@ -83,6 +86,7 @@ function TabButton({
 
 function GeneralTab() {
   const { t } = useTranslation()
+  const { prefs, setPref } = usePreferences()
   return (
     <div className="space-y-4">
       <Card
@@ -102,9 +106,9 @@ function GeneralTab() {
             </label>
             <input
               type="text"
-              value={t('nav.brand_title')}
-              readOnly
-              className="mt-1 w-full rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500"
+              value={prefs.brandTitle ?? t('nav.brand_title')}
+              onChange={(e) => setPref('brandTitle', e.target.value)}
+              className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
             />
           </div>
           <div>
@@ -113,9 +117,9 @@ function GeneralTab() {
             </label>
             <input
               type="text"
-              value={t('nav.brand_subtitle')}
-              readOnly
-              className="mt-1 w-full rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-500"
+              value={prefs.brandSubtitle ?? t('nav.brand_subtitle')}
+              onChange={(e) => setPref('brandSubtitle', e.target.value)}
+              className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
             />
           </div>
         </div>
@@ -386,6 +390,8 @@ function DataTab() {
   const assets = useAssetStore()
   const alerts = useAlertStore()
   const rules = useRulesStore()
+  const licenses = useLicensesStore()
+  const tickets = useTicketsStore()
   const [pending, setPending] = useState<null | (() => void)>(null)
   const [pendingMessage, setPendingMessage] = useState('')
   const [pendingLabel, setPendingLabel] = useState('')
@@ -483,6 +489,46 @@ function DataTab() {
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.rules_reset')}
+        </button>
+      </Card>
+
+      <Card
+        title={t('settings.data.licenses_title')}
+        description={t('settings.data.licenses_description')}
+      >
+        <button
+          type="button"
+          onClick={() =>
+            confirm(
+              t('settings.data.licenses_description'),
+              t('settings.data.licenses_reset'),
+              () => licenses.resetToDemo(),
+            )
+          }
+          className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+        >
+          <RotateCcw className="h-4 w-4" />
+          {t('settings.data.licenses_reset')}
+        </button>
+      </Card>
+
+      <Card
+        title={t('settings.data.tickets_title')}
+        description={t('settings.data.tickets_description')}
+      >
+        <button
+          type="button"
+          onClick={() =>
+            confirm(
+              t('settings.data.tickets_description'),
+              t('settings.data.tickets_reset'),
+              () => tickets.resetToDemo(),
+            )
+          }
+          className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+        >
+          <RotateCcw className="h-4 w-4" />
+          {t('settings.data.tickets_reset')}
         </button>
       </Card>
 

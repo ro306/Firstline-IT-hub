@@ -74,6 +74,12 @@
       "rules_title": "Workflow-regler",
       "rules_description": "Nulstil workflow-reglerne til standard-sættet.",
       "rules_reset": "Nulstil regler",
+      "licenses_title": "Licens-data",
+      "licenses_description": "Nulstil licens-inventaret til demo-data.",
+      "licenses_reset": "Nulstil licenser",
+      "tickets_title": "Vedligeholdelses-tickets",
+      "tickets_description": "Nulstil ticket-listen til demo-data.",
+      "tickets_reset": "Nulstil tickets",
       "danger_zone": "Farezone"
     }
   },
@@ -134,7 +140,10 @@
   },
   "header": {
     "search_placeholder": "Søg aktiver, serienumre, ejere…",
-    "notifications_aria": "Notifikationer ({count} åbne)"
+    "notifications_aria": "Notifikationer ({count} åbne)",
+    "search_hint": "Tryk ⌘K eller Ctrl+K",
+    "search_no_results": "Ingen resultater for '{query}'",
+    "search_recent": "Seneste aktiver"
   },
   "lifecycle": {
     "state": {
@@ -319,6 +328,70 @@
       "title": "Kommende for dette aktiv",
       "open_renewals": "Åbn fornyelser"
     }
+  },
+  "warranty_form": {
+    "add_title": "Tilføj garanti",
+    "edit_title": "Rediger garanti",
+    "delete_title": "Slet garanti",
+    "delete_warning": "Slet garantien fra {provider}? Det kan ikke fortrydes.",
+    "field": {
+      "kind": "Type",
+      "provider": "Leverandør",
+      "provider_placeholder": "fx Apple, Dell, AppleCare+",
+      "reference": "Reference (valgfri)",
+      "starts_at": "Starter",
+      "ends_at": "Slutter",
+      "coverage": "Dækningsnoter (valgfri)",
+      "coverage_placeholder": "fx Next-business-day on-site"
+    }
+  },
+  "check_form": {
+    "add_title": "Tilføj tilbagevendende tjek",
+    "edit_title": "Rediger tjek",
+    "complete": "Markér som udført",
+    "delete_title": "Slet tjek",
+    "delete_warning": "Slet tjekket '{label}'? Det kan ikke fortrydes.",
+    "field": {
+      "kind": "Type",
+      "label": "Beskrivelse",
+      "label_placeholder": "fx Årligt inventartjek",
+      "interval_months": "Interval (måneder)",
+      "next_due_at": "Næste forfaldsdato",
+      "responsible_role": "Ansvarlig rolle (valgfri)",
+      "responsible_placeholder": "fx IT Asset Manager"
+    }
+  },
+  "assignment_form": {
+    "assign_title": "Tildel aktiv",
+    "return_title": "Returnér aktiv",
+    "assign_submit": "Tildel",
+    "return_submit": "Markér som returneret",
+    "field": {
+      "assignee_name": "Tildelt person",
+      "assignee_email": "E-mail (valgfri)",
+      "location": "Lokation",
+      "assigned_at": "Tildelt dato",
+      "notes": "Noter (valgfri)"
+    },
+    "return_warning": "Returner aktivet fra {name}? Det kan tildeles igen senere."
+  },
+  "note_form": {
+    "title": "Tilføj note",
+    "placeholder": "Hvad vil du tilføje til tidslinjen?",
+    "submit": "Tilføj note"
+  },
+  "asset_detail": {
+    "add_warranty": "Tilføj garanti",
+    "add_check": "Tilføj tjek",
+    "assign_to": "Tildel",
+    "return_asset": "Returnér",
+    "add_note": "Tilføj note",
+    "recurring_checks_title": "Tilbagevendende tjek",
+    "no_checks": "Ingen tjek registreret. Tilføj et for at få påmindelser.",
+    "check_due": "Forfalder {date}",
+    "check_completed": "Senest udført {date}",
+    "check_interval": "Hver {n}. måned",
+    "no_assignment": "Ikke tildelt nogen lige nu"
   },
   "asset_form": {
     "create_title": "Opret nyt aktiv",
@@ -550,6 +623,142 @@
     "maintenance": "Planlagte og aktive vedligeholdelses-tickets på tværs af aktiver.",
     "reports": "Aktiv-rapporter, eksport og audit-log.",
     "settings": "Modul-præferencer. Tenant- og IAM-indstillinger ligger på platformen."
+  },
+  "licenses_page": {
+    "title": "Licenser",
+    "description": "Software-licenser, tildelinger og fornyelser.",
+    "new": "Ny licens",
+    "stat": {
+      "total": "Licenser i alt",
+      "seats_used": "Pladser i brug",
+      "seats_free": "Ledige pladser",
+      "annual_cost": "Årlig omkostning"
+    },
+    "table": {
+      "name": "Licens",
+      "vendor": "Leverandør",
+      "kind": "Type",
+      "seats": "Pladser",
+      "renews": "Fornyes",
+      "cost": "Omkostning"
+    },
+    "seats_label": "{used} / {total}",
+    "empty": "Ingen licenser endnu. Tilføj en for at komme i gang.",
+    "form": {
+      "create_title": "Ny licens",
+      "edit_title": "Rediger licens",
+      "delete_title": "Slet licens",
+      "delete_warning": "Slet licensen '{name}'? Det kan ikke fortrydes.",
+      "field": {
+        "name": "Navn",
+        "name_placeholder": "fx Microsoft 365 Business Standard",
+        "vendor": "Leverandør",
+        "vendor_placeholder": "fx Microsoft",
+        "kind": "Type",
+        "seats_total": "Pladser i alt",
+        "seats_used": "Pladser i brug",
+        "cost_per_seat": "Pris pr. plads pr. år",
+        "currency": "Valuta",
+        "owner": "Ansvarlig (valgfri)",
+        "owner_placeholder": "fx IT Admin",
+        "acquired_at": "Anskaffet",
+        "renews_at": "Fornyes (valgfri)",
+        "notes": "Noter (valgfri)"
+      }
+    },
+    "kind": {
+      "subscription": "Abonnement",
+      "perpetual": "Permanent",
+      "cloud": "Cloud",
+      "open_source": "Open source",
+      "other": "Andet"
+    }
+  },
+  "maintenance_page": {
+    "title": "Vedligehold",
+    "description": "Vedligeholdelses-tickets, reparationer og planlagte serviceopgaver.",
+    "new": "Ny ticket",
+    "stat": {
+      "open": "Åbne",
+      "in_progress": "Igang",
+      "awaiting": "Afventer",
+      "resolved": "Løst"
+    },
+    "filter": {
+      "all": "Alle",
+      "active": "Aktive",
+      "resolved": "Løste"
+    },
+    "table": {
+      "title": "Titel",
+      "asset": "Aktiv",
+      "status": "Status",
+      "priority": "Prioritet",
+      "assignee": "Tildelt",
+      "created": "Oprettet"
+    },
+    "empty": "Ingen tickets endnu.",
+    "form": {
+      "create_title": "Ny vedligeholdelses-ticket",
+      "edit_title": "Rediger ticket",
+      "delete_title": "Slet ticket",
+      "delete_warning": "Slet ticketen '{title}'? Det kan ikke fortrydes.",
+      "field": {
+        "title": "Titel",
+        "title_placeholder": "fx Kølerblæser larmer",
+        "asset": "Aktiv (valgfri)",
+        "asset_none": "Ikke knyttet til aktiv",
+        "status": "Status",
+        "priority": "Prioritet",
+        "description": "Beskrivelse",
+        "description_placeholder": "Beskriv problemet eller opgaven",
+        "reported_by": "Rapporteret af",
+        "assigned_to": "Tildelt til (valgfri)",
+        "vendor": "Leverandør (valgfri)",
+        "ticket_ref": "Ekstern reference",
+        "scheduled_for": "Planlagt til",
+        "resolution_notes": "Løsningsnoter"
+      }
+    },
+    "status": {
+      "open": "Åben",
+      "in_progress": "Igang",
+      "awaiting_parts": "Afventer dele",
+      "awaiting_user": "Afventer bruger",
+      "resolved": "Løst",
+      "cancelled": "Annulleret"
+    },
+    "priority": {
+      "low": "Lav",
+      "normal": "Normal",
+      "high": "Høj",
+      "urgent": "Akut"
+    }
+  },
+  "reports_page": {
+    "title": "Rapporter",
+    "description": "Statistik og eksport for hele aktiv-porteføljen.",
+    "export_csv": "Eksportér CSV",
+    "stat": {
+      "total_assets": "Aktiver i alt",
+      "total_value": "Total købsværdi",
+      "monthly_lease": "Månedlig leasing",
+      "active_assets": "Aktive aktiver",
+      "leased_assets": "Leasede aktiver",
+      "expiring_warranties": "Garantier udløber (90d)",
+      "expiring_leases": "Leasing udløber (180d)",
+      "overdue_checks": "Forsinkede tjek"
+    },
+    "section": {
+      "by_category": "Aktiver per kategori",
+      "by_lifecycle": "Status-fordeling",
+      "by_location": "Per lokation",
+      "expiring": "Udløber inden for 90 dage",
+      "depreciation": "Bogført værdi i dag",
+      "tickets": "Vedligeholdelses-status",
+      "licenses": "Licens-udnyttelse"
+    },
+    "no_data": "Ingen data at vise endnu."
   },
   "not_found": {
     "title": "Siden blev ikke fundet",

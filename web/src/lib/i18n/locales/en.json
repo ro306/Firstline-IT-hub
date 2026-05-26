@@ -74,6 +74,12 @@
       "rules_title": "Workflow rules",
       "rules_description": "Reset workflow rules to the default set.",
       "rules_reset": "Reset rules",
+      "licenses_title": "License data",
+      "licenses_description": "Reset license inventory to demo data.",
+      "licenses_reset": "Reset licenses",
+      "tickets_title": "Maintenance tickets",
+      "tickets_description": "Reset ticket list to demo data.",
+      "tickets_reset": "Reset tickets",
       "danger_zone": "Danger zone"
     }
   },
@@ -134,7 +140,10 @@
   },
   "header": {
     "search_placeholder": "Search assets, serial numbers, owners…",
-    "notifications_aria": "Notifications ({count} open)"
+    "notifications_aria": "Notifications ({count} open)",
+    "search_hint": "Press ⌘K or Ctrl+K",
+    "search_no_results": "No results for '{query}'",
+    "search_recent": "Recent assets"
   },
   "lifecycle": {
     "state": {
@@ -319,6 +328,70 @@
       "title": "Upcoming for this asset",
       "open_renewals": "Open renewals"
     }
+  },
+  "warranty_form": {
+    "add_title": "Add warranty",
+    "edit_title": "Edit warranty",
+    "delete_title": "Delete warranty",
+    "delete_warning": "Delete the warranty from {provider}? This cannot be undone.",
+    "field": {
+      "kind": "Kind",
+      "provider": "Provider",
+      "provider_placeholder": "e.g. Apple, Dell, AppleCare+",
+      "reference": "Reference (optional)",
+      "starts_at": "Starts",
+      "ends_at": "Ends",
+      "coverage": "Coverage notes (optional)",
+      "coverage_placeholder": "e.g. Next-business-day on-site"
+    }
+  },
+  "check_form": {
+    "add_title": "Add recurring check",
+    "edit_title": "Edit recurring check",
+    "complete": "Mark as completed",
+    "delete_title": "Delete check",
+    "delete_warning": "Delete the check '{label}'? This cannot be undone.",
+    "field": {
+      "kind": "Kind",
+      "label": "Description",
+      "label_placeholder": "e.g. Annual inventory audit",
+      "interval_months": "Interval (months)",
+      "next_due_at": "Next due date",
+      "responsible_role": "Responsible role (optional)",
+      "responsible_placeholder": "e.g. IT Asset Manager"
+    }
+  },
+  "assignment_form": {
+    "assign_title": "Assign asset",
+    "return_title": "Return asset",
+    "assign_submit": "Assign",
+    "return_submit": "Mark as returned",
+    "field": {
+      "assignee_name": "Assignee",
+      "assignee_email": "Email (optional)",
+      "location": "Location",
+      "assigned_at": "Assigned date",
+      "notes": "Notes (optional)"
+    },
+    "return_warning": "Return the asset from {name}? It can be reassigned later."
+  },
+  "note_form": {
+    "title": "Add note",
+    "placeholder": "What do you want to add to the timeline?",
+    "submit": "Add note"
+  },
+  "asset_detail": {
+    "add_warranty": "Add warranty",
+    "add_check": "Add check",
+    "assign_to": "Assign",
+    "return_asset": "Return",
+    "add_note": "Add note",
+    "recurring_checks_title": "Recurring checks",
+    "no_checks": "No checks registered. Add one to get reminders.",
+    "check_due": "Due {date}",
+    "check_completed": "Last completed {date}",
+    "check_interval": "Every {n} months",
+    "no_assignment": "Not currently assigned"
   },
   "asset_form": {
     "create_title": "Create new asset",
@@ -550,6 +623,142 @@
     "maintenance": "Scheduled and active maintenance tickets across assets.",
     "reports": "Asset reports, exports, and audit logs.",
     "settings": "Module preferences. Tenant and IAM settings live in the platform."
+  },
+  "licenses_page": {
+    "title": "Licenses",
+    "description": "Software licenses, seats, and renewals.",
+    "new": "New license",
+    "stat": {
+      "total": "Total licenses",
+      "seats_used": "Seats used",
+      "seats_free": "Seats free",
+      "annual_cost": "Annual cost"
+    },
+    "table": {
+      "name": "License",
+      "vendor": "Vendor",
+      "kind": "Kind",
+      "seats": "Seats",
+      "renews": "Renews",
+      "cost": "Cost"
+    },
+    "seats_label": "{used} / {total}",
+    "empty": "No licenses yet. Add one to get started.",
+    "form": {
+      "create_title": "New license",
+      "edit_title": "Edit license",
+      "delete_title": "Delete license",
+      "delete_warning": "Delete the license '{name}'? This cannot be undone.",
+      "field": {
+        "name": "Name",
+        "name_placeholder": "e.g. Microsoft 365 Business Standard",
+        "vendor": "Vendor",
+        "vendor_placeholder": "e.g. Microsoft",
+        "kind": "Kind",
+        "seats_total": "Total seats",
+        "seats_used": "Seats used",
+        "cost_per_seat": "Cost per seat per year",
+        "currency": "Currency",
+        "owner": "Owner (optional)",
+        "owner_placeholder": "e.g. IT Admin",
+        "acquired_at": "Acquired",
+        "renews_at": "Renews (optional)",
+        "notes": "Notes (optional)"
+      }
+    },
+    "kind": {
+      "subscription": "Subscription",
+      "perpetual": "Perpetual",
+      "cloud": "Cloud",
+      "open_source": "Open source",
+      "other": "Other"
+    }
+  },
+  "maintenance_page": {
+    "title": "Maintenance",
+    "description": "Maintenance tickets, repairs, and scheduled service work.",
+    "new": "New ticket",
+    "stat": {
+      "open": "Open",
+      "in_progress": "In progress",
+      "awaiting": "Awaiting",
+      "resolved": "Resolved"
+    },
+    "filter": {
+      "all": "All",
+      "active": "Active",
+      "resolved": "Resolved"
+    },
+    "table": {
+      "title": "Title",
+      "asset": "Asset",
+      "status": "Status",
+      "priority": "Priority",
+      "assignee": "Assignee",
+      "created": "Created"
+    },
+    "empty": "No tickets yet.",
+    "form": {
+      "create_title": "New maintenance ticket",
+      "edit_title": "Edit ticket",
+      "delete_title": "Delete ticket",
+      "delete_warning": "Delete the ticket '{title}'? This cannot be undone.",
+      "field": {
+        "title": "Title",
+        "title_placeholder": "e.g. Fan noisy",
+        "asset": "Asset (optional)",
+        "asset_none": "Not linked to an asset",
+        "status": "Status",
+        "priority": "Priority",
+        "description": "Description",
+        "description_placeholder": "Describe the problem or work",
+        "reported_by": "Reported by",
+        "assigned_to": "Assigned to (optional)",
+        "vendor": "Vendor (optional)",
+        "ticket_ref": "External reference",
+        "scheduled_for": "Scheduled for",
+        "resolution_notes": "Resolution notes"
+      }
+    },
+    "status": {
+      "open": "Open",
+      "in_progress": "In progress",
+      "awaiting_parts": "Awaiting parts",
+      "awaiting_user": "Awaiting user",
+      "resolved": "Resolved",
+      "cancelled": "Cancelled"
+    },
+    "priority": {
+      "low": "Low",
+      "normal": "Normal",
+      "high": "High",
+      "urgent": "Urgent"
+    }
+  },
+  "reports_page": {
+    "title": "Reports",
+    "description": "Statistics and exports across the asset portfolio.",
+    "export_csv": "Export CSV",
+    "stat": {
+      "total_assets": "Total assets",
+      "total_value": "Total purchase value",
+      "monthly_lease": "Monthly lease",
+      "active_assets": "Active assets",
+      "leased_assets": "Leased assets",
+      "expiring_warranties": "Warranties expiring (90d)",
+      "expiring_leases": "Leases expiring (180d)",
+      "overdue_checks": "Overdue checks"
+    },
+    "section": {
+      "by_category": "Assets by category",
+      "by_lifecycle": "Lifecycle breakdown",
+      "by_location": "By location",
+      "expiring": "Expiring within 90 days",
+      "depreciation": "Book value today",
+      "tickets": "Maintenance status",
+      "licenses": "License utilization"
+    },
+    "no_data": "No data to show yet."
   },
   "not_found": {
     "title": "Page not found",

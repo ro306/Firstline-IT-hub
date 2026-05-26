@@ -1,4 +1,4 @@
-import { ShieldCheck, ShieldAlert, ShieldOff } from 'lucide-react'
+import { ShieldCheck, ShieldAlert, ShieldOff, Pencil, Trash2 } from 'lucide-react'
 import { daysUntil, formatDate } from './finance'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { TranslateFn } from '@/lib/i18n/i18nContext'
@@ -25,7 +25,15 @@ function statusFor(w: AssetWarranty, t: TranslateFn) {
   }
 }
 
-export function WarrantyList({ warranties }: { warranties: AssetWarranty[] }) {
+export function WarrantyList({
+  warranties,
+  onEdit,
+  onDelete,
+}: {
+  warranties: AssetWarranty[]
+  onEdit?: (w: AssetWarranty) => void
+  onDelete?: (w: AssetWarranty) => void
+}) {
   const { t } = useTranslation()
 
   if (warranties.length === 0) {
@@ -54,12 +62,34 @@ export function WarrantyList({ warranties }: { warranties: AssetWarranty[] }) {
                   )}
                 </p>
               </div>
-              <span
-                className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${status.tone}`}
-              >
-                <Icon className="h-3 w-3" />
-                {status.label}
-              </span>
+              <div className="flex items-center gap-2">
+                <span
+                  className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ring-1 ring-inset ${status.tone}`}
+                >
+                  <Icon className="h-3 w-3" />
+                  {status.label}
+                </span>
+                {onEdit && (
+                  <button
+                    type="button"
+                    onClick={() => onEdit(w)}
+                    aria-label={t('asset_actions.edit')}
+                    className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                  >
+                    <Pencil className="h-4 w-4" />
+                  </button>
+                )}
+                {onDelete && (
+                  <button
+                    type="button"
+                    onClick={() => onDelete(w)}
+                    aria-label={t('asset_actions.delete')}
+                    className="rounded-md p-1 text-rose-500 hover:bg-rose-50"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                )}
+              </div>
             </div>
             <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
               <div>

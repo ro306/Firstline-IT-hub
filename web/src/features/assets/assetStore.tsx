@@ -13,7 +13,30 @@ import {
   type AssetStoreValue,
   type NewAssetInput,
 } from './assetStoreContext'
-import type { Asset } from './types'
+import type {
+  Asset,
+  AssetAssignment,
+  AssetLifecycleEvent,
+  AssetWarranty,
+} from './types'
+
+function shortId(prefix: string): string {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`
+}
+
+function pushEvent(
+  asset: Asset,
+  event: Omit<AssetLifecycleEvent, 'id' | 'occurredAt' | 'actor'>,
+  actor: string,
+): Asset {
+  const fullEvent: AssetLifecycleEvent = {
+    id: shortId('e'),
+    occurredAt: new Date().toISOString(),
+    actor,
+    ...event,
+  }
+  return { ...asset, events: [fullEvent, ...asset.events] }
+}
 
 const STORAGE_KEY = 'fl-assets-v1'
 
@@ -205,6 +228,241 @@ export function AssetStoreProvider({ children }: { children: ReactNode }) {
     setAssets(MOCK_ASSETS)
   }, [])
 
+  const addWarranty = useCallback<AssetStoreValue['addWarranty']>(
+    (assetId, input) => {
+      setAssets((prev) =>
+        prev.map((a) => {
+          if (a.id !== assetId) return a
+          const warranty: AssetWarranty = { ...input, id: shortId('w') }
+          const updated: Asset = {
+            ...a,
+            warranties: [...a.warranties, warranty],
+          }
+          return pushEvent(
+            updated,
+            {
+              kind: 'warranty_added',
+              payload: { provider: warranty.provider, kind: warranty.kind },
+            },
+            actor,
+          )
+        }),
+      )
+    },
+    [actor],
+  )
+
+  const updateWarranty = useCallback<AssetStoreValue['updateWarranty']>(
+    (assetId, warrantyId, patch) => {
+      setAssets((prev) =>
+        prev.map((a) =>
+          a.id === assetId
+            ? {
+                ...a,
+                warranties: a.warranties.map((w) =>
+                  w.id === warrantyId ? { ...w, ...patch } : w,
+                ),
+              }
+            : a,
+        ),
+      )
+    },
+    [],
+  )
+
+  const deleteWarranty = useCallback<AssetStoreValue['deleteWarranty']>(
+    (assetId, warrantyId) => {
+      setAssets((prev) =>
+        prev.map((a) =>
+          a.id === assetId
+            ? {
+                ...a,
+                warranties: a.warranties.filter((w) => w.id !== warrantyId),
+              }
+            : a,
+        ),
+      )
+    },
+    [],
+  )
+
+  const addCheck = useCallback<AssetStoreValue['addCheck']>(
+    (assetId, input) => {
+      setAssets((prev) =>
+        prev.map((a) =>
+          a.id === assetId
+            ? {
+                ...a,
+                recurringChecks: [
+                  ...a.recurringChecks,
+                  { ...input, id: shortId('rc') },
+                ],
+              }
+            : a,
+        ),
+      )
+    },
+    [],
+  )
+
+  const updateCheck = useCallback<AssetStoreValue['updateCheck']>(
+    (assetId, checkId, patch) => {
+      setAssets((prev) =>
+        prev.map((a) =>
+          a.id === assetId
+            ? {
+                ...a,
+                recurringChecks: a.recurringChecks.map((c) =>
+                  c.id === checkId ? { ...c, ...patch } : c,
+                ),
+              }
+            : a,
+        ),
+      )
+    },
+    [],
+  )
+
+  const deleteCheck = useCallback<AssetStoreValue['deleteCheck']>(
+    (assetId, checkId) => {
+      setAssets((prev) =>
+        prev.map((a) =>
+          a.id === assetId
+            ? {
+                ...a,
+                recurringChecks: a.recurringChecks.filter(
+                  (c) => c.id !== checkId,
+                ),
+              }
+            : a,
+        ),
+      )
+    },
+    [],
+  )
+
+  // Completing a check stamps lastCompletedAt to today and rolls nextDueAt
+  // forward by intervalMonths.
+  const completeCheck = useCallback<AssetStoreValue['completeCheck']>(
+    (assetId, checkId) => {
+      setAssets((prev) =>
+        prev.map((a) => {
+          if (a.id !== assetId) return a
+          const today = new Date()
+          const todayIso = today.toISOString().slice(0, 10)
+          return {
+            ...a,
+            recurringChecks: a.recurringChecks.map((c) => {
+              if (c.id !== checkId) return c
+              const next = new Date(today)
+              next.setMonth(next.getMonth() + c.intervalMonths)
+              return {
+                ...c,
+                lastCompletedAt: todayIso,
+                nextDueAt: next.toISOString().slice(0, 10),
+              }
+            }),
+          }
+        }),
+      )
+    },
+    [],
+  )
+
+  const assign = useCallback<AssetStoreValue['assign']>(
+    (assetId, input) => {
+      setAssets((prev) =>
+        prev.map((a) => {
+          if (a.id !== assetId) return a
+          const newAssignment: AssetAssignment = {
+            ...input,
+            id: shortId('asg'),
+          }
+          // End any active assignment first.
+          const closedHistory: AssetAssignment[] = a.assignments.map((existing) =>
+            existing.returnedAt
+              ? existing
+              : { ...existing, returnedAt: input.assignedAt },
+          )
+          const updated: Asset = {
+            ...a,
+            currentAssignment: newAssignment,
+            assignments: [...closedHistory, newAssignment],
+          }
+          return pushEvent(
+            updated,
+            {
+              kind: 'assigned',
+              payload: { assignee: newAssignment.assigneeName },
+              notes: input.notes,
+            },
+            actor,
+          )
+        }),
+      )
+    },
+    [actor],
+  )
+
+  const returnAssignment = useCallback<AssetStoreValue['returnAssignment']>(
+    (assetId, notes) => {
+      setAssets((prev) =>
+        prev.map((a) => {
+          if (a.id !== assetId) return a
+          if (!a.currentAssignment) return a
+          const today = new Date().toISOString().slice(0, 10)
+          const returnedAssignment: AssetAssignment = {
+            ...a.currentAssignment,
+            returnedAt: today,
+          }
+          const updated: Asset = {
+            ...a,
+            currentAssignment: undefined,
+            assignments: a.assignments.map((existing) =>
+              existing.id === returnedAssignment.id
+                ? returnedAssignment
+                : existing,
+            ),
+          }
+          return pushEvent(
+            updated,
+            {
+              kind: 'unassigned',
+              payload: { from: returnedAssignment.assigneeName },
+              notes,
+            },
+            actor,
+          )
+        }),
+      )
+    },
+    [actor],
+  )
+
+  const addNote = useCallback<AssetStoreValue['addNote']>(
+    (assetId, note) => {
+      setAssets((prev) =>
+        prev.map((a) =>
+          a.id === assetId
+            ? pushEvent(a, { kind: 'note', notes: note }, actor)
+            : a,
+        ),
+      )
+    },
+    [actor],
+  )
+
+  const addEvent = useCallback<AssetStoreValue['addEvent']>(
+    (assetId, event) => {
+      setAssets((prev) =>
+        prev.map((a) => (a.id === assetId ? pushEvent(a, event, actor) : a)),
+      )
+    },
+    [actor],
+  )
+
+  // Suppress eslint exhaustive-deps for completeness — every store fn is
+  // listed below, even though several are stable references via useCallback.
   const value = useMemo<AssetStoreValue>(
     () => ({
       assets,
@@ -214,6 +472,17 @@ export function AssetStoreProvider({ children }: { children: ReactNode }) {
       changeState,
       deleteAsset,
       resetToDemo,
+      addWarranty,
+      updateWarranty,
+      deleteWarranty,
+      addCheck,
+      updateCheck,
+      deleteCheck,
+      completeCheck,
+      assign,
+      returnAssignment,
+      addNote,
+      addEvent,
     }),
     [
       assets,
@@ -223,6 +492,17 @@ export function AssetStoreProvider({ children }: { children: ReactNode }) {
       changeState,
       deleteAsset,
       resetToDemo,
+      addWarranty,
+      updateWarranty,
+      deleteWarranty,
+      addCheck,
+      updateCheck,
+      deleteCheck,
+      completeCheck,
+      assign,
+      returnAssignment,
+      addNote,
+      addEvent,
     ],
   )
 

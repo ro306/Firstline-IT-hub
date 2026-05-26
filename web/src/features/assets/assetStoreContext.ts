@@ -1,5 +1,11 @@
 import { createContext } from 'react'
-import type { Asset } from './types'
+import type {
+  Asset,
+  AssetAssignment,
+  AssetLifecycleEvent,
+  AssetWarranty,
+  RecurringCheck,
+} from './types'
 
 export type AssetStoreValue = {
   assets: Asset[]
@@ -9,11 +15,36 @@ export type AssetStoreValue = {
   changeState: (id: string, next: Asset['lifecycleState'], notes?: string) => void
   deleteAsset: (id: string) => void
   resetToDemo: () => void
+  // Sub-entity CRUD. Each operation also appends a lifecycle event so the
+  // change is visible on the asset timeline.
+  addWarranty: (assetId: string, input: Omit<AssetWarranty, 'id'>) => void
+  updateWarranty: (
+    assetId: string,
+    warrantyId: string,
+    patch: Partial<Omit<AssetWarranty, 'id'>>,
+  ) => void
+  deleteWarranty: (assetId: string, warrantyId: string) => void
+  addCheck: (assetId: string, input: Omit<RecurringCheck, 'id'>) => void
+  updateCheck: (
+    assetId: string,
+    checkId: string,
+    patch: Partial<Omit<RecurringCheck, 'id'>>,
+  ) => void
+  deleteCheck: (assetId: string, checkId: string) => void
+  completeCheck: (assetId: string, checkId: string) => void
+  assign: (
+    assetId: string,
+    input: Omit<AssetAssignment, 'id' | 'returnedAt'>,
+  ) => void
+  returnAssignment: (assetId: string, notes?: string) => void
+  addNote: (assetId: string, note: string) => void
+  // Appends a freeform lifecycle event with optional payload.
+  addEvent: (
+    assetId: string,
+    event: Omit<AssetLifecycleEvent, 'id' | 'occurredAt' | 'actor'>,
+  ) => void
 }
 
-// Subset of Asset that the create-form gathers. The store fills in defaults
-// (id, empty arrays, default lifecycle state) so the form stays focused on
-// fields a user actually types.
 export type NewAssetInput = {
   name: string
   assetTag: string
@@ -29,7 +60,6 @@ export type NewAssetInput = {
   priceCurrency: 'DKK' | 'EUR' | 'USD'
 }
 
-// Patch type for editing — same fields, all optional.
 export type AssetPatch = Partial<NewAssetInput>
 
 export const AssetStoreContext = createContext<AssetStoreValue | null>(null)

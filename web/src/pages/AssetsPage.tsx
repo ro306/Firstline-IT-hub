@@ -5,6 +5,7 @@ import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
 import { AssetFormDialog } from '@/features/assets/AssetFormDialog'
 import { useAssetStore } from '@/features/assets/useAssetStore'
+import { downloadAssetsCsv } from '@/features/assets/csvExport'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { AssetLifecycleState } from '@/features/assets/types'
 
@@ -88,6 +89,7 @@ export function AssetsPage() {
           <>
             <button
               type="button"
+              onClick={() => downloadAssetsCsv(filtered)}
               className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
               <Download className="h-4 w-4" />

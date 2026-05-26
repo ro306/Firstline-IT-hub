@@ -1,11 +1,21 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { ArrowLeft, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import {
+  ArrowLeft,
+  MoreHorizontal,
+  Pencil,
+  Trash2,
+  Plus,
+  UserPlus,
+  UserMinus,
+  FileText,
+} from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
 import { LifecycleStepper } from '@/features/assets/LifecycleStepper'
 import { LifecycleTimeline } from '@/features/assets/LifecycleTimeline'
 import { WarrantyList } from '@/features/assets/WarrantyList'
+import { RecurringCheckList } from '@/features/assets/RecurringCheckList'
 import { AssignmentHistory } from '@/features/assets/AssignmentHistory'
 import {
   DepreciationCard,
@@ -16,11 +26,28 @@ import {
 import { AssetFormDialog } from '@/features/assets/AssetFormDialog'
 import { StateChangeDialog } from '@/features/assets/StateChangeDialog'
 import { DeleteAssetDialog } from '@/features/assets/DeleteAssetDialog'
+import {
+  WarrantyDialog,
+  WarrantyDeleteDialog,
+} from '@/features/assets/WarrantyDialog'
+import {
+  RecurringCheckDialog,
+  RecurringCheckDeleteDialog,
+} from '@/features/assets/RecurringCheckDialog'
+import {
+  AssignmentDialog,
+  ReturnAssignmentDialog,
+  NoteDialog,
+} from '@/features/assets/AssignmentDialog'
 import { useAssetStore } from '@/features/assets/useAssetStore'
 import { AssetUpcomingPanel } from '@/features/lifecycle/AssetUpcomingPanel'
 import { formatDate } from '@/features/assets/finance'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { cn } from '@/lib/cn'
+import type {
+  AssetWarranty,
+  RecurringCheck,
+} from '@/features/assets/types'
 
 type Tab = 'overview' | 'history' | 'warranties' | 'finance'
 
@@ -47,12 +74,26 @@ export function AssetDetailPage() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
-  const { getAsset } = useAssetStore()
+  const store = useAssetStore()
+  const getAsset = store.getAsset
   const [tab, setTab] = useState<Tab>('overview')
   const [editing, setEditing] = useState(false)
   const [changingState, setChangingState] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [addingWarranty, setAddingWarranty] = useState(false)
+  const [editingWarranty, setEditingWarranty] = useState<AssetWarranty | null>(
+    null,
+  )
+  const [deletingWarranty, setDeletingWarranty] = useState<AssetWarranty | null>(
+    null,
+  )
+  const [addingCheck, setAddingCheck] = useState(false)
+  const [editingCheck, setEditingCheck] = useState<RecurringCheck | null>(null)
+  const [deletingCheck, setDeletingCheck] = useState<RecurringCheck | null>(null)
+  const [assigning, setAssigning] = useState(false)
+  const [returningAssignment, setReturningAssignment] = useState(false)
+  const [addingNote, setAddingNote] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const asset = id ? getAsset(id) : undefined
 
@@ -218,22 +259,45 @@ export function AssetDetailPage() {
                 <DetailRow
                   label={t('asset.details.currently_assigned_to')}
                   value={
-                    asset.currentAssignment ? (
-                      <>
-                        <p className="font-medium text-slate-900">
-                          {asset.currentAssignment.assigneeName}
-                        </p>
-                        {asset.currentAssignment.assigneeEmail && (
-                          <p className="text-xs text-slate-500">
-                            {asset.currentAssignment.assigneeEmail}
-                          </p>
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div>
+                        {asset.currentAssignment ? (
+                          <>
+                            <p className="font-medium text-slate-900">
+                              {asset.currentAssignment.assigneeName}
+                            </p>
+                            {asset.currentAssignment.assigneeEmail && (
+                              <p className="text-xs text-slate-500">
+                                {asset.currentAssignment.assigneeEmail}
+                              </p>
+                            )}
+                          </>
+                        ) : (
+                          <span className="text-slate-400">
+                            {t('asset.details.unassigned')}
+                          </span>
                         )}
-                      </>
-                    ) : (
-                      <span className="text-slate-400">
-                        {t('asset.details.unassigned')}
-                      </span>
-                    )
+                      </div>
+                      {asset.currentAssignment ? (
+                        <button
+                          type="button"
+                          onClick={() => setReturningAssignment(true)}
+                          className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                        >
+                          <UserMinus className="h-3.5 w-3.5" />
+                          {t('asset_detail.return_asset')}
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => setAssigning(true)}
+                          className="inline-flex items-center gap-1 rounded-md bg-brand-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-brand-700"
+                        >
+                          <UserPlus className="h-3.5 w-3.5" />
+                          {t('asset_detail.assign_to')}
+                        </button>
+                      )}
+                    </div>
                   }
                 />
               </dl>
@@ -295,15 +359,47 @@ export function AssetDetailPage() {
               </dl>
             </div>
           </div>
+
+          <div className="mt-6 rounded-lg border border-slate-200 bg-white p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-slate-900">
+                {t('asset_detail.recurring_checks_title')}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setAddingCheck(true)}
+                className="inline-flex items-center gap-1 rounded-md bg-brand-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-brand-700"
+              >
+                <Plus className="h-3.5 w-3.5" />
+                {t('asset_detail.add_check')}
+              </button>
+            </div>
+            <RecurringCheckList
+              checks={asset.recurringChecks}
+              onEdit={(c) => setEditingCheck(c)}
+              onDelete={(c) => setDeletingCheck(c)}
+              onComplete={(c) => store.completeCheck(asset.id, c.id)}
+            />
+          </div>
         </>
       )}
 
       {tab === 'history' && (
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <div className="rounded-lg border border-slate-200 bg-white p-6">
-            <h3 className="mb-4 text-sm font-semibold text-slate-900">
-              {t('asset.history.timeline_title')}
-            </h3>
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-sm font-semibold text-slate-900">
+                {t('asset.history.timeline_title')}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setAddingNote(true)}
+                className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+              >
+                <FileText className="h-3.5 w-3.5" />
+                {t('asset_detail.add_note')}
+              </button>
+            </div>
             <LifecycleTimeline events={asset.events} />
           </div>
           <div className="rounded-lg border border-slate-200 bg-white p-6">
@@ -317,10 +413,24 @@ export function AssetDetailPage() {
 
       {tab === 'warranties' && (
         <div className="rounded-lg border border-slate-200 bg-white p-6">
-          <h3 className="mb-4 text-sm font-semibold text-slate-900">
-            {t('asset.section_warranties')}
-          </h3>
-          <WarrantyList warranties={asset.warranties} />
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-slate-900">
+              {t('asset.section_warranties')}
+            </h3>
+            <button
+              type="button"
+              onClick={() => setAddingWarranty(true)}
+              className="inline-flex items-center gap-1 rounded-md bg-brand-600 px-2.5 py-1 text-xs font-medium text-white hover:bg-brand-700"
+            >
+              <Plus className="h-3.5 w-3.5" />
+              {t('asset_detail.add_warranty')}
+            </button>
+          </div>
+          <WarrantyList
+            warranties={asset.warranties}
+            onEdit={(w) => setEditingWarranty(w)}
+            onDelete={(w) => setDeletingWarranty(w)}
+          />
         </div>
       )}
 
@@ -348,6 +458,58 @@ export function AssetDetailPage() {
           onClose={() => setDeleting(false)}
           onDeleted={() => navigate('/assets')}
         />
+      )}
+      {addingWarranty && (
+        <WarrantyDialog
+          assetId={asset.id}
+          onClose={() => setAddingWarranty(false)}
+        />
+      )}
+      {editingWarranty && (
+        <WarrantyDialog
+          assetId={asset.id}
+          warranty={editingWarranty}
+          onClose={() => setEditingWarranty(null)}
+        />
+      )}
+      {deletingWarranty && (
+        <WarrantyDeleteDialog
+          assetId={asset.id}
+          warranty={deletingWarranty}
+          onClose={() => setDeletingWarranty(null)}
+        />
+      )}
+      {addingCheck && (
+        <RecurringCheckDialog
+          assetId={asset.id}
+          onClose={() => setAddingCheck(false)}
+        />
+      )}
+      {editingCheck && (
+        <RecurringCheckDialog
+          assetId={asset.id}
+          check={editingCheck}
+          onClose={() => setEditingCheck(null)}
+        />
+      )}
+      {deletingCheck && (
+        <RecurringCheckDeleteDialog
+          assetId={asset.id}
+          check={deletingCheck}
+          onClose={() => setDeletingCheck(null)}
+        />
+      )}
+      {assigning && (
+        <AssignmentDialog asset={asset} onClose={() => setAssigning(false)} />
+      )}
+      {returningAssignment && (
+        <ReturnAssignmentDialog
+          asset={asset}
+          onClose={() => setReturningAssignment(false)}
+        />
+      )}
+      {addingNote && (
+        <NoteDialog asset={asset} onClose={() => setAddingNote(false)} />
       )}
     </div>
   )
