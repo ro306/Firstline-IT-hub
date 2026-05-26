@@ -35,7 +35,7 @@ export function Sidebar() {
     <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-slate-200 md:bg-white">
       <div className="flex h-16 items-center gap-2 border-b border-slate-200 px-6">
         <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-600 text-white font-semibold">
-          F
+          J
         </div>
         <div className="flex flex-col leading-tight">
           <span className="text-sm font-semibold text-slate-900">
