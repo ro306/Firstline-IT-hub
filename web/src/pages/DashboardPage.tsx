@@ -2,16 +2,22 @@ import {
   Boxes,
   AlertTriangle,
   CheckCircle2,
-  ShieldAlert,
   Package,
   Trash2,
+  ArrowUpRight,
 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { PageHeader } from '@/components/PageHeader'
 import { MOCK_ASSETS } from '@/features/assets/mockData'
 import { LIFECYCLE_STATE_CONFIG } from '@/features/assets/lifecycle'
-import { daysUntil, formatDate, formatMoney } from '@/features/assets/finance'
+import { formatMoney } from '@/features/assets/finance'
 import { StatusBadge } from '@/features/assets/StatusBadge'
+import {
+  computeExpirations,
+  KIND_LABEL,
+} from '@/features/lifecycle/expirations'
+import { SeverityBadge } from '@/features/lifecycle/SeverityBadge'
+import { DEFAULT_WORKFLOW_RULES } from '@/features/lifecycle/mockRules'
 
 const ACTIVE = new Set([
   'in_use',
@@ -70,15 +76,14 @@ export function DashboardPage() {
     ['retired', 'disposed', 'returned_to_vendor'].includes(a.lifecycleState),
   ).length
 
-  // Warranties expiring within 90 days, excluding already expired.
-  const expiringWarranties = MOCK_ASSETS.flatMap((a) =>
-    a.warranties
-      .filter((w) => {
-        const d = daysUntil(w.endsAt)
-        return d >= 0 && d <= 90
-      })
-      .map((w) => ({ asset: a, warranty: w, daysLeft: daysUntil(w.endsAt) })),
-  ).sort((a, b) => a.daysLeft - b.daysLeft)
+  // Upcoming periods within 90 days across all kinds (warranty, lease,
+  // depreciation EOL, recurring checks) plus anything already overdue.
+  const upcomingPeriods = computeExpirations(
+    MOCK_ASSETS,
+    DEFAULT_WORKFLOW_RULES,
+  )
+    .filter((p) => p.daysUntil <= 90)
+    .sort((a, b) => a.daysUntil - b.daysUntil)
 
   // Total monthly lease cost.
   const totalMonthlyLease = MOCK_ASSETS.reduce(
@@ -124,36 +129,49 @@ export function DashboardPage() {
         <div className="rounded-lg border border-slate-200 bg-white p-6 lg:col-span-2">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-slate-900">
-              Warranties expiring soon
+              Upcoming renewals
             </h3>
-            <span className="text-xs text-slate-500">next 90 days</span>
+            <Link
+              to="/renewals"
+              className="inline-flex items-center gap-1 text-xs font-medium text-brand-700 hover:underline"
+            >
+              View all
+              <ArrowUpRight className="h-3 w-3" />
+            </Link>
           </div>
-          {expiringWarranties.length === 0 ? (
+          <p className="text-xs text-slate-500">
+            Warranties, leases, EOL and recurring checks within 90 days
+          </p>
+          {upcomingPeriods.length === 0 ? (
             <p className="mt-4 text-sm text-slate-500">
-              No warranties expiring in the next 90 days.
+              Nothing expiring in the next 90 days.
             </p>
           ) : (
             <ul className="mt-4 divide-y divide-slate-100">
-              {expiringWarranties.slice(0, 5).map(({ asset, warranty, daysLeft }) => (
+              {upcomingPeriods.slice(0, 6).map((p) => (
                 <li
-                  key={`${asset.id}-${warranty.id}`}
-                  className="flex items-center justify-between py-3"
+                  key={p.key}
+                  className="flex flex-wrap items-center justify-between gap-2 py-3"
                 >
-                  <div>
+                  <div className="min-w-0">
                     <Link
-                      to={`/assets/${asset.id}`}
+                      to={`/assets/${p.assetId}`}
                       className="text-sm font-medium text-slate-900 hover:text-brand-700"
                     >
-                      {asset.name}
+                      {p.assetName}
                     </Link>
                     <p className="text-xs text-slate-500">
-                      {warranty.provider} · ends {formatDate(warranty.endsAt)}
+                      {KIND_LABEL[p.kind]} · {p.label}
                     </p>
                   </div>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-600/20">
-                    <ShieldAlert className="h-3 w-3" />
-                    {daysLeft}d left
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-slate-500">
+                      {p.daysUntil < 0
+                        ? `${Math.abs(p.daysUntil)}d overdue`
+                        : `${p.daysUntil}d left`}
+                    </span>
+                    <SeverityBadge severity={p.severity} />
+                  </div>
                 </li>
               ))}
             </ul>

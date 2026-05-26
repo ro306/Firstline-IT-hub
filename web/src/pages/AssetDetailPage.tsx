@@ -13,6 +13,7 @@ import {
   LeaseCard,
   DisposalCard,
 } from '@/features/assets/FinanceCards'
+import { AssetUpcomingPanel } from '@/features/lifecycle/AssetUpcomingPanel'
 import { MOCK_ASSETS } from '@/features/assets/mockData'
 import { formatDate } from '@/features/assets/finance'
 import { cn } from '@/lib/cn'
@@ -128,6 +129,10 @@ export function AssetDetailPage() {
       </div>
 
       {tab === 'overview' && (
+        <>
+        <div className="mb-6">
+          <AssetUpcomingPanel asset={asset} />
+        </div>
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           <div className="rounded-lg border border-slate-200 bg-white p-6 lg:col-span-2">
             <h3 className="text-sm font-semibold text-slate-900">Details</h3>
@@ -210,6 +215,7 @@ export function AssetDetailPage() {
             </dl>
           </div>
         </div>
+        </>
       )}
 
       {tab === 'history' && (

@@ -51,7 +51,7 @@ export const MOCK_ASSETS: Asset[] = [
         kind: 'manufacturer',
         provider: 'Apple',
         startsAt: '2025-09-10',
-        endsAt: '2026-09-10',
+        endsAt: '2026-06-20',
       },
       {
         id: 'w1-b',
@@ -61,6 +61,17 @@ export const MOCK_ASSETS: Asset[] = [
         startsAt: '2025-09-10',
         endsAt: '2028-09-10',
         coverageNotes: 'Includes accidental damage, 2 incidents/year',
+      },
+    ],
+    recurringChecks: [
+      {
+        id: 'rc1-1',
+        kind: 'inventory_audit',
+        label: 'Annual inventory audit',
+        intervalMonths: 12,
+        lastCompletedAt: '2025-09-15',
+        nextDueAt: '2026-09-15',
+        responsibleRole: 'IT Asset Manager',
       },
     ],
     events: [
@@ -160,6 +171,17 @@ export const MOCK_ASSETS: Asset[] = [
         coverageNotes: 'Next-business-day on-site',
       },
     ],
+    recurringChecks: [
+      {
+        id: 'rc2-1',
+        kind: 'inventory_audit',
+        label: 'Annual inventory audit',
+        intervalMonths: 12,
+        lastCompletedAt: '2025-06-12',
+        nextDueAt: '2026-06-12',
+        responsibleRole: 'IT Asset Manager',
+      },
+    ],
     events: [
       {
         id: 'e2-1',
@@ -234,10 +256,11 @@ export const MOCK_ASSETS: Asset[] = [
         kind: 'manufacturer',
         provider: 'Dell',
         startsAt: '2025-02-20',
-        endsAt: '2028-02-20',
+        endsAt: '2026-05-10',
         coverageNotes: 'Premium Panel Exchange',
       },
     ],
+    recurringChecks: [],
     events: [
       {
         id: 'e3-1',
@@ -284,7 +307,7 @@ export const MOCK_ASSETS: Asset[] = [
       vendor: '3 Erhverv',
       contractRef: 'LEASE-3-2025-882',
       startsAt: '2025-10-01',
-      endsAt: '2027-10-01',
+      endsAt: '2026-08-20',
       monthlyCost: { amount: 449, currency: 'DKK' },
     },
     warranties: [
@@ -293,7 +316,18 @@ export const MOCK_ASSETS: Asset[] = [
         kind: 'manufacturer',
         provider: 'Apple',
         startsAt: '2025-10-01',
-        endsAt: '2026-10-01',
+        endsAt: '2026-05-30',
+      },
+    ],
+    recurringChecks: [
+      {
+        id: 'rc4-1',
+        kind: 'license_renewal',
+        label: 'MDM enrollment renewal',
+        intervalMonths: 12,
+        lastCompletedAt: '2025-10-01',
+        nextDueAt: '2026-06-15',
+        responsibleRole: 'IT Security',
       },
     ],
     events: [
@@ -353,6 +387,26 @@ export const MOCK_ASSETS: Asset[] = [
         startsAt: '2024-04-12',
         endsAt: '2029-04-12',
         coverageNotes: '4hr mission-critical, on-site',
+      },
+    ],
+    recurringChecks: [
+      {
+        id: 'rc5-1',
+        kind: 'preventive_maintenance',
+        label: 'Quarterly firmware & health check',
+        intervalMonths: 3,
+        lastCompletedAt: '2026-03-01',
+        nextDueAt: '2026-06-01',
+        responsibleRole: 'Infra Team',
+      },
+      {
+        id: 'rc5-2',
+        kind: 'compliance_review',
+        label: 'Annual security baseline review',
+        intervalMonths: 12,
+        lastCompletedAt: '2025-08-10',
+        nextDueAt: '2026-08-10',
+        responsibleRole: 'IT Security',
       },
     ],
     events: [
@@ -440,6 +494,7 @@ export const MOCK_ASSETS: Asset[] = [
         endsAt: '2023-05-18',
       },
     ],
+    recurringChecks: [],
     disposal: {
       method: 'recycled',
       disposedAt: '2026-01-15',

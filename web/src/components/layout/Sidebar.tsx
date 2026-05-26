@@ -6,6 +6,8 @@ import {
   Wrench,
   FileBarChart,
   Settings,
+  BellRing,
+  ListChecks,
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 
@@ -18,6 +20,8 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/assets', label: 'Assets', icon: Boxes },
+  { to: '/renewals', label: 'Renewals', icon: BellRing },
+  { to: '/workflows', label: 'Workflows', icon: ListChecks },
   { to: '/licenses', label: 'Licenses', icon: KeyRound },
   { to: '/maintenance', label: 'Maintenance', icon: Wrench },
   { to: '/reports', label: 'Reports', icon: FileBarChart },

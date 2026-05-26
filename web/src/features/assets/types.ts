@@ -128,6 +128,23 @@ export type AssetLifecycleEvent = {
   notes?: string
 }
 
+export type RecurringCheckKind =
+  | 'inventory_audit'
+  | 'preventive_maintenance'
+  | 'license_renewal'
+  | 'compliance_review'
+  | 'other'
+
+export type RecurringCheck = {
+  id: string
+  kind: RecurringCheckKind
+  label: string
+  intervalMonths: number
+  lastCompletedAt?: string
+  nextDueAt: string
+  responsibleRole?: string
+}
+
 export type Asset = {
   id: string
   assetTag: string
@@ -155,6 +172,7 @@ export type Asset = {
   lease?: AssetLease
   disposal?: AssetDisposal
   warranties: AssetWarranty[]
+  recurringChecks: RecurringCheck[]
 
   events: AssetLifecycleEvent[]
 }
