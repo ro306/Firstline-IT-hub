@@ -194,19 +194,22 @@ export function isActionable(p: ExpirationPeriod): boolean {
   return p.matchedRules.length > 0 || p.daysUntil < 0
 }
 
-export const KIND_LABEL: Record<ExpirationKind, string> = {
-  warranty: 'Warranty',
-  lease: 'Lease',
-  depreciation_eol: 'End of life',
-  recurring_check: 'Recurring check',
+export function kindKey(k: ExpirationKind): string {
+  return `renewals.kind.${k}`
 }
 
-export const SEVERITY_LABEL: Record<Severity, string> = {
-  info: 'Info',
-  warning: 'Warning',
-  urgent: 'Urgent',
-  expired: 'Expired',
+export function severityKey(s: Severity): string {
+  return `renewals.severity.${s}`
 }
+
+export const EXPIRATION_KINDS: ExpirationKind[] = [
+  'warranty',
+  'lease',
+  'depreciation_eol',
+  'recurring_check',
+]
+
+export const SEVERITIES: Severity[] = ['info', 'warning', 'urgent', 'expired']
 
 export const SEVERITY_BADGE: Record<Severity, string> = {
   info: 'bg-sky-50 text-sky-700 ring-sky-600/20',

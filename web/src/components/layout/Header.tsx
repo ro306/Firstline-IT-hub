@@ -7,10 +7,13 @@ import { effectiveStatus } from '@/features/lifecycle/alertStoreContext'
 import { computeExpirations } from '@/features/lifecycle/expirations'
 import { MOCK_ASSETS } from '@/features/assets/mockData'
 import { DEFAULT_WORKFLOW_RULES } from '@/features/lifecycle/mockRules'
+import { useTranslation } from '@/lib/i18n/useTranslation'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 
 export function Header() {
   const { user } = useAuth()
   const store = useAlertStore()
+  const { t } = useTranslation()
   const initials = user?.name
     .split(' ')
     .map((part) => part[0])
@@ -32,15 +35,16 @@ export function Header() {
         <Search className="pointer-events-none absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-slate-400" />
         <input
           type="search"
-          placeholder="Search assets, serial numbers, owners…"
+          placeholder={t('header.search_placeholder')}
           className="w-full rounded-md border border-slate-200 bg-slate-50 py-2 pr-3 pl-9 text-sm placeholder-slate-400 focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
         />
       </div>
       <div className="flex items-center gap-4">
+        <LanguageSwitcher />
         <Link
           to="/renewals"
           className="relative rounded-md p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700"
-          aria-label={`Notifications (${openCount} open)`}
+          aria-label={t('header.notifications_aria', { count: openCount })}
         >
           <Bell className="h-5 w-5" />
           {openCount > 0 && (

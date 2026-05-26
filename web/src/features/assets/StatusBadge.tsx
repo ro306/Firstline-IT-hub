@@ -1,8 +1,10 @@
 import { cn } from '@/lib/cn'
-import { LIFECYCLE_STATE_CONFIG } from './lifecycle'
+import { LIFECYCLE_STATE_CONFIG, lifecycleStateKey } from './lifecycle'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { AssetLifecycleState } from './types'
 
 export function StatusBadge({ state }: { state: AssetLifecycleState }) {
+  const { t } = useTranslation()
   const cfg = LIFECYCLE_STATE_CONFIG[state]
   return (
     <span
@@ -11,7 +13,7 @@ export function StatusBadge({ state }: { state: AssetLifecycleState }) {
         cfg.badge,
       )}
     >
-      {cfg.label}
+      {t(lifecycleStateKey(state))}
     </span>
   )
 }

@@ -11,8 +11,13 @@ import {
   Package,
   RotateCcw,
 } from 'lucide-react'
-import { EVENT_KIND_LABEL, LIFECYCLE_STATE_CONFIG } from './lifecycle'
+import {
+  eventKindKey,
+  lifecycleStateKey,
+} from './lifecycle'
 import { formatDateTime } from './finance'
+import { useTranslation } from '@/lib/i18n/useTranslation'
+import type { TranslateFn } from '@/lib/i18n/i18nContext'
 import type {
   AssetLifecycleEvent,
   AssetLifecycleEventKind,
@@ -35,7 +40,10 @@ const ICONS: Record<AssetLifecycleEventKind, typeof ArrowRightLeft> = {
   note: FileText,
 }
 
-function renderEventDetail(event: AssetLifecycleEvent): string | null {
+function renderEventDetail(
+  event: AssetLifecycleEvent,
+  t: TranslateFn,
+): string | null {
   const p = event.payload
   if (!p) return null
   switch (event.kind) {
@@ -43,14 +51,12 @@ function renderEventDetail(event: AssetLifecycleEvent): string | null {
       const from = p.from as AssetLifecycleState | undefined
       const to = p.to as AssetLifecycleState | undefined
       if (!from || !to) return null
-      const fromLabel = LIFECYCLE_STATE_CONFIG[from]?.label ?? from
-      const toLabel = LIFECYCLE_STATE_CONFIG[to]?.label ?? to
-      return `${fromLabel} → ${toLabel}`
+      return `${t(lifecycleStateKey(from))} → ${t(lifecycleStateKey(to))}`
     }
     case 'assigned':
-      return p.assignee ? `to ${p.assignee}` : null
+      return p.assignee ? `${t('asset.history.to_prefix')} ${p.assignee}` : null
     case 'unassigned':
-      return p.from ? `from ${p.from}` : null
+      return p.from ? `${t('asset.history.from_prefix')} ${p.from}` : null
     case 'moved':
       return p.from && p.to ? `${p.from} → ${p.to}` : null
     case 'maintenance_started':
@@ -72,9 +78,11 @@ export function LifecycleTimeline({
 }: {
   events: AssetLifecycleEvent[]
 }) {
+  const { t } = useTranslation()
+
   if (events.length === 0) {
     return (
-      <p className="text-sm text-slate-500">No lifecycle events recorded.</p>
+      <p className="text-sm text-slate-500">{t('asset.history.no_events')}</p>
     )
   }
 
@@ -86,7 +94,7 @@ export function LifecycleTimeline({
     <ol className="relative space-y-6 border-l border-slate-200 pl-6">
       {sorted.map((event) => {
         const Icon = ICONS[event.kind] ?? FileText
-        const detail = renderEventDetail(event)
+        const detail = renderEventDetail(event, t)
         return (
           <li key={event.id} className="relative">
             <span className="absolute -left-[33px] flex h-6 w-6 items-center justify-center rounded-full bg-white ring-1 ring-slate-200">
@@ -94,7 +102,7 @@ export function LifecycleTimeline({
             </span>
             <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
               <p className="text-sm font-medium text-slate-900">
-                {EVENT_KIND_LABEL[event.kind]}
+                {t(eventKindKey(event.kind))}
                 {detail && (
                   <span className="ml-2 text-sm font-normal text-slate-600">
                     {detail}
@@ -105,7 +113,9 @@ export function LifecycleTimeline({
                 {formatDateTime(event.occurredAt)}
               </time>
             </div>
-            <p className="mt-0.5 text-xs text-slate-500">by {event.actor}</p>
+            <p className="mt-0.5 text-xs text-slate-500">
+              {t('asset.history.by')} {event.actor}
+            </p>
             {event.notes && (
               <p className="mt-1 rounded-md bg-slate-50 px-3 py-2 text-xs text-slate-600">
                 {event.notes}

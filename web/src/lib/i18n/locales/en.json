@@ -1,0 +1,417 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "close": "Close",
+    "back": "Back",
+    "view_all": "View all",
+    "loading": "Loading…",
+    "none": "None",
+    "na": "—",
+    "all": "All",
+    "show_all": "Show all",
+    "search": "Search",
+    "open": "Open",
+    "new": "New"
+  },
+  "language": {
+    "switcher_label": "Language",
+    "da": "Dansk",
+    "en": "English"
+  },
+  "nav": {
+    "brand_title": "Firstline IT",
+    "brand_subtitle": "Asset Management",
+    "dashboard": "Dashboard",
+    "assets": "Assets",
+    "renewals": "Renewals",
+    "workflows": "Workflows",
+    "licenses": "Licenses",
+    "maintenance": "Maintenance",
+    "reports": "Reports",
+    "settings": "Settings",
+    "footer_version": "v0.1.0 · dev build"
+  },
+  "header": {
+    "search_placeholder": "Search assets, serial numbers, owners…",
+    "notifications_aria": "Notifications ({count} open)"
+  },
+  "lifecycle": {
+    "state": {
+      "requested": "Requested",
+      "ordered": "Ordered",
+      "in_stock": "In stock",
+      "assigned": "Assigned",
+      "in_use": "In use",
+      "in_maintenance": "Maintenance",
+      "leased_in": "Leased in",
+      "leased_out": "Leased out",
+      "retired": "Retired",
+      "disposed": "Disposed",
+      "returned_to_vendor": "Returned to vendor",
+      "lost": "Lost",
+      "stolen": "Stolen"
+    },
+    "stage": {
+      "requested": "Requested",
+      "ordered": "Ordered",
+      "in_stock": "In stock",
+      "assigned": "Assigned",
+      "in_use": "In use",
+      "retired": "Retired",
+      "disposed": "End of life"
+    },
+    "exception_state": "Exception state",
+    "exception_description": "Asset is off the normal lifecycle flow.",
+    "event_kind": {
+      "state_changed": "State changed",
+      "assigned": "Assigned",
+      "unassigned": "Unassigned",
+      "moved": "Moved",
+      "maintenance_started": "Maintenance started",
+      "maintenance_completed": "Maintenance completed",
+      "warranty_added": "Warranty added",
+      "warranty_expired": "Warranty expired",
+      "lease_started": "Lease started",
+      "lease_renewed": "Lease renewed",
+      "lease_ended": "Lease ended",
+      "disposed": "Disposed",
+      "note": "Note"
+    }
+  },
+  "asset": {
+    "category": {
+      "laptop": "Laptop",
+      "desktop": "Desktop",
+      "monitor": "Monitor",
+      "phone": "Phone",
+      "tablet": "Tablet",
+      "server": "Server",
+      "network": "Network",
+      "peripheral": "Peripheral",
+      "other": "Other"
+    },
+    "ownership": {
+      "owned": "Owned",
+      "leased": "Leased"
+    },
+    "back_to_assets": "Back to assets",
+    "asset_tag": "Asset tag",
+    "serial_number": "Serial",
+    "serial_label": "Serial",
+    "change_state": "Change state",
+    "more_actions": "More actions",
+    "header_subtitle": "Asset tag {tag} · Serial {serial}",
+    "section_lifecycle": "Lifecycle",
+    "section_warranties": "Warranties & service contracts",
+    "not_found_title": "Asset not found",
+    "not_found_description": "The asset with id {id} doesn't exist.",
+    "tab": {
+      "overview": "Overview",
+      "history": "Lifecycle history",
+      "warranties": "Warranties",
+      "finance": "Finance"
+    },
+    "details": {
+      "title": "Details",
+      "category": "Category",
+      "location": "Location",
+      "ownership": "Ownership",
+      "currently_assigned_to": "Currently assigned to",
+      "unassigned": "Unassigned"
+    },
+    "lifecycle_dates": {
+      "title": "Lifecycle dates",
+      "requested": "Requested",
+      "ordered": "Ordered",
+      "received": "Received",
+      "deployed": "Deployed",
+      "retired": "Retired",
+      "disposed": "Disposed"
+    },
+    "assignment": {
+      "assignee": "Assignee",
+      "location": "Location",
+      "from": "From",
+      "until": "Until",
+      "notes": "Notes",
+      "current": "Current"
+    },
+    "history": {
+      "timeline_title": "Event timeline",
+      "assignment_title": "Assignment history",
+      "no_events": "No events yet.",
+      "no_assignments": "Never assigned.",
+      "to_prefix": "to",
+      "from_prefix": "from",
+      "by": "by"
+    },
+    "warranties": {
+      "title": "Active warranties",
+      "kind": {
+        "manufacturer": "Manufacturer warranty",
+        "extended": "Extended warranty",
+        "service_contract": "Service contract",
+        "accidental_damage": "Accidental damage cover"
+      },
+      "status": {
+        "expired": "Expired",
+        "active": "Active",
+        "ends_in": "Ends in {n}d"
+      },
+      "provider": "Provider",
+      "reference": "Reference",
+      "starts": "Starts",
+      "ends": "Ends",
+      "coverage": "Coverage",
+      "none": "No warranties registered."
+    },
+    "finance": {
+      "purchase_title": "Purchase",
+      "vendor": "Vendor",
+      "purchase_order": "Purchase order",
+      "purchase_date": "Purchase date",
+      "price": "Price",
+      "depreciation_title": "Depreciation",
+      "method": "Method",
+      "useful_life": "Useful life",
+      "residual_value": "Residual value",
+      "months_suffix": "months",
+      "lease_title": "Lease",
+      "contract_ref": "Contract ref",
+      "monthly_cost": "Monthly cost",
+      "starts": "Starts",
+      "ends": "Ends",
+      "returned": "Returned",
+      "disposal_title": "Disposal",
+      "disposal_method": "Method",
+      "disposed_at": "Date",
+      "disposed_by": "Disposed by",
+      "recipient": "Recipient",
+      "certificate": "Certificate",
+      "depreciation_method": {
+        "straight_line": "Straight line",
+        "declining_balance": "Declining balance (2x)",
+        "none": "Not depreciated"
+      },
+      "useful_life_months": "{n} months useful life",
+      "book_value_today": "Book value today",
+      "percent_depreciated": "{percent}% depreciated · {amount}",
+      "residual": "Residual {amount}",
+      "not_depreciated": "This asset is not being depreciated.",
+      "disposal_method_value": {
+        "sold": "Sold",
+        "recycled": "Recycled (WEEE)",
+        "donated": "Donated",
+        "destroyed": "Destroyed",
+        "returned_to_lessor": "Returned to lessor"
+      },
+      "lease_in": "Leased in",
+      "lease_out": "Leased out",
+      "po": "PO",
+      "purchased": "Purchased",
+      "contract": "Contract",
+      "period": "Period",
+      "by": "By",
+      "sale_price": "Sale price"
+    },
+    "upcoming": {
+      "title": "Upcoming for this asset",
+      "open_renewals": "Open renewals"
+    }
+  },
+  "assets_page": {
+    "title": "Assets",
+    "description_one": "1 asset tracked across the lifecycle.",
+    "description_other": "{count} assets tracked across the lifecycle.",
+    "export": "Export",
+    "new_asset": "New asset",
+    "filter": {
+      "all": "All",
+      "pipeline": "Pipeline",
+      "active": "Active",
+      "end_of_life": "End of life",
+      "exception": "Exception"
+    },
+    "search_placeholder": "Filter rows…",
+    "table": {
+      "name": "Asset",
+      "tag": "Tag",
+      "lifecycle": "Lifecycle",
+      "assigned_to": "Assigned to",
+      "location": "Location",
+      "ownership": "Ownership"
+    },
+    "unassigned": "Unassigned",
+    "empty": "No assets match the current filters."
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "description": "Lifecycle overview of your IT asset inventory.",
+    "stat": {
+      "total": "Total assets",
+      "active": "Active",
+      "maintenance": "In maintenance",
+      "leased": "Leased",
+      "eol": "End of life"
+    },
+    "upcoming": {
+      "title": "Upcoming renewals",
+      "subtitle": "Warranties, leases, EOL and recurring checks within 90 days",
+      "empty": "Nothing expiring in the next 90 days."
+    },
+    "lease": {
+      "title": "Monthly lease cost",
+      "across_one": "Across 1 leased asset",
+      "across_other": "Across {count} leased assets"
+    },
+    "lifecycle_breakdown_title": "Lifecycle breakdown"
+  },
+  "renewals": {
+    "title": "Renewals",
+    "description": "Every warranty, lease, end-of-life and recurring check that needs attention.",
+    "workflow_rules_button": "Workflow rules",
+    "status": {
+      "open": "Open",
+      "snoozed": "Snoozed",
+      "acknowledged": "Acknowledged",
+      "resolved": "Resolved"
+    },
+    "filter": {
+      "kind_label": "Kind",
+      "severity_label": "Severity",
+      "show_all_statuses": "Show all statuses"
+    },
+    "kind": {
+      "warranty": "Warranty",
+      "lease": "Lease",
+      "depreciation_eol": "End of life",
+      "recurring_check": "Recurring check"
+    },
+    "severity": {
+      "info": "Info",
+      "warning": "Warning",
+      "urgent": "Urgent",
+      "expired": "Expired"
+    },
+    "action": {
+      "renew": "Renew",
+      "snooze": "Snooze",
+      "ack": "Ack",
+      "task": "Task"
+    },
+    "days": {
+      "overdue": "{n}d overdue",
+      "today": "Due today",
+      "one_left": "1d left",
+      "many_left": "{n}d left"
+    },
+    "ends_on": "ends {date}",
+    "empty": "Nothing matches the current filters. Try widening them."
+  },
+  "workflows": {
+    "title": "Workflows",
+    "description": "Rules that trigger when lifecycle periods approach expiration, plus the follow-up tasks they generate.",
+    "view_renewals": "View renewals",
+    "tab": {
+      "rules": "Rules ({count})",
+      "tasks": "Follow-up tasks ({count})"
+    },
+    "rules_count_one": "1 rule",
+    "rules_count_other": "{count} rules",
+    "rule": {
+      "disabled": "Disabled",
+      "fires_before": "Fires {days} days before the end date",
+      "fires_on_day": "Fires on the day of the end date",
+      "fires_after": "Fires {days} days after the end date"
+    },
+    "rule_name": {
+      "wf-warranty-90": "Warranty: 90-day notice",
+      "wf-warranty-30": "Warranty: 30-day warning",
+      "wf-warranty-7": "Warranty: 7-day urgent",
+      "wf-lease-180": "Lease: 6-month notice",
+      "wf-lease-90": "Lease: 90-day decision window",
+      "wf-lease-30": "Lease: 30-day urgent",
+      "wf-eol-90": "EOL: refresh planning",
+      "wf-eol-0": "EOL: fully depreciated",
+      "wf-check-30": "Recurring check: 30-day reminder",
+      "wf-check-0": "Recurring check: due",
+      "wf-check-overdue": "Recurring check: 14 days overdue"
+    },
+    "action": {
+      "notify_in_app": "In-app notification",
+      "notify_email": "Email",
+      "create_task": "Create task",
+      "mark_urgent": "Mark urgent"
+    },
+    "rules_readonly_note": "Rules are currently read-only. Inline editing arrives with the settings module once IAM/tenant context is in place.",
+    "tasks": {
+      "empty_prefix": "No follow-up tasks yet. They appear here when you click",
+      "empty_link": "Task",
+      "empty_suffix": "on a renewal.",
+      "assigned_to": "Assigned to {name}",
+      "due": "due {date}",
+      "view_asset": "view asset →",
+      "complete_aria": "Mark as done",
+      "reopen_aria": "Mark as open"
+    }
+  },
+  "dialog": {
+    "title": {
+      "renew": "Renew {kind}",
+      "snooze": "Snooze alert",
+      "acknowledge": "Acknowledge alert",
+      "task": "Create follow-up task"
+    },
+    "ends_at_summary": "{asset} · {label} · ends {date}",
+    "renew": {
+      "extend_by": "Extend by",
+      "months": "{n} months",
+      "new_end_date": "New end date:"
+    },
+    "snooze": {
+      "hide_for": "Hide from list for",
+      "preset_7": "7 days",
+      "preset_30": "30 days",
+      "preset_90": "90 days",
+      "reappears_on": "Re-appears on"
+    },
+    "task": {
+      "title_label": "Title",
+      "placeholder": "Follow up on {label}",
+      "assign_to": "Assign to",
+      "due_in": "Due in",
+      "due_3": "3 days",
+      "due_7": "7 days",
+      "due_14": "14 days",
+      "due_30": "30 days",
+      "default_title": "Follow up on {label} for {asset}"
+    },
+    "notes_label": "Notes (optional)",
+    "notes_placeholder": "Why did you take this action?",
+    "renew_completion_note": "Renewed for {n} months"
+  },
+  "placeholder": {
+    "construction": "Module under construction.",
+    "back_link": "To dashboard",
+    "licenses": "Software license inventory and assignments.",
+    "maintenance": "Scheduled and active maintenance tickets across assets.",
+    "reports": "Asset reports, exports, and audit logs.",
+    "settings": "Module preferences. Tenant and IAM settings live in the platform."
+  },
+  "not_found": {
+    "title": "Page not found",
+    "description": "We couldn't find the page you're looking for.",
+    "back_link": "Back to dashboard"
+  },
+  "recurring_check_kind": {
+    "inventory_audit": "Inventory audit",
+    "preventive_maintenance": "Preventive maintenance",
+    "license_renewal": "License renewal",
+    "compliance_review": "Compliance review",
+    "other": "Other"
+  }
+}

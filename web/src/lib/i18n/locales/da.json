@@ -1,0 +1,417 @@
+{
+  "common": {
+    "cancel": "Annuller",
+    "confirm": "Bekræft",
+    "save": "Gem",
+    "edit": "Rediger",
+    "delete": "Slet",
+    "close": "Luk",
+    "back": "Tilbage",
+    "view_all": "Se alle",
+    "loading": "Indlæser…",
+    "none": "Ingen",
+    "na": "—",
+    "all": "Alle",
+    "show_all": "Vis alle",
+    "search": "Søg",
+    "open": "Åben",
+    "new": "Ny"
+  },
+  "language": {
+    "switcher_label": "Sprog",
+    "da": "Dansk",
+    "en": "English"
+  },
+  "nav": {
+    "brand_title": "Firstline IT",
+    "brand_subtitle": "Asset Management",
+    "dashboard": "Oversigt",
+    "assets": "Aktiver",
+    "renewals": "Fornyelser",
+    "workflows": "Workflows",
+    "licenses": "Licenser",
+    "maintenance": "Vedligehold",
+    "reports": "Rapporter",
+    "settings": "Indstillinger",
+    "footer_version": "v0.1.0 · dev build"
+  },
+  "header": {
+    "search_placeholder": "Søg aktiver, serienumre, ejere…",
+    "notifications_aria": "Notifikationer ({count} åbne)"
+  },
+  "lifecycle": {
+    "state": {
+      "requested": "Anmodet",
+      "ordered": "Bestilt",
+      "in_stock": "På lager",
+      "assigned": "Tildelt",
+      "in_use": "I brug",
+      "in_maintenance": "Vedligehold",
+      "leased_in": "Leaset ind",
+      "leased_out": "Leaset ud",
+      "retired": "Udfaset",
+      "disposed": "Bortskaffet",
+      "returned_to_vendor": "Returneret",
+      "lost": "Mistet",
+      "stolen": "Stjålet"
+    },
+    "stage": {
+      "requested": "Anmodet",
+      "ordered": "Bestilt",
+      "in_stock": "På lager",
+      "assigned": "Tildelt",
+      "in_use": "I brug",
+      "retired": "Udfaset",
+      "disposed": "Slut på levetid"
+    },
+    "exception_state": "Undtagelsesstatus",
+    "exception_description": "Aktivet er ude af det normale livscyklus-flow.",
+    "event_kind": {
+      "state_changed": "Status ændret",
+      "assigned": "Tildelt",
+      "unassigned": "Tildeling fjernet",
+      "moved": "Flyttet",
+      "maintenance_started": "Vedligehold startet",
+      "maintenance_completed": "Vedligehold afsluttet",
+      "warranty_added": "Garanti tilføjet",
+      "warranty_expired": "Garanti udløbet",
+      "lease_started": "Leasing startet",
+      "lease_renewed": "Leasing fornyet",
+      "lease_ended": "Leasing afsluttet",
+      "disposed": "Bortskaffet",
+      "note": "Note"
+    }
+  },
+  "asset": {
+    "category": {
+      "laptop": "Bærbar",
+      "desktop": "Stationær",
+      "monitor": "Skærm",
+      "phone": "Telefon",
+      "tablet": "Tablet",
+      "server": "Server",
+      "network": "Netværksudstyr",
+      "peripheral": "Tilbehør",
+      "other": "Andet"
+    },
+    "ownership": {
+      "owned": "Ejet",
+      "leased": "Leaset"
+    },
+    "back_to_assets": "Tilbage til aktiver",
+    "asset_tag": "Aktiv-tag",
+    "serial_number": "Serienr.",
+    "serial_label": "Serial",
+    "change_state": "Skift status",
+    "more_actions": "Flere handlinger",
+    "header_subtitle": "Aktiv-tag {tag} · Serienr. {serial}",
+    "section_lifecycle": "Livscyklus",
+    "section_warranties": "Garantier & servicekontrakter",
+    "not_found_title": "Aktiv ikke fundet",
+    "not_found_description": "Aktivet med id {id} findes ikke.",
+    "tab": {
+      "overview": "Oversigt",
+      "history": "Historik",
+      "warranties": "Garantier",
+      "finance": "Økonomi"
+    },
+    "details": {
+      "title": "Detaljer",
+      "category": "Kategori",
+      "location": "Lokation",
+      "ownership": "Ejerskab",
+      "currently_assigned_to": "Tildelt til",
+      "unassigned": "Ikke tildelt"
+    },
+    "lifecycle_dates": {
+      "title": "Livscyklus-datoer",
+      "requested": "Anmodet",
+      "ordered": "Bestilt",
+      "received": "Modtaget",
+      "deployed": "Deployeret",
+      "retired": "Udfaset",
+      "disposed": "Bortskaffet"
+    },
+    "assignment": {
+      "assignee": "Tildelt person",
+      "location": "Lokation",
+      "from": "Fra",
+      "until": "Indtil",
+      "notes": "Noter",
+      "current": "Aktuel"
+    },
+    "history": {
+      "timeline_title": "Begivenhedstidslinje",
+      "assignment_title": "Tildelingshistorik",
+      "no_events": "Ingen begivenheder endnu.",
+      "no_assignments": "Aldrig tildelt.",
+      "to_prefix": "til",
+      "from_prefix": "fra",
+      "by": "af"
+    },
+    "warranties": {
+      "title": "Aktive garantier",
+      "kind": {
+        "manufacturer": "Producentgaranti",
+        "extended": "Forlænget garanti",
+        "service_contract": "Servicekontrakt",
+        "accidental_damage": "Uheldsdækning"
+      },
+      "status": {
+        "expired": "Udløbet",
+        "active": "Aktiv",
+        "ends_in": "Slutter om {n}d"
+      },
+      "provider": "Leverandør",
+      "reference": "Reference",
+      "starts": "Starter",
+      "ends": "Slutter",
+      "coverage": "Dækning",
+      "none": "Ingen garantier registreret."
+    },
+    "finance": {
+      "purchase_title": "Køb",
+      "vendor": "Leverandør",
+      "purchase_order": "Indkøbsordre",
+      "purchase_date": "Købsdato",
+      "price": "Pris",
+      "depreciation_title": "Afskrivning",
+      "method": "Metode",
+      "useful_life": "Brugslevetid",
+      "residual_value": "Restværdi",
+      "months_suffix": "måneder",
+      "lease_title": "Leasing",
+      "contract_ref": "Kontraktref.",
+      "monthly_cost": "Månedlig pris",
+      "starts": "Starter",
+      "ends": "Slutter",
+      "returned": "Returneret",
+      "disposal_title": "Bortskaffelse",
+      "disposal_method": "Metode",
+      "disposed_at": "Dato",
+      "disposed_by": "Udført af",
+      "recipient": "Modtager",
+      "certificate": "Certifikat",
+      "depreciation_method": {
+        "straight_line": "Lineær afskrivning",
+        "declining_balance": "Saldoafskrivning (2x)",
+        "none": "Ikke afskrevet"
+      },
+      "useful_life_months": "{n} måneders brugslevetid",
+      "book_value_today": "Bogført værdi i dag",
+      "percent_depreciated": "{percent}% afskrevet · {amount}",
+      "residual": "Restværdi {amount}",
+      "not_depreciated": "Dette aktiv afskrives ikke.",
+      "disposal_method_value": {
+        "sold": "Solgt",
+        "recycled": "Genbrugt (WEEE)",
+        "donated": "Doneret",
+        "destroyed": "Destrueret",
+        "returned_to_lessor": "Returneret til leasinggiver"
+      },
+      "lease_in": "Leaset ind",
+      "lease_out": "Leaset ud",
+      "po": "Indkøbsordre",
+      "purchased": "Købt",
+      "contract": "Kontrakt",
+      "period": "Periode",
+      "by": "Udført af",
+      "sale_price": "Salgspris"
+    },
+    "upcoming": {
+      "title": "Kommende for dette aktiv",
+      "open_renewals": "Åbn fornyelser"
+    }
+  },
+  "assets_page": {
+    "title": "Aktiver",
+    "description_one": "1 aktiv sporet i livscyklussen.",
+    "description_other": "{count} aktiver sporet i livscyklussen.",
+    "export": "Eksportér",
+    "new_asset": "Nyt aktiv",
+    "filter": {
+      "all": "Alle",
+      "pipeline": "Pipeline",
+      "active": "Aktive",
+      "end_of_life": "Slut på levetid",
+      "exception": "Undtagelser"
+    },
+    "search_placeholder": "Filtrér rækker…",
+    "table": {
+      "name": "Aktiv",
+      "tag": "Tag",
+      "lifecycle": "Status",
+      "assigned_to": "Tildelt til",
+      "location": "Lokation",
+      "ownership": "Ejerskab"
+    },
+    "unassigned": "Ikke tildelt",
+    "empty": "Ingen aktiver matcher de aktive filtre."
+  },
+  "dashboard": {
+    "title": "Oversigt",
+    "description": "Livscyklus-overblik over jeres IT-aktiver.",
+    "stat": {
+      "total": "Aktiver i alt",
+      "active": "Aktive",
+      "maintenance": "I vedligehold",
+      "leased": "Leaset",
+      "eol": "Udløbet"
+    },
+    "upcoming": {
+      "title": "Kommende fornyelser",
+      "subtitle": "Garantier, leasing, EOL og tilbagevendende tjek inden for 90 dage",
+      "empty": "Intet udløber inden for de næste 90 dage."
+    },
+    "lease": {
+      "title": "Månedlig leasing-omkostning",
+      "across_one": "På tværs af 1 leaset aktiv",
+      "across_other": "På tværs af {count} leasede aktiver"
+    },
+    "lifecycle_breakdown_title": "Status-fordeling"
+  },
+  "renewals": {
+    "title": "Fornyelser",
+    "description": "Alle garantier, leasing, EOL og tilbagevendende tjek der kræver opmærksomhed.",
+    "workflow_rules_button": "Workflow-regler",
+    "status": {
+      "open": "Åbne",
+      "snoozed": "Udsat",
+      "acknowledged": "Bekræftet",
+      "resolved": "Løst"
+    },
+    "filter": {
+      "kind_label": "Type",
+      "severity_label": "Alvorlighed",
+      "show_all_statuses": "Vis alle status"
+    },
+    "kind": {
+      "warranty": "Garanti",
+      "lease": "Leasing",
+      "depreciation_eol": "Slut på levetid",
+      "recurring_check": "Tilbagevendende tjek"
+    },
+    "severity": {
+      "info": "Info",
+      "warning": "Advarsel",
+      "urgent": "Akut",
+      "expired": "Udløbet"
+    },
+    "action": {
+      "renew": "Forny",
+      "snooze": "Udsæt",
+      "ack": "Bekræft",
+      "task": "Opgave"
+    },
+    "days": {
+      "overdue": "{n}d over tid",
+      "today": "Forfalder i dag",
+      "one_left": "1d tilbage",
+      "many_left": "{n}d tilbage"
+    },
+    "ends_on": "slutter {date}",
+    "empty": "Intet matcher de aktive filtre. Prøv at udvide dem."
+  },
+  "workflows": {
+    "title": "Workflows",
+    "description": "Regler der udløses når livscyklus-perioder nærmer sig udløb, plus de opfølgningsopgaver de skaber.",
+    "view_renewals": "Vis fornyelser",
+    "tab": {
+      "rules": "Regler ({count})",
+      "tasks": "Opfølgningsopgaver ({count})"
+    },
+    "rules_count_one": "1 regel",
+    "rules_count_other": "{count} regler",
+    "rule": {
+      "disabled": "Deaktiveret",
+      "fires_before": "Udløses {days} dage før slutdatoen",
+      "fires_on_day": "Udløses på dagen for slutdatoen",
+      "fires_after": "Udløses {days} dage efter slutdatoen"
+    },
+    "rule_name": {
+      "wf-warranty-90": "Garanti: 90-dages varsel",
+      "wf-warranty-30": "Garanti: 30-dages advarsel",
+      "wf-warranty-7": "Garanti: 7-dages akut",
+      "wf-lease-180": "Leasing: 6-måneders varsel",
+      "wf-lease-90": "Leasing: 90-dages beslutningsvindue",
+      "wf-lease-30": "Leasing: 30-dages akut",
+      "wf-eol-90": "EOL: planlæg udskiftning",
+      "wf-eol-0": "EOL: fuldt afskrevet",
+      "wf-check-30": "Tilbagevendende tjek: 30-dages påmindelse",
+      "wf-check-0": "Tilbagevendende tjek: forfalder",
+      "wf-check-overdue": "Tilbagevendende tjek: 14 dage over tid"
+    },
+    "action": {
+      "notify_in_app": "Notifikation i appen",
+      "notify_email": "E-mail",
+      "create_task": "Opret opgave",
+      "mark_urgent": "Markér som akut"
+    },
+    "rules_readonly_note": "Reglerne er pt. skrivebeskyttede. Inline-redigering kommer med settings-modulet når IAM/tenant er på plads.",
+    "tasks": {
+      "empty_prefix": "Ingen opfølgningsopgaver endnu. De vises her når du klikker",
+      "empty_link": "Opgave",
+      "empty_suffix": "på en fornyelse.",
+      "assigned_to": "Tildelt {name}",
+      "due": "forfalder {date}",
+      "view_asset": "vis aktiv →",
+      "complete_aria": "Markér som færdig",
+      "reopen_aria": "Markér som åben"
+    }
+  },
+  "dialog": {
+    "title": {
+      "renew": "Forny {kind}",
+      "snooze": "Udsæt påmindelse",
+      "acknowledge": "Bekræft påmindelse",
+      "task": "Opret opfølgningsopgave"
+    },
+    "ends_at_summary": "{asset} · {label} · slutter {date}",
+    "renew": {
+      "extend_by": "Forlæng med",
+      "months": "{n} måneder",
+      "new_end_date": "Ny slutdato:"
+    },
+    "snooze": {
+      "hide_for": "Skjul fra listen i",
+      "preset_7": "7 dage",
+      "preset_30": "30 dage",
+      "preset_90": "90 dage",
+      "reappears_on": "Vises igen den"
+    },
+    "task": {
+      "title_label": "Titel",
+      "placeholder": "Følg op på {label}",
+      "assign_to": "Tildel til",
+      "due_in": "Forfalder om",
+      "due_3": "3 dage",
+      "due_7": "7 dage",
+      "due_14": "14 dage",
+      "due_30": "30 dage",
+      "default_title": "Følg op på {label} for {asset}"
+    },
+    "notes_label": "Noter (valgfrit)",
+    "notes_placeholder": "Hvorfor udførte du denne handling?",
+    "renew_completion_note": "Fornyet i {n} måneder"
+  },
+  "placeholder": {
+    "construction": "Modulet er under opbygning.",
+    "back_link": "Til oversigt",
+    "licenses": "Software-licenser og tildelinger.",
+    "maintenance": "Planlagte og aktive vedligeholdelses-tickets på tværs af aktiver.",
+    "reports": "Aktiv-rapporter, eksport og audit-log.",
+    "settings": "Modul-præferencer. Tenant- og IAM-indstillinger ligger på platformen."
+  },
+  "not_found": {
+    "title": "Siden blev ikke fundet",
+    "description": "Vi kunne ikke finde den side du leder efter.",
+    "back_link": "Tilbage til oversigt"
+  },
+  "recurring_check_kind": {
+    "inventory_audit": "Inventartjek",
+    "preventive_maintenance": "Forebyggende vedligehold",
+    "license_renewal": "Licensfornyelse",
+    "compliance_review": "Compliance-gennemgang",
+    "other": "Andet"
+  }
+}

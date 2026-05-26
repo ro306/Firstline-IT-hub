@@ -10,25 +10,27 @@ import {
   ListChecks,
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 
 type NavItem = {
   to: string
-  label: string
+  labelKey: string
   icon: typeof LayoutDashboard
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/assets', label: 'Assets', icon: Boxes },
-  { to: '/renewals', label: 'Renewals', icon: BellRing },
-  { to: '/workflows', label: 'Workflows', icon: ListChecks },
-  { to: '/licenses', label: 'Licenses', icon: KeyRound },
-  { to: '/maintenance', label: 'Maintenance', icon: Wrench },
-  { to: '/reports', label: 'Reports', icon: FileBarChart },
-  { to: '/settings', label: 'Settings', icon: Settings },
+  { to: '/', labelKey: 'nav.dashboard', icon: LayoutDashboard },
+  { to: '/assets', labelKey: 'nav.assets', icon: Boxes },
+  { to: '/renewals', labelKey: 'nav.renewals', icon: BellRing },
+  { to: '/workflows', labelKey: 'nav.workflows', icon: ListChecks },
+  { to: '/licenses', labelKey: 'nav.licenses', icon: KeyRound },
+  { to: '/maintenance', labelKey: 'nav.maintenance', icon: Wrench },
+  { to: '/reports', labelKey: 'nav.reports', icon: FileBarChart },
+  { to: '/settings', labelKey: 'nav.settings', icon: Settings },
 ]
 
 export function Sidebar() {
+  const { t } = useTranslation()
   return (
     <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-slate-200 md:bg-white">
       <div className="flex h-16 items-center gap-2 border-b border-slate-200 px-6">
@@ -37,13 +39,13 @@ export function Sidebar() {
         </div>
         <div className="flex flex-col leading-tight">
           <span className="text-sm font-semibold text-slate-900">
-            Firstline IT
+            {t('nav.brand_title')}
           </span>
-          <span className="text-xs text-slate-500">Asset Management</span>
+          <span className="text-xs text-slate-500">{t('nav.brand_subtitle')}</span>
         </div>
       </div>
       <nav className="flex-1 space-y-1 px-3 py-4">
-        {NAV_ITEMS.map(({ to, label, icon: Icon }) => (
+        {NAV_ITEMS.map(({ to, labelKey, icon: Icon }) => (
           <NavLink
             key={to}
             to={to}
@@ -58,12 +60,12 @@ export function Sidebar() {
             }
           >
             <Icon className="h-4 w-4" />
-            <span>{label}</span>
+            <span>{t(labelKey)}</span>
           </NavLink>
         ))}
       </nav>
       <div className="border-t border-slate-200 px-6 py-4 text-xs text-slate-400">
-        v0.1.0 · dev build
+        {t('nav.footer_version')}
       </div>
     </aside>
   )

@@ -1,8 +1,10 @@
 import { cn } from '@/lib/cn'
-import { SEVERITY_BADGE, SEVERITY_LABEL } from './expirations'
+import { SEVERITY_BADGE, severityKey } from './expirations'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { Severity } from './types'
 
 export function SeverityBadge({ severity }: { severity: Severity }) {
+  const { t } = useTranslation()
   return (
     <span
       className={cn(
@@ -10,7 +12,7 @@ export function SeverityBadge({ severity }: { severity: Severity }) {
         SEVERITY_BADGE[severity],
       )}
     >
-      {SEVERITY_LABEL[severity]}
+      {t(severityKey(severity))}
     </span>
   )
 }

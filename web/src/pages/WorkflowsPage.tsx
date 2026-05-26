@@ -9,10 +9,12 @@ import {
 } from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { SeverityBadge } from '@/features/lifecycle/SeverityBadge'
-import { KIND_LABEL } from '@/features/lifecycle/expirations'
+import { kindKey } from '@/features/lifecycle/expirations'
 import { DEFAULT_WORKFLOW_RULES } from '@/features/lifecycle/mockRules'
 import { useAlertStore } from '@/features/lifecycle/useAlertStore'
 import { formatDate } from '@/features/assets/finance'
+import { useTranslation } from '@/lib/i18n/useTranslation'
+import type { TranslateFn } from '@/lib/i18n/i18nContext'
 import type {
   WorkflowAction,
   WorkflowActionType,
@@ -22,13 +24,6 @@ import { cn } from '@/lib/cn'
 
 type Tab = 'rules' | 'tasks'
 
-const ACTION_LABELS: Record<WorkflowActionType, string> = {
-  notify_in_app: 'In-app notification',
-  notify_email: 'Email',
-  create_task: 'Create task',
-  mark_urgent: 'Mark urgent',
-}
-
 const ACTION_ICONS: Record<WorkflowActionType, typeof Bell> = {
   notify_in_app: Bell,
   notify_email: Mail,
@@ -36,18 +31,19 @@ const ACTION_ICONS: Record<WorkflowActionType, typeof Bell> = {
   mark_urgent: AlertTriangle,
 }
 
-function thresholdLabel(days: number): string {
-  if (days > 0) return `${days} days before`
-  if (days === 0) return 'On the day'
-  return `${Math.abs(days)} days after`
+function thresholdLabel(days: number, t: TranslateFn): string {
+  if (days > 0) return t('workflows.rule.fires_before', { days })
+  if (days === 0) return t('workflows.rule.fires_on_day')
+  return t('workflows.rule.fires_after', { days: Math.abs(days) })
 }
 
 function ActionPill({ action }: { action: WorkflowAction }) {
+  const { t } = useTranslation()
   const Icon = ACTION_ICONS[action.type]
   return (
     <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700">
       <Icon className="h-3 w-3" />
-      {ACTION_LABELS[action.type]}
+      {t(`workflows.action.${action.type}`)}
       {action.target && (
         <span className="text-slate-500">· {action.target}</span>
       )}
@@ -56,6 +52,7 @@ function ActionPill({ action }: { action: WorkflowAction }) {
 }
 
 export function WorkflowsPage() {
+  const { t } = useTranslation()
   const [tab, setTab] = useState<Tab>('rules')
   const store = useAlertStore()
 
@@ -72,27 +69,29 @@ export function WorkflowsPage() {
     byKind[key].sort((a, b) => b.thresholdDays - a.thresholdDays)
   }
 
+  const activeTasks = store.tasks.filter((t) => t.status !== 'done').length
+
   return (
     <div>
       <PageHeader
-        title="Workflows"
-        description="Rules that trigger when lifecycle periods approach expiration, plus the follow-up tasks they generate."
+        title={t('workflows.title')}
+        description={t('workflows.description')}
         actions={
           <Link
             to="/renewals"
             className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
           >
-            View renewals
+            {t('workflows.view_renewals')}
           </Link>
         }
       />
 
       <div className="mb-4 flex gap-1 border-b border-slate-200">
         <TabButton active={tab === 'rules'} onClick={() => setTab('rules')}>
-          Rules ({DEFAULT_WORKFLOW_RULES.length})
+          {t('workflows.tab.rules', { count: DEFAULT_WORKFLOW_RULES.length })}
         </TabButton>
         <TabButton active={tab === 'tasks'} onClick={() => setTab('tasks')}>
-          Follow-up tasks ({store.tasks.filter((t) => t.status !== 'done').length})
+          {t('workflows.tab.tasks', { count: activeTasks })}
         </TabButton>
       </div>
 
@@ -103,10 +102,12 @@ export function WorkflowsPage() {
               <section key={kind} className="rounded-lg border border-slate-200 bg-white">
                 <header className="border-b border-slate-200 px-5 py-3">
                   <h2 className="text-sm font-semibold text-slate-900">
-                    {KIND_LABEL[kind]}
+                    {t(kindKey(kind))}
                   </h2>
                   <p className="text-xs text-slate-500">
-                    {rules.length} rule{rules.length === 1 ? '' : 's'}
+                    {rules.length === 1
+                      ? t('workflows.rules_count_one')
+                      : t('workflows.rules_count_other', { count: rules.length })}
                   </p>
                 </header>
                 <ul className="divide-y divide-slate-100">
@@ -118,18 +119,17 @@ export function WorkflowsPage() {
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="text-sm font-medium text-slate-900">
-                            {rule.name}
+                            {t(`workflows.rule_name.${rule.id}`)}
                           </span>
                           <SeverityBadge severity={rule.severity} />
                           {!rule.enabled && (
                             <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-500">
-                              Disabled
+                              {t('workflows.rule.disabled')}
                             </span>
                           )}
                         </div>
                         <p className="mt-0.5 text-xs text-slate-500">
-                          Fires {thresholdLabel(rule.thresholdDays)} the end
-                          date
+                          {thresholdLabel(rule.thresholdDays, t)}
                         </p>
                       </div>
                       <div className="flex flex-wrap gap-1">
@@ -144,8 +144,7 @@ export function WorkflowsPage() {
             ))}
 
           <p className="text-xs text-slate-500 italic">
-            Rules are currently read-only. Inline editing arrives with the
-            settings module once IAM/tenant context is in place.
+            {t('workflows.rules_readonly_note')}
           </p>
         </div>
       )}
@@ -154,11 +153,11 @@ export function WorkflowsPage() {
         <div className="rounded-lg border border-slate-200 bg-white">
           {store.tasks.length === 0 ? (
             <div className="p-10 text-center text-sm text-slate-500">
-              No follow-up tasks yet. They appear here when you click{' '}
+              {t('workflows.tasks.empty_prefix')}{' '}
               <Link to="/renewals" className="text-brand-700 underline">
-                Task
+                {t('workflows.tasks.empty_link')}
               </Link>{' '}
-              on a renewal.
+              {t('workflows.tasks.empty_suffix')}
             </div>
           ) : (
             <ul className="divide-y divide-slate-100">
@@ -179,7 +178,9 @@ export function WorkflowsPage() {
                           : 'border-slate-300 hover:border-brand-500',
                       )}
                       aria-label={
-                        task.status === 'done' ? 'Mark as open' : 'Mark as done'
+                        task.status === 'done'
+                          ? t('workflows.tasks.reopen_aria')
+                          : t('workflows.tasks.complete_aria')
                       }
                     >
                       {task.status === 'done' && (
@@ -198,12 +199,18 @@ export function WorkflowsPage() {
                         {task.title}
                       </p>
                       <p className="text-xs text-slate-500">
-                        Assigned to {task.assigneeName} · due {formatDate(task.dueAt)}{' '}
+                        {t('workflows.tasks.assigned_to', {
+                          name: task.assigneeName,
+                        })}{' '}
+                        ·{' '}
+                        {t('workflows.tasks.due', {
+                          date: formatDate(task.dueAt),
+                        })}{' '}
                         <Link
                           to={`/assets/${task.assetId}`}
                           className="ml-1 text-brand-700 hover:underline"
                         >
-                          view asset →
+                          {t('workflows.tasks.view_asset')}
                         </Link>
                       </p>
                       {task.description && (

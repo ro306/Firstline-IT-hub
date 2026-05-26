@@ -1,7 +1,12 @@
+import { getCurrentLocale, LOCALE_TAG } from '@/lib/i18n/i18nContext'
 import type { Asset, Money } from './types'
 
+function currentTag(): string {
+  return LOCALE_TAG[getCurrentLocale()]
+}
+
 export function formatMoney(money: Money): string {
-  return new Intl.NumberFormat('da-DK', {
+  return new Intl.NumberFormat(currentTag(), {
     style: 'currency',
     currency: money.currency,
     maximumFractionDigits: 0,
@@ -10,7 +15,7 @@ export function formatMoney(money: Money): string {
 
 export function formatDate(iso: string | undefined | null): string {
   if (!iso) return '—'
-  return new Intl.DateTimeFormat('da-DK', {
+  return new Intl.DateTimeFormat(currentTag(), {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
@@ -18,7 +23,7 @@ export function formatDate(iso: string | undefined | null): string {
 }
 
 export function formatDateTime(iso: string): string {
-  return new Intl.DateTimeFormat('da-DK', {
+  return new Intl.DateTimeFormat(currentTag(), {
     year: 'numeric',
     month: 'short',
     day: 'numeric',

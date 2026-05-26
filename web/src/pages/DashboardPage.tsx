@@ -14,10 +14,11 @@ import { formatMoney } from '@/features/assets/finance'
 import { StatusBadge } from '@/features/assets/StatusBadge'
 import {
   computeExpirations,
-  KIND_LABEL,
+  kindKey,
 } from '@/features/lifecycle/expirations'
 import { SeverityBadge } from '@/features/lifecycle/SeverityBadge'
 import { DEFAULT_WORKFLOW_RULES } from '@/features/lifecycle/mockRules'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 
 const ACTIVE = new Set([
   'in_use',
@@ -62,6 +63,7 @@ function StatCard({
 }
 
 export function DashboardPage() {
+  const { t } = useTranslation()
   const total = MOCK_ASSETS.length
   const active = MOCK_ASSETS.filter((a) =>
     ACTIVE.has(a.lifecycleState),
@@ -76,8 +78,6 @@ export function DashboardPage() {
     ['retired', 'disposed', 'returned_to_vendor'].includes(a.lifecycleState),
   ).length
 
-  // Upcoming periods within 90 days across all kinds (warranty, lease,
-  // depreciation EOL, recurring checks) plus anything already overdue.
   const upcomingPeriods = computeExpirations(
     MOCK_ASSETS,
     DEFAULT_WORKFLOW_RULES,
@@ -85,13 +85,11 @@ export function DashboardPage() {
     .filter((p) => p.daysUntil <= 90)
     .sort((a, b) => a.daysUntil - b.daysUntil)
 
-  // Total monthly lease cost.
   const totalMonthlyLease = MOCK_ASSETS.reduce(
     (sum, a) => sum + (a.lease?.monthlyCost.amount ?? 0),
     0,
   )
 
-  // Lifecycle state breakdown.
   const stateBreakdown = MOCK_ASSETS.reduce<Record<string, number>>(
     (acc, a) => {
       acc[a.lifecycleState] = (acc[a.lifecycleState] ?? 0) + 1
@@ -100,51 +98,73 @@ export function DashboardPage() {
     {},
   )
 
+  function daysLabel(days: number): string {
+    if (days < 0) return t('renewals.days.overdue', { n: Math.abs(days) })
+    if (days === 0) return t('renewals.days.today')
+    if (days === 1) return t('renewals.days.one_left')
+    return t('renewals.days.many_left', { n: days })
+  }
+
   return (
     <div>
       <PageHeader
-        title="Dashboard"
-        description="Lifecycle overview of your IT asset inventory."
+        title={t('dashboard.title')}
+        description={t('dashboard.description')}
       />
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        <StatCard label="Total assets" value={total} icon={Boxes} tone="brand" />
         <StatCard
-          label="Active"
+          label={t('dashboard.stat.total')}
+          value={total}
+          icon={Boxes}
+          tone="brand"
+        />
+        <StatCard
+          label={t('dashboard.stat.active')}
           value={active}
           icon={CheckCircle2}
           tone="emerald"
         />
         <StatCard
-          label="In maintenance"
+          label={t('dashboard.stat.maintenance')}
           value={maintenance}
           icon={AlertTriangle}
           tone="amber"
         />
-        <StatCard label="Leased" value={leased} icon={Package} tone="slate" />
-        <StatCard label="End of life" value={eol} icon={Trash2} tone="rose" />
+        <StatCard
+          label={t('dashboard.stat.leased')}
+          value={leased}
+          icon={Package}
+          tone="slate"
+        />
+        <StatCard
+          label={t('dashboard.stat.eol')}
+          value={eol}
+          icon={Trash2}
+          tone="rose"
+        />
       </div>
 
       <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
         <div className="rounded-lg border border-slate-200 bg-white p-6 lg:col-span-2">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-slate-900">
-              Upcoming renewals
+              {t('dashboard.upcoming.title')}
             </h3>
             <Link
               to="/renewals"
               className="inline-flex items-center gap-1 text-xs font-medium text-brand-700 hover:underline"
             >
-              View all
+              {t('common.view_all')}
               <ArrowUpRight className="h-3 w-3" />
             </Link>
           </div>
           <p className="text-xs text-slate-500">
-            Warranties, leases, EOL and recurring checks within 90 days
+            {t('dashboard.upcoming.subtitle')}
           </p>
           {upcomingPeriods.length === 0 ? (
             <p className="mt-4 text-sm text-slate-500">
-              Nothing expiring in the next 90 days.
+              {t('dashboard.upcoming.empty')}
             </p>
           ) : (
             <ul className="mt-4 divide-y divide-slate-100">
@@ -161,14 +181,12 @@ export function DashboardPage() {
                       {p.assetName}
                     </Link>
                     <p className="text-xs text-slate-500">
-                      {KIND_LABEL[p.kind]} · {p.label}
+                      {t(kindKey(p.kind))} · {p.label}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-xs text-slate-500">
-                      {p.daysUntil < 0
-                        ? `${Math.abs(p.daysUntil)}d overdue`
-                        : `${p.daysUntil}d left`}
+                      {daysLabel(p.daysUntil)}
                     </span>
                     <SeverityBadge severity={p.severity} />
                   </div>
@@ -181,19 +199,21 @@ export function DashboardPage() {
         <div className="space-y-6">
           <div className="rounded-lg border border-slate-200 bg-white p-6">
             <h3 className="text-sm font-semibold text-slate-900">
-              Monthly lease cost
+              {t('dashboard.lease.title')}
             </h3>
             <p className="mt-2 text-2xl font-semibold text-slate-900">
               {formatMoney({ amount: totalMonthlyLease, currency: 'DKK' })}
             </p>
             <p className="mt-1 text-xs text-slate-500">
-              Across {leased} leased asset{leased === 1 ? '' : 's'}
+              {leased === 1
+                ? t('dashboard.lease.across_one')
+                : t('dashboard.lease.across_other', { count: leased })}
             </p>
           </div>
 
           <div className="rounded-lg border border-slate-200 bg-white p-6">
             <h3 className="text-sm font-semibold text-slate-900">
-              Lifecycle breakdown
+              {t('dashboard.lifecycle_breakdown_title')}
             </h3>
             <ul className="mt-3 space-y-1.5">
               {Object.entries(stateBreakdown)

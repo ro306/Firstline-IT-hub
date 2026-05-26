@@ -1,44 +1,41 @@
 import { ShieldCheck, ShieldAlert, ShieldOff } from 'lucide-react'
 import { daysUntil, formatDate } from './finance'
-import type { AssetWarranty, WarrantyKind } from './types'
+import { useTranslation } from '@/lib/i18n/useTranslation'
+import type { TranslateFn } from '@/lib/i18n/i18nContext'
+import type { AssetWarranty } from './types'
 
-const KIND_LABEL: Record<WarrantyKind, string> = {
-  manufacturer: 'Manufacturer warranty',
-  extended: 'Extended warranty',
-  service_contract: 'Service contract',
-  accidental_damage: 'Accidental damage cover',
-}
-
-function statusFor(w: AssetWarranty) {
+function statusFor(w: AssetWarranty, t: TranslateFn) {
   const days = daysUntil(w.endsAt)
   if (days < 0)
     return {
-      label: 'Expired',
+      label: t('asset.warranties.status.expired'),
       tone: 'text-rose-700 bg-rose-50 ring-rose-600/20',
       Icon: ShieldOff,
     }
   if (days <= 60)
     return {
-      label: `Ends in ${days}d`,
+      label: t('asset.warranties.status.ends_in', { n: days }),
       tone: 'text-amber-700 bg-amber-50 ring-amber-600/20',
       Icon: ShieldAlert,
     }
   return {
-    label: 'Active',
+    label: t('asset.warranties.status.active'),
     tone: 'text-emerald-700 bg-emerald-50 ring-emerald-600/20',
     Icon: ShieldCheck,
   }
 }
 
 export function WarrantyList({ warranties }: { warranties: AssetWarranty[] }) {
+  const { t } = useTranslation()
+
   if (warranties.length === 0) {
-    return <p className="text-sm text-slate-500">No warranties on file.</p>
+    return <p className="text-sm text-slate-500">{t('asset.warranties.none')}</p>
   }
 
   return (
     <ul className="space-y-3">
       {warranties.map((w) => {
-        const status = statusFor(w)
+        const status = statusFor(w, t)
         const { Icon } = status
         return (
           <li
@@ -48,7 +45,7 @@ export function WarrantyList({ warranties }: { warranties: AssetWarranty[] }) {
             <div className="flex items-start justify-between gap-3">
               <div>
                 <p className="text-sm font-medium text-slate-900">
-                  {KIND_LABEL[w.kind]}
+                  {t(`asset.warranties.kind.${w.kind}`)}
                 </p>
                 <p className="text-xs text-slate-500">
                   {w.provider}
@@ -66,11 +63,11 @@ export function WarrantyList({ warranties }: { warranties: AssetWarranty[] }) {
             </div>
             <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
               <div>
-                <p className="text-slate-500">Starts</p>
+                <p className="text-slate-500">{t('asset.warranties.starts')}</p>
                 <p className="text-slate-900">{formatDate(w.startsAt)}</p>
               </div>
               <div>
-                <p className="text-slate-500">Ends</p>
+                <p className="text-slate-500">{t('asset.warranties.ends')}</p>
                 <p className="text-slate-900">{formatDate(w.endsAt)}</p>
               </div>
             </div>

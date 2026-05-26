@@ -1,4 +1,5 @@
 import { formatDate } from './finance'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { AssetAssignment } from './types'
 
 export function AssignmentHistory({
@@ -6,10 +7,12 @@ export function AssignmentHistory({
 }: {
   assignments: AssetAssignment[]
 }) {
+  const { t } = useTranslation()
+
   if (assignments.length === 0) {
     return (
       <p className="text-sm text-slate-500">
-        Never assigned to anyone.
+        {t('asset.history.no_assignments')}
       </p>
     )
   }
@@ -23,11 +26,11 @@ export function AssignmentHistory({
       <table className="w-full text-left text-sm">
         <thead className="text-xs font-medium text-slate-500 uppercase">
           <tr>
-            <th className="pb-2">Assignee</th>
-            <th className="pb-2">Location</th>
-            <th className="pb-2">From</th>
-            <th className="pb-2">Until</th>
-            <th className="pb-2">Notes</th>
+            <th className="pb-2">{t('asset.assignment.assignee')}</th>
+            <th className="pb-2">{t('asset.assignment.location')}</th>
+            <th className="pb-2">{t('asset.assignment.from')}</th>
+            <th className="pb-2">{t('asset.assignment.until')}</th>
+            <th className="pb-2">{t('asset.assignment.notes')}</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
@@ -46,7 +49,7 @@ export function AssignmentHistory({
                   formatDate(a.returnedAt)
                 ) : (
                   <span className="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
-                    Current
+                    {t('asset.assignment.current')}
                   </span>
                 )}
               </td>

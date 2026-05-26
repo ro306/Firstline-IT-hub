@@ -4,10 +4,14 @@ import {
   PIPELINE_STAGES,
   LIFECYCLE_STATE_CONFIG,
   getCurrentStageIndex,
+  lifecycleStateKey,
+  pipelineStageKey,
 } from './lifecycle'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { AssetLifecycleState } from './types'
 
 export function LifecycleStepper({ state }: { state: AssetLifecycleState }) {
+  const { t } = useTranslation()
   const cfg = LIFECYCLE_STATE_CONFIG[state]
   const currentIdx = getCurrentStageIndex(state)
   const isOffFlow = cfg.stage === null
@@ -17,9 +21,11 @@ export function LifecycleStepper({ state }: { state: AssetLifecycleState }) {
       <div className="flex items-center gap-3 rounded-md border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
         <AlertOctagon className="h-5 w-5 flex-shrink-0" />
         <div>
-          <p className="font-medium">Exception state: {cfg.label}</p>
+          <p className="font-medium">
+            {t('lifecycle.exception_state')}: {t(lifecycleStateKey(state))}
+          </p>
           <p className="text-xs text-rose-700/80">
-            Asset is off the normal lifecycle flow.
+            {t('lifecycle.exception_description')}
           </p>
         </div>
       </div>
@@ -33,7 +39,9 @@ export function LifecycleStepper({ state }: { state: AssetLifecycleState }) {
         const isCurrent = idx === currentIdx
         const isLast = idx === PIPELINE_STAGES.length - 1
         const isInCurrentStageGroup = stage.states.includes(state)
-        const currentLabel = isInCurrentStageGroup ? cfg.label : stage.label
+        const currentLabel = isInCurrentStageGroup
+          ? t(lifecycleStateKey(state))
+          : t(pipelineStageKey(stage.key))
 
         return (
           <li

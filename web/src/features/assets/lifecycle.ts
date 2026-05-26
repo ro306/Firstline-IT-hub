@@ -1,7 +1,6 @@
 import type { AssetLifecycleState, AssetLifecycleEventKind } from './types'
 
 type StateConfig = {
-  label: string
   // Tailwind classes for the badge background/text/ring.
   badge: string
   // Stage in the canonical pipeline (used by the stepper). null = off-flow.
@@ -12,108 +11,100 @@ type StateConfig = {
 export const LIFECYCLE_STATE_CONFIG: Record<AssetLifecycleState, StateConfig> =
   {
     requested: {
-      label: 'Requested',
       badge: 'bg-violet-50 text-violet-700 ring-violet-600/20',
       stage: 0,
       terminal: false,
     },
     ordered: {
-      label: 'Ordered',
       badge: 'bg-indigo-50 text-indigo-700 ring-indigo-600/20',
       stage: 1,
       terminal: false,
     },
     in_stock: {
-      label: 'In stock',
       badge: 'bg-sky-50 text-sky-700 ring-sky-600/20',
       stage: 2,
       terminal: false,
     },
     assigned: {
-      label: 'Assigned',
       badge: 'bg-cyan-50 text-cyan-700 ring-cyan-600/20',
       stage: 3,
       terminal: false,
     },
     in_use: {
-      label: 'In use',
       badge: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
       stage: 4,
       terminal: false,
     },
     in_maintenance: {
-      label: 'Maintenance',
       badge: 'bg-amber-50 text-amber-700 ring-amber-600/20',
       stage: 4,
       terminal: false,
     },
     leased_in: {
-      label: 'Leased in',
       badge: 'bg-teal-50 text-teal-700 ring-teal-600/20',
       stage: 4,
       terminal: false,
     },
     leased_out: {
-      label: 'Leased out',
       badge: 'bg-fuchsia-50 text-fuchsia-700 ring-fuchsia-600/20',
       stage: 4,
       terminal: false,
     },
     retired: {
-      label: 'Retired',
       badge: 'bg-slate-100 text-slate-700 ring-slate-500/20',
       stage: 5,
       terminal: false,
     },
     disposed: {
-      label: 'Disposed',
       badge: 'bg-zinc-100 text-zinc-600 ring-zinc-500/20',
       stage: 6,
       terminal: true,
     },
     returned_to_vendor: {
-      label: 'Returned to vendor',
       badge: 'bg-stone-100 text-stone-700 ring-stone-500/20',
       stage: 6,
       terminal: true,
     },
     lost: {
-      label: 'Lost',
       badge: 'bg-rose-50 text-rose-700 ring-rose-600/20',
       stage: null,
       terminal: true,
     },
     stolen: {
-      label: 'Stolen',
       badge: 'bg-red-50 text-red-700 ring-red-600/20',
       stage: null,
       terminal: true,
     },
   }
 
+export function lifecycleStateKey(state: AssetLifecycleState): string {
+  return `lifecycle.state.${state}`
+}
+
 // Canonical pipeline shown in the stepper. Off-flow states (lost/stolen) are
 // rendered separately as exception badges.
 export const PIPELINE_STAGES: {
   key: string
-  label: string
   states: AssetLifecycleState[]
 }[] = [
-  { key: 'requested', label: 'Requested', states: ['requested'] },
-  { key: 'ordered', label: 'Ordered', states: ['ordered'] },
-  { key: 'in_stock', label: 'In stock', states: ['in_stock'] },
-  { key: 'assigned', label: 'Assigned', states: ['assigned'] },
+  { key: 'requested', states: ['requested'] },
+  { key: 'ordered', states: ['ordered'] },
+  { key: 'in_stock', states: ['in_stock'] },
+  { key: 'assigned', states: ['assigned'] },
   {
     key: 'in_use',
-    label: 'In use',
     states: ['in_use', 'in_maintenance', 'leased_in', 'leased_out'],
   },
-  { key: 'retired', label: 'Retired', states: ['retired'] },
+  { key: 'retired', states: ['retired'] },
   {
     key: 'disposed',
-    label: 'End of life',
     states: ['disposed', 'returned_to_vendor'],
   },
 ]
+
+export function pipelineStageKey(stageKey: string): string {
+  return `lifecycle.stage.${stageKey}`
+}
 
 export function getCurrentStageIndex(state: AssetLifecycleState): number {
   const cfg = LIFECYCLE_STATE_CONFIG[state]
@@ -142,18 +133,6 @@ export const ALLOWED_TRANSITIONS: Record<
   stolen: ['in_stock', 'disposed'],
 }
 
-export const EVENT_KIND_LABEL: Record<AssetLifecycleEventKind, string> = {
-  state_changed: 'State changed',
-  assigned: 'Assigned',
-  unassigned: 'Unassigned',
-  moved: 'Moved',
-  maintenance_started: 'Maintenance started',
-  maintenance_completed: 'Maintenance completed',
-  warranty_added: 'Warranty added',
-  warranty_expired: 'Warranty expired',
-  lease_started: 'Lease started',
-  lease_renewed: 'Lease renewed',
-  lease_ended: 'Lease ended',
-  disposed: 'Disposed',
-  note: 'Note',
+export function eventKindKey(kind: AssetLifecycleEventKind): string {
+  return `lifecycle.event_kind.${kind}`
 }

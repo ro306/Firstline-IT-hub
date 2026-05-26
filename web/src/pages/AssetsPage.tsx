@@ -4,16 +4,17 @@ import { Plus, Filter, Download } from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
 import { MOCK_ASSETS } from '@/features/assets/mockData'
+import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { AssetLifecycleState } from '@/features/assets/types'
 
-type Filter = 'all' | 'active' | 'pipeline' | 'end_of_life' | 'exception'
+type FilterKind = 'all' | 'active' | 'pipeline' | 'end_of_life' | 'exception'
 
-const FILTERS: { value: Filter; label: string }[] = [
-  { value: 'all', label: 'All' },
-  { value: 'pipeline', label: 'Pipeline' },
-  { value: 'active', label: 'Active' },
-  { value: 'end_of_life', label: 'End of life' },
-  { value: 'exception', label: 'Exception' },
+const FILTERS: FilterKind[] = [
+  'all',
+  'pipeline',
+  'active',
+  'end_of_life',
+  'exception',
 ]
 
 const ACTIVE_STATES: AssetLifecycleState[] = [
@@ -35,7 +36,7 @@ const EOL_STATES: AssetLifecycleState[] = [
 ]
 const EXCEPTION_STATES: AssetLifecycleState[] = ['lost', 'stolen']
 
-function matchesFilter(state: AssetLifecycleState, filter: Filter): boolean {
+function matchesFilter(state: AssetLifecycleState, filter: FilterKind): boolean {
   switch (filter) {
     case 'all':
       return true
@@ -51,7 +52,8 @@ function matchesFilter(state: AssetLifecycleState, filter: Filter): boolean {
 }
 
 export function AssetsPage() {
-  const [filter, setFilter] = useState<Filter>('all')
+  const { t } = useTranslation()
+  const [filter, setFilter] = useState<FilterKind>('all')
   const [query, setQuery] = useState('')
 
   const filtered = useMemo(() => {
@@ -69,11 +71,16 @@ export function AssetsPage() {
     })
   }, [filter, query])
 
+  const description =
+    MOCK_ASSETS.length === 1
+      ? t('assets_page.description_one')
+      : t('assets_page.description_other', { count: MOCK_ASSETS.length })
+
   return (
     <div>
       <PageHeader
-        title="Assets"
-        description={`${MOCK_ASSETS.length} assets tracked across the lifecycle.`}
+        title={t('assets_page.title')}
+        description={description}
         actions={
           <>
             <button
@@ -81,14 +88,14 @@ export function AssetsPage() {
               className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
               <Download className="h-4 w-4" />
-              Export
+              {t('assets_page.export')}
             </button>
             <button
               type="button"
               className="inline-flex items-center gap-2 rounded-md bg-brand-600 px-3 py-2 text-sm font-medium text-white shadow-sm hover:bg-brand-700"
             >
               <Plus className="h-4 w-4" />
-              New asset
+              {t('assets_page.new_asset')}
             </button>
           </>
         }
@@ -100,16 +107,16 @@ export function AssetsPage() {
             <Filter className="h-4 w-4 text-slate-400" />
             {FILTERS.map((f) => (
               <button
-                key={f.value}
+                key={f}
                 type="button"
-                onClick={() => setFilter(f.value)}
+                onClick={() => setFilter(f)}
                 className={
-                  filter === f.value
+                  filter === f
                     ? 'rounded-md bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700'
                     : 'rounded-md px-3 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100'
                 }
               >
-                {f.label}
+                {t(`assets_page.filter.${f}`)}
               </button>
             ))}
           </div>
@@ -117,7 +124,7 @@ export function AssetsPage() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Filter rows…"
+            placeholder={t('assets_page.search_placeholder')}
             className="w-64 max-w-full rounded-md border border-slate-200 px-3 py-1.5 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
           />
         </div>
@@ -126,12 +133,16 @@ export function AssetsPage() {
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50 text-xs font-medium text-slate-500 uppercase">
               <tr>
-                <th className="px-4 py-3">Asset</th>
-                <th className="px-4 py-3">Tag</th>
-                <th className="px-4 py-3">Lifecycle</th>
-                <th className="px-4 py-3">Assigned to</th>
-                <th className="px-4 py-3">Location</th>
-                <th className="px-4 py-3">Ownership</th>
+                <th className="px-4 py-3">{t('assets_page.table.name')}</th>
+                <th className="px-4 py-3">{t('assets_page.table.tag')}</th>
+                <th className="px-4 py-3">{t('assets_page.table.lifecycle')}</th>
+                <th className="px-4 py-3">
+                  {t('assets_page.table.assigned_to')}
+                </th>
+                <th className="px-4 py-3">{t('assets_page.table.location')}</th>
+                <th className="px-4 py-3">
+                  {t('assets_page.table.ownership')}
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -144,8 +155,8 @@ export function AssetsPage() {
                     >
                       {asset.name}
                     </Link>
-                    <div className="text-xs text-slate-500 capitalize">
-                      {asset.category}
+                    <div className="text-xs text-slate-500">
+                      {t(`asset.category.${asset.category}`)}
                     </div>
                   </td>
                   <td className="px-4 py-3 font-mono text-xs text-slate-600">
@@ -156,12 +167,18 @@ export function AssetsPage() {
                   </td>
                   <td className="px-4 py-3 text-slate-700">
                     {asset.currentAssignment?.assigneeName ?? (
-                      <span className="text-slate-400">Unassigned</span>
+                      <span className="text-slate-400">
+                        {t('assets_page.unassigned')}
+                      </span>
                     )}
                   </td>
                   <td className="px-4 py-3 text-slate-700">{asset.location}</td>
-                  <td className="px-4 py-3 text-xs text-slate-600 capitalize">
-                    {asset.ownership.replace('_', ' ')}
+                  <td className="px-4 py-3 text-xs text-slate-600">
+                    {asset.ownership === 'leased_in'
+                      ? t('asset.finance.lease_in')
+                      : asset.ownership === 'leased_out'
+                        ? t('asset.finance.lease_out')
+                        : t('asset.ownership.owned')}
                   </td>
                 </tr>
               ))}
@@ -171,7 +188,7 @@ export function AssetsPage() {
                     colSpan={6}
                     className="px-4 py-10 text-center text-sm text-slate-500"
                   >
-                    No assets match the current filters.
+                    {t('assets_page.empty')}
                   </td>
                 </tr>
               )}

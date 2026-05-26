@@ -22,8 +22,8 @@ export const router = createBrowserRouter([
         path: 'licenses',
         element: (
           <PlaceholderPage
-            title="Licenses"
-            description="Software license inventory and assignments."
+            titleKey="nav.licenses"
+            descriptionKey="placeholder.licenses"
           />
         ),
       },
@@ -31,8 +31,8 @@ export const router = createBrowserRouter([
         path: 'maintenance',
         element: (
           <PlaceholderPage
-            title="Maintenance"
-            description="Scheduled and active maintenance tickets across assets."
+            titleKey="nav.maintenance"
+            descriptionKey="placeholder.maintenance"
           />
         ),
       },
@@ -40,8 +40,8 @@ export const router = createBrowserRouter([
         path: 'reports',
         element: (
           <PlaceholderPage
-            title="Reports"
-            description="Asset reports, exports, and audit logs."
+            titleKey="nav.reports"
+            descriptionKey="placeholder.reports"
           />
         ),
       },
@@ -49,8 +49,8 @@ export const router = createBrowserRouter([
         path: 'settings',
         element: (
           <PlaceholderPage
-            title="Settings"
-            description="Module preferences. Tenant and IAM settings live in the platform."
+            titleKey="nav.settings"
+            descriptionKey="placeholder.settings"
           />
         ),
       },
