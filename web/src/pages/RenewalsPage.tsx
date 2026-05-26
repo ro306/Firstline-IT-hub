@@ -27,7 +27,7 @@ import {
 import { useAlertStore } from '@/features/lifecycle/useAlertStore'
 import { effectiveStatus } from '@/features/lifecycle/alertStoreContext'
 import { useAssetStore } from '@/features/assets/useAssetStore'
-import { DEFAULT_WORKFLOW_RULES } from '@/features/lifecycle/mockRules'
+import { useRulesStore } from '@/features/lifecycle/useRulesStore'
 import { formatDate } from '@/features/assets/finance'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { TranslateFn } from '@/lib/i18n/i18nContext'
@@ -55,6 +55,7 @@ export function RenewalsPage() {
   const { t } = useTranslation()
   const store = useAlertStore()
   const { assets } = useAssetStore()
+  const { rules } = useRulesStore()
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('open')
   const [kindFilter, setKindFilter] = useState<KindFilter>('all')
   const [severityFilter, setSeverityFilter] = useState<SeverityFilter>('all')
@@ -64,8 +65,8 @@ export function RenewalsPage() {
   const [dialogAction, setDialogAction] = useState<ActionKind | null>(null)
 
   const periods = useMemo(
-    () => computeExpirations(assets, DEFAULT_WORKFLOW_RULES),
-    [assets],
+    () => computeExpirations(assets, rules),
+    [assets, rules],
   )
 
   const actionable = useMemo(
@@ -115,7 +116,7 @@ export function RenewalsPage() {
         description={t('renewals.description')}
         actions={
           <Link
-            to="/workflows"
+            to="/settings"
             className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
           >
             <ListChecks className="h-4 w-4" />

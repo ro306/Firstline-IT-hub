@@ -7,7 +7,7 @@ import {
   FileBarChart,
   Settings,
   BellRing,
-  ListChecks,
+  CheckSquare,
 } from 'lucide-react'
 import { cn } from '@/lib/cn'
 import { useTranslation } from '@/lib/i18n/useTranslation'
@@ -22,7 +22,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/', labelKey: 'nav.dashboard', icon: LayoutDashboard },
   { to: '/assets', labelKey: 'nav.assets', icon: Boxes },
   { to: '/renewals', labelKey: 'nav.renewals', icon: BellRing },
-  { to: '/workflows', labelKey: 'nav.workflows', icon: ListChecks },
+  { to: '/tasks', labelKey: 'nav.tasks', icon: CheckSquare },
   { to: '/licenses', labelKey: 'nav.licenses', icon: KeyRound },
   { to: '/maintenance', labelKey: 'nav.maintenance', icon: Wrench },
   { to: '/reports', labelKey: 'nav.reports', icon: FileBarChart },

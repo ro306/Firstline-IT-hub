@@ -28,12 +28,109 @@
     "dashboard": "Dashboard",
     "assets": "Assets",
     "renewals": "Renewals",
-    "workflows": "Workflows",
+    "tasks": "Tasks",
     "licenses": "Licenses",
     "maintenance": "Maintenance",
     "reports": "Reports",
     "settings": "Settings",
     "footer_version": "v0.1.0 · dev build"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "App configuration, automation rules, and data.",
+    "tab": {
+      "general": "General",
+      "workflows": "Workflow rules",
+      "data": "Data"
+    },
+    "general": {
+      "language_title": "Language",
+      "language_description": "Select the UI language. Dates and currency adapt automatically.",
+      "branding_title": "Branding",
+      "branding_description": "Name shown in the sidebar and browser tab. Visual branding only — not a tenant switch.",
+      "brand_name_label": "Brand name",
+      "brand_subtitle_label": "Subtitle"
+    },
+    "workflows": {
+      "title": "Workflow rules",
+      "description": "Rules decide when renewals fire as notifications or auto-created tasks.",
+      "add_rule": "Add rule",
+      "reset_to_defaults": "Reset to defaults",
+      "reset_warning": "Reset all workflow rules to defaults? Your customizations will be lost.",
+      "no_rules_in_group": "No rules for this kind yet.",
+      "rule_enabled": "Enabled",
+      "rule_disabled": "Disabled"
+    },
+    "data": {
+      "assets_title": "Asset data",
+      "assets_description": "Reset assets to the seed demo data. Removes any assets you've created or edited.",
+      "assets_reset": "Reset assets to demo",
+      "alerts_title": "Alert state",
+      "alerts_description": "Clear all snoozes and acknowledgements. The underlying assets are not affected.",
+      "alerts_reset": "Clear alert state",
+      "tasks_title": "Follow-up tasks",
+      "tasks_description": "Delete all follow-up tasks. The underlying assets are not affected.",
+      "tasks_reset": "Delete all tasks",
+      "rules_title": "Workflow rules",
+      "rules_description": "Reset workflow rules to the default set.",
+      "rules_reset": "Reset rules",
+      "danger_zone": "Danger zone"
+    }
+  },
+  "rule_editor": {
+    "create_title": "Add workflow rule",
+    "edit_title": "Edit workflow rule",
+    "save": "Save rule",
+    "create_submit": "Create rule",
+    "section_basics": "Basics",
+    "section_trigger": "Trigger",
+    "section_actions": "Actions",
+    "field": {
+      "name": "Rule name",
+      "name_placeholder": "e.g. Warranty: 60-day notice",
+      "applies_to": "Applies to",
+      "threshold_days": "Days before/after end date",
+      "threshold_help": "Positive = days before expiry. 0 = on the day. Negative = days after expiry (overdue).",
+      "severity": "Severity",
+      "enabled": "Enabled"
+    },
+    "action_kind": {
+      "notify_in_app": "In-app notification",
+      "notify_email": "Send email",
+      "create_task": "Create task",
+      "mark_urgent": "Mark urgent"
+    },
+    "action_target": {
+      "email": "Recipient",
+      "email_placeholder": "e.g. procurement@juvaro.dk",
+      "role": "Assign to",
+      "role_placeholder": "e.g. IT Asset Manager",
+      "task_title": "Task title",
+      "task_title_placeholder": "e.g. Renew warranty on {assetName}"
+    },
+    "add_action": "Add action",
+    "remove_action": "Remove action",
+    "validation": {
+      "required": "Required",
+      "no_actions": "Rule must have at least one action"
+    }
+  },
+  "rule_delete": {
+    "title": "Delete workflow rule",
+    "warning": "You're about to delete '{name}'. This cannot be undone.",
+    "confirm": "Delete rule"
+  },
+  "tasks_page": {
+    "title": "Follow-up tasks",
+    "description": "Tasks created from renewal workflows and manual actions.",
+    "empty_prefix": "No tasks yet. They appear here when a rule creates one, or when you click",
+    "empty_link": "Task",
+    "empty_suffix": "on a renewal.",
+    "assigned_to": "Assigned to {name}",
+    "due": "due {date}",
+    "view_asset": "view asset →",
+    "complete_aria": "Mark as done",
+    "reopen_aria": "Mark as open"
   },
   "header": {
     "search_placeholder": "Search assets, serial numbers, owners…",

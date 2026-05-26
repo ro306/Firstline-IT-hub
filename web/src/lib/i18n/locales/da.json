@@ -28,12 +28,109 @@
     "dashboard": "Oversigt",
     "assets": "Aktiver",
     "renewals": "Fornyelser",
-    "workflows": "Workflows",
+    "tasks": "Opgaver",
     "licenses": "Licenser",
     "maintenance": "Vedligehold",
     "reports": "Rapporter",
     "settings": "Indstillinger",
     "footer_version": "v0.1.0 · dev build"
+  },
+  "settings": {
+    "title": "Indstillinger",
+    "description": "Konfiguration af appen, automatik-regler og data.",
+    "tab": {
+      "general": "Generelt",
+      "workflows": "Workflow-regler",
+      "data": "Data"
+    },
+    "general": {
+      "language_title": "Sprog",
+      "language_description": "Vælg sprog for hele brugerfladen. Datoer og valuta tilpasses automatisk.",
+      "branding_title": "Brand",
+      "branding_description": "Navn vist i sidebar og browser-faneblad. Tjener kun som visuelt brand pt. — ikke et tenant-skift.",
+      "brand_name_label": "Brand-navn",
+      "brand_subtitle_label": "Undertekst"
+    },
+    "workflows": {
+      "title": "Workflow-regler",
+      "description": "Reglerne bestemmer hvornår fornyelser udløses som notifikationer eller automatiske opgaver.",
+      "add_rule": "Tilføj regel",
+      "reset_to_defaults": "Nulstil til standard",
+      "reset_warning": "Nulstil alle workflow-regler til standard? Dine ændringer går tabt.",
+      "no_rules_in_group": "Ingen regler for denne type endnu.",
+      "rule_enabled": "Aktiveret",
+      "rule_disabled": "Deaktiveret"
+    },
+    "data": {
+      "assets_title": "Aktiv-data",
+      "assets_description": "Nulstil aktiverne til demo-data. Sletter alle dine oprettede aktiver og redigeringer.",
+      "assets_reset": "Nulstil aktiver til demo",
+      "alerts_title": "Påmindelses-status",
+      "alerts_description": "Ryd alle udsatte og bekræftede påmindelser. Aktiverne selv er ikke påvirket.",
+      "alerts_reset": "Ryd påmindelses-status",
+      "tasks_title": "Opfølgningsopgaver",
+      "tasks_description": "Slet alle opfølgningsopgaver. Aktiverne selv er ikke påvirket.",
+      "tasks_reset": "Slet alle opgaver",
+      "rules_title": "Workflow-regler",
+      "rules_description": "Nulstil workflow-reglerne til standard-sættet.",
+      "rules_reset": "Nulstil regler",
+      "danger_zone": "Farezone"
+    }
+  },
+  "rule_editor": {
+    "create_title": "Tilføj workflow-regel",
+    "edit_title": "Rediger workflow-regel",
+    "save": "Gem regel",
+    "create_submit": "Opret regel",
+    "section_basics": "Grundlæggende",
+    "section_trigger": "Udløser",
+    "section_actions": "Handlinger",
+    "field": {
+      "name": "Regelnavn",
+      "name_placeholder": "fx Garanti: 60-dages varsel",
+      "applies_to": "Gælder for",
+      "threshold_days": "Dage før/efter slutdato",
+      "threshold_help": "Positivt tal = dage før udløb. 0 = på dagen. Negativt tal = dage efter udløb (overskredet).",
+      "severity": "Alvorlighed",
+      "enabled": "Aktiveret"
+    },
+    "action_kind": {
+      "notify_in_app": "Notifikation i appen",
+      "notify_email": "Send e-mail",
+      "create_task": "Opret opgave",
+      "mark_urgent": "Markér som akut"
+    },
+    "action_target": {
+      "email": "Modtager",
+      "email_placeholder": "fx procurement@juvaro.dk",
+      "role": "Tildel til",
+      "role_placeholder": "fx IT Asset Manager",
+      "task_title": "Opgave-titel",
+      "task_title_placeholder": "fx Forny garanti på {assetName}"
+    },
+    "add_action": "Tilføj handling",
+    "remove_action": "Fjern handling",
+    "validation": {
+      "required": "Påkrævet",
+      "no_actions": "Reglen skal have mindst én handling"
+    }
+  },
+  "rule_delete": {
+    "title": "Slet workflow-regel",
+    "warning": "Du er ved at slette '{name}'. Det kan ikke fortrydes.",
+    "confirm": "Slet regel"
+  },
+  "tasks_page": {
+    "title": "Opfølgningsopgaver",
+    "description": "Opgaver oprettet ud fra fornyelses-workflows og manuelle handlinger.",
+    "empty_prefix": "Ingen opgaver endnu. De vises her når en regel opretter en, eller når du klikker",
+    "empty_link": "Opgave",
+    "empty_suffix": "på en fornyelse.",
+    "assigned_to": "Tildelt {name}",
+    "due": "forfalder {date}",
+    "view_asset": "vis aktiv →",
+    "complete_aria": "Markér som færdig",
+    "reopen_aria": "Markér som åben"
   },
   "header": {
     "search_placeholder": "Søg aktiver, serienumre, ejere…",

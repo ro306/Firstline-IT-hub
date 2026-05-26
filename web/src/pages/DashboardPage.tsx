@@ -17,7 +17,7 @@ import {
   kindKey,
 } from '@/features/lifecycle/expirations'
 import { SeverityBadge } from '@/features/lifecycle/SeverityBadge'
-import { DEFAULT_WORKFLOW_RULES } from '@/features/lifecycle/mockRules'
+import { useRulesStore } from '@/features/lifecycle/useRulesStore'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 
 const ACTIVE = new Set([
@@ -65,6 +65,7 @@ function StatCard({
 export function DashboardPage() {
   const { t } = useTranslation()
   const { assets } = useAssetStore()
+  const { rules } = useRulesStore()
   const total = assets.length
   const active = assets.filter((a) =>
     ACTIVE.has(a.lifecycleState),
@@ -79,7 +80,7 @@ export function DashboardPage() {
     ['retired', 'disposed', 'returned_to_vendor'].includes(a.lifecycleState),
   ).length
 
-  const upcomingPeriods = computeExpirations(assets, DEFAULT_WORKFLOW_RULES)
+  const upcomingPeriods = computeExpirations(assets, rules)
     .filter((p) => p.daysUntil <= 90)
     .sort((a, b) => a.daysUntil - b.daysUntil)
 

@@ -6,7 +6,7 @@ import { useAlertStore } from '@/features/lifecycle/useAlertStore'
 import { effectiveStatus } from '@/features/lifecycle/alertStoreContext'
 import { computeExpirations } from '@/features/lifecycle/expirations'
 import { useAssetStore } from '@/features/assets/useAssetStore'
-import { DEFAULT_WORKFLOW_RULES } from '@/features/lifecycle/mockRules'
+import { useRulesStore } from '@/features/lifecycle/useRulesStore'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 
@@ -14,6 +14,7 @@ export function Header() {
   const { user } = useAuth()
   const store = useAlertStore()
   const { assets } = useAssetStore()
+  const { rules } = useRulesStore()
   const { t } = useTranslation()
   const initials = user?.name
     .split(' ')
@@ -23,12 +24,12 @@ export function Header() {
     .toUpperCase()
 
   const openCount = useMemo(() => {
-    const periods = computeExpirations(assets, DEFAULT_WORKFLOW_RULES)
+    const periods = computeExpirations(assets, rules)
     return periods.filter((p) => {
       if (p.matchedRules.length === 0 && p.daysUntil >= 0) return false
       return effectiveStatus(store.alerts[p.key]) === 'open'
     }).length
-  }, [assets, store.alerts])
+  }, [assets, rules, store.alerts])
 
   return (
     <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6">

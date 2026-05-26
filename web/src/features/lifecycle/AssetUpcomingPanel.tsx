@@ -3,19 +3,20 @@ import { Link } from 'react-router-dom'
 import { ArrowUpRight } from 'lucide-react'
 import { SeverityBadge } from './SeverityBadge'
 import { computeExpirations, kindKey } from './expirations'
-import { DEFAULT_WORKFLOW_RULES } from './mockRules'
+import { useRulesStore } from './useRulesStore'
 import { formatDate } from '@/features/assets/finance'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { Asset } from '@/features/assets/types'
 
 export function AssetUpcomingPanel({ asset }: { asset: Asset }) {
   const { t } = useTranslation()
+  const { rules } = useRulesStore()
   const periods = useMemo(
     () =>
-      computeExpirations([asset], DEFAULT_WORKFLOW_RULES)
+      computeExpirations([asset], rules)
         .filter((p) => p.daysUntil <= 180)
         .sort((a, b) => a.daysUntil - b.daysUntil),
-    [asset],
+    [asset, rules],
   )
 
   if (periods.length === 0) return null
