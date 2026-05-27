@@ -445,6 +445,27 @@
     "delete": "Slet",
     "more": "Flere handlinger"
   },
+  "import": {
+    "button": "Importér",
+    "title": "Importér aktiver fra Excel",
+    "step1_title": "1. Download skabelonen",
+    "step1_description": "Excel-fil med kolonner og to eksempel-rækker. Udfyld med dine egne aktiver.",
+    "download_template": "Download Excel-skabelon",
+    "step2_title": "2. Upload den udfyldte fil",
+    "step2_description": "Vælg .xlsx-filen. Vi viser et preview før noget importeres.",
+    "select_file": "Vælg fil…",
+    "change_file": "Vælg en anden fil",
+    "selected_file": "Valgt: {name}",
+    "preview_title": "Preview ({count} rækker)",
+    "preview_legend": "Rækker med fejl springes over. Eksisterende aktiver (matchet på Asset tag) opdateres.",
+    "row_new": "Ny",
+    "row_update": "Opdater",
+    "row_error": "Fejl",
+    "no_rows": "Filen indeholder ingen data-rækker.",
+    "import_count": "Importér {n} rækker",
+    "summary_success": "Importerede {created} nye og opdaterede {updated} eksisterende aktiver. {skipped} sprunget over på grund af fejl.",
+    "errors_label": "Fejl i denne række:"
+  },
   "assets_page": {
     "title": "Aktiver",
     "description_one": "1 aktiv sporet i livscyklussen.",

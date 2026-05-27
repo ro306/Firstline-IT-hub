@@ -445,6 +445,27 @@
     "delete": "Delete",
     "more": "More actions"
   },
+  "import": {
+    "button": "Import",
+    "title": "Import assets from Excel",
+    "step1_title": "1. Download the template",
+    "step1_description": "Excel file with columns and two example rows. Fill it with your own assets.",
+    "download_template": "Download Excel template",
+    "step2_title": "2. Upload the filled file",
+    "step2_description": "Pick the .xlsx file. We'll show a preview before anything is imported.",
+    "select_file": "Choose file…",
+    "change_file": "Pick a different file",
+    "selected_file": "Selected: {name}",
+    "preview_title": "Preview ({count} rows)",
+    "preview_legend": "Rows with errors are skipped. Existing assets (matched by Asset tag) are updated.",
+    "row_new": "New",
+    "row_update": "Update",
+    "row_error": "Error",
+    "no_rows": "The file contains no data rows.",
+    "import_count": "Import {n} rows",
+    "summary_success": "Imported {created} new and updated {updated} existing assets. {skipped} skipped due to errors.",
+    "errors_label": "Errors in this row:"
+  },
   "assets_page": {
     "title": "Assets",
     "description_one": "1 asset tracked across the lifecycle.",

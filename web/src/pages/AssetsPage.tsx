@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Plus, Filter, Download } from 'lucide-react'
+import { Plus, Filter, Download, Upload } from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
 import { AssetFormDialog } from '@/features/assets/AssetFormDialog'
+import { ImportDialog } from '@/features/assets/ImportDialog'
 import { useAssetStore } from '@/features/assets/useAssetStore'
 import { downloadAssetsCsv } from '@/features/assets/csvExport'
 import { useTranslation } from '@/lib/i18n/useTranslation'
@@ -59,6 +60,7 @@ export function AssetsPage() {
   const [filter, setFilter] = useState<FilterKind>('all')
   const [query, setQuery] = useState('')
   const [creating, setCreating] = useState(false)
+  const [importing, setImporting] = useState(false)
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -87,6 +89,14 @@ export function AssetsPage() {
         description={description}
         actions={
           <>
+            <button
+              type="button"
+              onClick={() => setImporting(true)}
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 shadow-sm transition-all hover:border-slate-700 hover:bg-slate-900/50"
+            >
+              <Upload className="h-4 w-4" />
+              {t('import.button')}
+            </button>
             <button
               type="button"
               onClick={() => downloadAssetsCsv(filtered)}
@@ -207,6 +217,7 @@ export function AssetsPage() {
       </div>
 
       {creating && <AssetFormDialog onClose={() => setCreating(false)} />}
+      {importing && <ImportDialog onClose={() => setImporting(false)} />}
     </div>
   )
 }
