@@ -123,7 +123,7 @@ export function PeriodActionDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -140,7 +140,7 @@ export function PeriodActionDialog({
       {action === 'renew' && (
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-medium text-slate-700">
+            <label className="text-xs font-medium text-slate-300">
               {t('dialog.renew.extend_by')}
             </label>
             <div className="mt-1 flex gap-2">
@@ -151,8 +151,8 @@ export function PeriodActionDialog({
                   onClick={() => setRenewExtensionMonths(m)}
                   className={
                     renewExtensionMonths === m
-                      ? 'rounded-md bg-brand-50 px-3 py-1.5 text-sm font-medium text-brand-700 ring-1 ring-brand-600/30'
-                      : 'rounded-md border border-slate-200 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50'
+                      ? 'rounded-md bg-brand-400/10 px-3 py-1.5 text-sm font-medium text-brand-300 ring-1 ring-brand-600/30'
+                      : 'rounded-md border border-slate-800 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-900/50'
                   }
                 >
                   {t('dialog.renew.months', { n: m })}
@@ -161,7 +161,7 @@ export function PeriodActionDialog({
             </div>
             <p className="mt-2 text-xs text-slate-500">
               {t('dialog.renew.new_end_date')}{' '}
-              <span className="font-medium text-slate-700">
+              <span className="font-medium text-slate-300">
                 {formatDate(addMonths(renewExtensionMonths, period.endsAt))}
               </span>
             </p>
@@ -172,7 +172,7 @@ export function PeriodActionDialog({
       {action === 'snooze' && (
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-medium text-slate-700">
+            <label className="text-xs font-medium text-slate-300">
               {t('dialog.snooze.hide_for')}
             </label>
             <div className="mt-1 flex gap-2">
@@ -183,8 +183,8 @@ export function PeriodActionDialog({
                   onClick={() => setSnoozeDays(days)}
                   className={
                     snoozeDays === days
-                      ? 'rounded-md bg-brand-50 px-3 py-1.5 text-sm font-medium text-brand-700 ring-1 ring-brand-600/30'
-                      : 'rounded-md border border-slate-200 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50'
+                      ? 'rounded-md bg-brand-400/10 px-3 py-1.5 text-sm font-medium text-brand-300 ring-1 ring-brand-600/30'
+                      : 'rounded-md border border-slate-800 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-900/50'
                   }
                 >
                   {t(`dialog.snooze.preset_${days}`)}
@@ -193,7 +193,7 @@ export function PeriodActionDialog({
             </div>
             <p className="mt-2 text-xs text-slate-500">
               {t('dialog.snooze.reappears_on')}{' '}
-              <span className="font-medium text-slate-700">
+              <span className="font-medium text-slate-300">
                 {formatDate(addDays(snoozeDays))}
               </span>
             </p>
@@ -204,7 +204,7 @@ export function PeriodActionDialog({
       {action === 'task' && (
         <div className="space-y-3">
           <div>
-            <label className="text-xs font-medium text-slate-700">
+            <label className="text-xs font-medium text-slate-300">
               {t('dialog.task.title_label')}
             </label>
             <input
@@ -212,29 +212,29 @@ export function PeriodActionDialog({
               value={taskTitle}
               onChange={(e) => setTaskTitle(e.target.value)}
               placeholder={t('dialog.task.placeholder', { label: period.label })}
-              className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+              className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
             />
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-medium text-slate-700">
+              <label className="text-xs font-medium text-slate-300">
                 {t('dialog.task.assign_to')}
               </label>
               <input
                 type="text"
                 value={taskAssignee}
                 onChange={(e) => setTaskAssignee(e.target.value)}
-                className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+                className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-slate-700">
+              <label className="text-xs font-medium text-slate-300">
                 {t('dialog.task.due_in')}
               </label>
               <select
                 value={taskDueDays}
                 onChange={(e) => setTaskDueDays(Number(e.target.value))}
-                className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+                className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
               >
                 <option value={3}>{t('dialog.task.due_3')}</option>
                 <option value={7}>{t('dialog.task.due_7')}</option>
@@ -247,14 +247,14 @@ export function PeriodActionDialog({
       )}
 
       <div className="mt-4">
-        <label className="text-xs font-medium text-slate-700">
+        <label className="text-xs font-medium text-slate-300">
           {t('dialog.notes_label')}
         </label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
-          className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+          className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
           placeholder={t('dialog.notes_placeholder')}
         />
       </div>

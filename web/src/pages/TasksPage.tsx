@@ -17,17 +17,17 @@ export function TasksPage() {
         description={t('tasks_page.description')}
       />
 
-      <div className="rounded-lg border border-slate-200 bg-white">
+      <div className="rounded-lg border border-slate-800 bg-slate-900">
         {store.tasks.length === 0 ? (
           <div className="p-10 text-center text-sm text-slate-500">
             {t('tasks_page.empty_prefix')}{' '}
-            <Link to="/renewals" className="text-brand-700 underline">
+            <Link to="/renewals" className="text-brand-300 underline">
               {t('tasks_page.empty_link')}
             </Link>{' '}
             {t('tasks_page.empty_suffix')}
           </div>
         ) : (
-          <ul className="divide-y divide-slate-100">
+          <ul className="divide-y divide-slate-800/70">
             {[...store.tasks]
               .sort((a, b) => a.dueAt.localeCompare(b.dueAt))
               .map((task) => (
@@ -42,7 +42,7 @@ export function TasksPage() {
                       'flex h-6 w-6 items-center justify-center rounded-full border-2',
                       task.status === 'done'
                         ? 'border-emerald-600 bg-emerald-600 text-white'
-                        : 'border-slate-300 hover:border-brand-500',
+                        : 'border-slate-700 hover:border-brand-500',
                     )}
                     aria-label={
                       task.status === 'done'
@@ -59,8 +59,8 @@ export function TasksPage() {
                       className={cn(
                         'text-sm font-medium',
                         task.status === 'done'
-                          ? 'text-slate-400 line-through'
-                          : 'text-slate-900',
+                          ? 'text-slate-500 line-through'
+                          : 'text-slate-100',
                       )}
                     >
                       {task.title}
@@ -75,13 +75,13 @@ export function TasksPage() {
                       })}{' '}
                       <Link
                         to={`/assets/${task.assetId}`}
-                        className="ml-1 text-brand-700 hover:underline"
+                        className="ml-1 text-brand-300 hover:underline"
                       >
                         {t('tasks_page.view_asset')}
                       </Link>
                     </p>
                     {task.description && (
-                      <p className="mt-1 text-xs text-slate-600 italic">
+                      <p className="mt-1 text-xs text-slate-500 italic">
                         {task.description}
                       </p>
                     )}

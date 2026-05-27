@@ -37,7 +37,7 @@ export function DeleteAssetDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -53,19 +53,19 @@ export function DeleteAssetDialog({
       }
     >
       <div className="space-y-4">
-        <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800">
+        <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-950/40 p-3 text-sm text-rose-800">
           <AlertTriangle className="h-5 w-5 flex-shrink-0" />
           <p>{t('delete_asset.warning', { name: asset.name })}</p>
         </div>
         <div>
-          <label className="text-xs font-medium text-slate-700">
+          <label className="text-xs font-medium text-slate-300">
             {t('delete_asset.confirm_label', { tag: asset.assetTag })}
           </label>
           <input
             type="text"
             value={tagInput}
             onChange={(e) => setTagInput(e.target.value)}
-            className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm font-mono focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 focus:outline-none"
+            className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm font-mono focus:border-rose-500 focus:ring-2 focus:ring-rose-500/20 focus:outline-none"
           />
         </div>
       </div>

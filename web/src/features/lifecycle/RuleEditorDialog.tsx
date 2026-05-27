@@ -128,7 +128,7 @@ export function RuleEditorDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -145,7 +145,7 @@ export function RuleEditorDialog({
       <div className="space-y-5">
         <Section title={t('rule_editor.section_basics')}>
           <div>
-            <label className="text-xs font-medium text-slate-700">
+            <label className="text-xs font-medium text-slate-300">
               {t('rule_editor.field.name')}
             </label>
             <input
@@ -164,9 +164,9 @@ export function RuleEditorDialog({
               type="checkbox"
               checked={form.enabled}
               onChange={(e) => set('enabled', e.target.checked)}
-              className="h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500/30"
+              className="h-4 w-4 rounded border-slate-700 text-brand-400 focus:ring-brand-500/30"
             />
-            <span className="text-sm text-slate-700">
+            <span className="text-sm text-slate-300">
               {t('rule_editor.field.enabled')}
             </span>
           </label>
@@ -175,7 +175,7 @@ export function RuleEditorDialog({
         <Section title={t('rule_editor.section_trigger')}>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-xs font-medium text-slate-700">
+              <label className="text-xs font-medium text-slate-300">
                 {t('rule_editor.field.applies_to')}
               </label>
               <select
@@ -193,7 +193,7 @@ export function RuleEditorDialog({
               </select>
             </div>
             <div>
-              <label className="text-xs font-medium text-slate-700">
+              <label className="text-xs font-medium text-slate-300">
                 {t('rule_editor.field.threshold_days')}
               </label>
               <input
@@ -208,7 +208,7 @@ export function RuleEditorDialog({
             {t('rule_editor.field.threshold_help')}
           </p>
           <div>
-            <label className="text-xs font-medium text-slate-700">
+            <label className="text-xs font-medium text-slate-300">
               {t('rule_editor.field.severity')}
             </label>
             <div className="mt-1 flex gap-2">
@@ -219,8 +219,8 @@ export function RuleEditorDialog({
                   onClick={() => set('severity', s)}
                   className={
                     form.severity === s
-                      ? 'rounded-md bg-brand-50 px-3 py-1.5 text-sm font-medium text-brand-700 ring-1 ring-brand-600/30'
-                      : 'rounded-md border border-slate-200 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50'
+                      ? 'rounded-md bg-brand-400/10 px-3 py-1.5 text-sm font-medium text-brand-300 ring-1 ring-brand-600/30'
+                      : 'rounded-md border border-slate-800 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-900/50'
                   }
                 >
                   {t(severityKey(s))}
@@ -235,7 +235,7 @@ export function RuleEditorDialog({
             {form.actions.map((action, idx) => (
               <div
                 key={idx}
-                className="space-y-2 rounded-md border border-slate-200 bg-slate-50/40 p-3"
+                className="space-y-2 rounded-md border border-slate-800 bg-slate-900/50/40 p-3"
               >
                 <div className="flex items-center gap-2">
                   <select
@@ -247,7 +247,7 @@ export function RuleEditorDialog({
                         taskTitle: undefined,
                       })
                     }
-                    className="flex-1 rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+                    className="flex-1 rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
                   >
                     {ACTION_TYPES.map((typeKey) => (
                       <option key={typeKey} value={typeKey}>
@@ -259,14 +259,14 @@ export function RuleEditorDialog({
                     type="button"
                     onClick={() => removeAction(idx)}
                     aria-label={t('rule_editor.remove_action')}
-                    className="rounded-md p-2 text-slate-400 hover:bg-slate-200 hover:text-slate-700"
+                    className="rounded-md p-2 text-slate-500 hover:bg-slate-700 hover:text-slate-300"
                   >
                     <X className="h-4 w-4" />
                   </button>
                 </div>
                 {action.type === 'notify_email' && (
                   <div>
-                    <label className="text-xs text-slate-600">
+                    <label className="text-xs text-slate-500">
                       {t('rule_editor.action_target.email')}
                     </label>
                     <input
@@ -283,7 +283,7 @@ export function RuleEditorDialog({
                 {action.type === 'create_task' && (
                   <div className="space-y-2">
                     <div>
-                      <label className="text-xs text-slate-600">
+                      <label className="text-xs text-slate-500">
                         {t('rule_editor.action_target.role')}
                       </label>
                       <input
@@ -299,7 +299,7 @@ export function RuleEditorDialog({
                       />
                     </div>
                     <div>
-                      <label className="text-xs text-slate-600">
+                      <label className="text-xs text-slate-500">
                         {t('rule_editor.action_target.task_title')}
                       </label>
                       <input
@@ -323,7 +323,7 @@ export function RuleEditorDialog({
             <button
               type="button"
               onClick={addAction}
-              className="inline-flex items-center gap-1 rounded-md border border-dashed border-slate-300 px-3 py-2 text-sm text-slate-600 hover:bg-slate-50"
+              className="inline-flex items-center gap-1 rounded-md border border-dashed border-slate-700 px-3 py-2 text-sm text-slate-500 hover:bg-slate-900/50"
             >
               <Plus className="h-4 w-4" />
               {t('rule_editor.add_action')}
@@ -343,7 +343,7 @@ function inputCls(hasError: boolean): string {
     'mt-1 w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:outline-none',
     hasError
       ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/20'
-      : 'border-slate-200 focus:border-brand-500 focus:ring-brand-500/20',
+      : 'border-slate-800 focus:border-brand-500 focus:ring-brand-500/20',
   ].join(' ')
 }
 

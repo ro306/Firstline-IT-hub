@@ -38,14 +38,14 @@ export function Sidebar() {
   const brandSubtitle = prefs.brandSubtitle || t('nav.brand_subtitle')
   const initial = brandTitle.trim().charAt(0).toUpperCase() || 'J'
   return (
-    <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-slate-200/70 md:bg-white/60 md:backdrop-blur-xl">
-      <div className="flex h-16 items-center gap-2.5 border-b border-slate-200/70 px-5">
+    <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-slate-800/70 md:bg-slate-900/60 md:backdrop-blur-xl">
+      <div className="flex h-16 items-center gap-2.5 border-b border-slate-800/70 px-5">
         <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-semibold text-white shadow-[0_4px_12px_-2px_rgb(99_102_241_/_0.35)]">
           {initial}
           <span className="absolute inset-0 rounded-lg ring-1 ring-inset ring-white/20" />
         </div>
         <div className="flex flex-col leading-tight">
-          <span className="text-sm font-semibold tracking-tight text-slate-900">
+          <span className="text-sm font-semibold tracking-tight text-slate-100">
             {brandTitle}
           </span>
           <span className="text-[11px] text-slate-500">{brandSubtitle}</span>
@@ -61,8 +61,8 @@ export function Sidebar() {
               cn(
                 'group relative flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
                 isActive
-                  ? 'text-brand-700'
-                  : 'text-slate-600 hover:text-slate-900',
+                  ? 'text-brand-300'
+                  : 'text-slate-500 hover:text-slate-100',
               )
             }
           >
@@ -71,20 +71,20 @@ export function Sidebar() {
                 {isActive && (
                   <motion.span
                     layoutId="sidebar-active"
-                    className="absolute inset-0 rounded-md bg-brand-50 ring-1 ring-inset ring-brand-100"
+                    className="absolute inset-0 rounded-md bg-brand-400/10 ring-1 ring-inset ring-brand-400/30"
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
                 <span
                   className={cn(
                     'absolute inset-0 rounded-md transition-colors',
-                    !isActive && 'group-hover:bg-slate-100/70',
+                    !isActive && 'group-hover:bg-slate-800/60',
                   )}
                 />
                 <Icon
                   className={cn(
                     'relative h-4 w-4 transition-transform group-hover:scale-110',
-                    isActive ? 'text-brand-600' : 'text-slate-400',
+                    isActive ? 'text-brand-400' : 'text-slate-500',
                   )}
                 />
                 <span className="relative">{t(labelKey)}</span>
@@ -93,7 +93,7 @@ export function Sidebar() {
           </NavLink>
         ))}
       </nav>
-      <div className="border-t border-slate-200/70 px-5 py-3.5 text-[11px] text-slate-400">
+      <div className="border-t border-slate-800/70 px-5 py-3.5 text-[11px] text-slate-500">
         {t('nav.footer_version')}
       </div>
     </aside>

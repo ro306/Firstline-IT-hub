@@ -14,8 +14,8 @@ export function LanguageSwitcher() {
         className={cn(
           'rounded px-2 py-0.5 text-xs font-medium transition-colors',
           lang === target
-            ? 'bg-white text-slate-900 shadow-sm'
-            : 'text-slate-500 hover:text-slate-700',
+            ? 'bg-slate-900 text-slate-100 shadow-sm'
+            : 'text-slate-500 hover:text-slate-300',
         )}
         aria-pressed={lang === target}
       >
@@ -26,11 +26,11 @@ export function LanguageSwitcher() {
 
   return (
     <div
-      className="flex items-center gap-1 rounded-md bg-slate-100 p-0.5"
+      className="flex items-center gap-1 rounded-md bg-slate-800 p-0.5"
       role="group"
       aria-label={t('language.switcher_label')}
     >
-      <Languages className="ml-1 h-4 w-4 text-slate-400" aria-hidden="true" />
+      <Languages className="ml-1 h-4 w-4 text-slate-500" aria-hidden="true" />
       {pill('da', 'DA')}
       {pill('en', 'EN')}
     </div>

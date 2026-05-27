@@ -35,7 +35,7 @@ export function SettingsPage() {
         description={t('settings.description')}
       />
 
-      <div className="mb-4 flex gap-1 border-b border-slate-200">
+      <div className="mb-4 flex gap-1 border-b border-slate-800">
         <TabButton active={tab === 'general'} onClick={() => setTab('general')}>
           {t('settings.tab.general')}
         </TabButton>
@@ -73,8 +73,8 @@ function TabButton({
       className={cn(
         '-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors',
         active
-          ? 'border-brand-600 text-brand-700'
-          : 'border-transparent text-slate-500 hover:text-slate-700',
+          ? 'border-brand-600 text-brand-300'
+          : 'border-transparent text-slate-500 hover:text-slate-300',
       )}
     >
       {children}
@@ -101,25 +101,25 @@ function GeneralTab() {
       >
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="text-xs font-medium text-slate-700">
+            <label className="text-xs font-medium text-slate-300">
               {t('settings.general.brand_name_label')}
             </label>
             <input
               type="text"
               value={prefs.brandTitle ?? t('nav.brand_title')}
               onChange={(e) => setPref('brandTitle', e.target.value)}
-              className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+              className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
             />
           </div>
           <div>
-            <label className="text-xs font-medium text-slate-700">
+            <label className="text-xs font-medium text-slate-300">
               {t('settings.general.brand_subtitle_label')}
             </label>
             <input
               type="text"
               value={prefs.brandSubtitle ?? t('nav.brand_subtitle')}
               onChange={(e) => setPref('brandSubtitle', e.target.value)}
-              className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+              className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
             />
           </div>
         </div>
@@ -141,7 +141,7 @@ function ActionPill({ action }: { action: WorkflowAction }) {
   const { t } = useTranslation()
   const Icon = ACTION_ICONS[action.type]
   return (
-    <span className="inline-flex items-center gap-1 rounded-md bg-slate-100 px-2 py-1 text-xs font-medium text-slate-700">
+    <span className="inline-flex items-center gap-1 rounded-md bg-slate-800 px-2 py-1 text-xs font-medium text-slate-300">
       <Icon className="h-3 w-3" />
       {t(`rule_editor.action_kind.${action.type}`)}
       {action.target && (
@@ -175,12 +175,12 @@ function WorkflowsTab() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-slate-600">{t('settings.workflows.description')}</p>
+        <p className="text-sm text-slate-500">{t('settings.workflows.description')}</p>
         <div className="flex gap-2">
           <button
             type="button"
             onClick={() => setResetOpen(true)}
-            className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             <RotateCcw className="h-4 w-4" />
             {t('settings.workflows.reset_to_defaults')}
@@ -200,10 +200,10 @@ function WorkflowsTab() {
         ([kind, rules]) => (
           <section
             key={kind}
-            className="rounded-lg border border-slate-200 bg-white"
+            className="rounded-lg border border-slate-800 bg-slate-900"
           >
-            <header className="border-b border-slate-200 px-5 py-3">
-              <h2 className="text-sm font-semibold text-slate-900">
+            <header className="border-b border-slate-800 px-5 py-3">
+              <h2 className="text-sm font-semibold text-slate-100">
                 {t(kindKey(kind))}
               </h2>
             </header>
@@ -212,7 +212,7 @@ function WorkflowsTab() {
                 {t('settings.workflows.no_rules_in_group')}
               </p>
             ) : (
-              <ul className="divide-y divide-slate-100">
+              <ul className="divide-y divide-slate-800/70">
                 {rules.map((rule) => (
                   <li
                     key={rule.id}
@@ -223,7 +223,7 @@ function WorkflowsTab() {
                         <span
                           className={cn(
                             'text-sm font-medium',
-                            rule.enabled ? 'text-slate-900' : 'text-slate-400',
+                            rule.enabled ? 'text-slate-100' : 'text-slate-500',
                           )}
                         >
                           {rule.name}
@@ -260,7 +260,7 @@ function WorkflowsTab() {
                       type="button"
                       onClick={() => setEditing(rule)}
                       aria-label={t('asset_actions.edit')}
-                      className="rounded-md border border-slate-200 bg-white p-2 text-slate-600 hover:bg-slate-50"
+                      className="rounded-md border border-slate-800 bg-slate-900 p-2 text-slate-500 hover:bg-slate-900/50"
                     >
                       <Pencil className="h-4 w-4" />
                     </button>
@@ -268,7 +268,7 @@ function WorkflowsTab() {
                       type="button"
                       onClick={() => setDeleting(rule)}
                       aria-label={t('asset_actions.delete')}
-                      className="rounded-md border border-slate-200 bg-white p-2 text-rose-600 hover:bg-rose-50"
+                      className="rounded-md border border-slate-800 bg-slate-900 p-2 text-rose-600 hover:bg-rose-950/40"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
@@ -328,12 +328,12 @@ function ToggleSwitch({
       onClick={onChange}
       className={cn(
         'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
-        checked ? 'bg-brand-600' : 'bg-slate-200',
+        checked ? 'bg-brand-600' : 'bg-slate-700',
       )}
     >
       <span
         className={cn(
-          'inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform',
+          'inline-block h-5 w-5 transform rounded-full bg-slate-900 shadow transition-transform',
           checked ? 'translate-x-5' : 'translate-x-0.5',
         )}
       />
@@ -361,7 +361,7 @@ function DeleteRuleDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -375,7 +375,7 @@ function DeleteRuleDialog({
         </>
       }
     >
-      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800">
+      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-950/40 p-3 text-sm text-rose-800">
         <AlertTriangle className="h-5 w-5 flex-shrink-0" />
         <p>{t('rule_delete.warning', { name: rule.name })}</p>
       </div>
@@ -417,7 +417,7 @@ function DataTab() {
               () => assets.resetToDemo(),
             )
           }
-          className="inline-flex items-center gap-2 rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm font-medium text-amber-800 hover:bg-amber-100"
+          className="inline-flex items-center gap-2 rounded-md border border-amber-200 bg-amber-950/40 px-3 py-2 text-sm font-medium text-amber-800 hover:bg-amber-100"
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.assets_reset')}
@@ -441,7 +441,7 @@ function DataTab() {
               },
             )
           }
-          className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.alerts_reset')}
@@ -465,7 +465,7 @@ function DataTab() {
               },
             )
           }
-          className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.tasks_reset')}
@@ -485,7 +485,7 @@ function DataTab() {
               () => rules.resetToDefaults(),
             )
           }
-          className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.rules_reset')}
@@ -505,7 +505,7 @@ function DataTab() {
               () => licenses.resetToDemo(),
             )
           }
-          className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.licenses_reset')}
@@ -525,7 +525,7 @@ function DataTab() {
               () => tickets.resetToDemo(),
             )
           }
-          className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.tickets_reset')}
@@ -572,7 +572,7 @@ function ConfirmDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -586,7 +586,7 @@ function ConfirmDialog({
         </>
       }
     >
-      <p className="text-sm text-slate-700">{description}</p>
+      <p className="text-sm text-slate-300">{description}</p>
     </Modal>
   )
 }
@@ -601,9 +601,9 @@ function Card({
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-xl border border-slate-200/70 bg-white p-5 shadow-elevated">
+    <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-5 shadow-elevated">
       <div className="mb-3">
-        <h3 className="text-sm font-semibold text-slate-900">{title}</h3>
+        <h3 className="text-sm font-semibold text-slate-100">{title}</h3>
         {description && (
           <p className="mt-0.5 text-xs text-slate-500">{description}</p>
         )}

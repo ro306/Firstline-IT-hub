@@ -10,7 +10,7 @@ export function PageHeader({ title, description, actions }: PageHeaderProps) {
   return (
     <div className="mb-7 flex flex-wrap items-start justify-between gap-4">
       <div>
-        <h1 className="text-[26px] font-semibold tracking-tight text-slate-900">
+        <h1 className="text-[26px] font-semibold tracking-tight text-slate-100">
           {title}
         </h1>
         {description && (

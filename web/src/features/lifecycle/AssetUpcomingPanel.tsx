@@ -22,27 +22,27 @@ export function AssetUpcomingPanel({ asset }: { asset: Asset }) {
   if (periods.length === 0) return null
 
   return (
-    <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
+    <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-semibold text-slate-900">
+        <h3 className="text-sm font-semibold text-slate-100">
           {t('asset.upcoming.title')}
         </h3>
         <Link
           to="/renewals"
-          className="inline-flex items-center gap-1 text-xs font-medium text-brand-700 hover:underline"
+          className="inline-flex items-center gap-1 text-xs font-medium text-brand-300 hover:underline"
         >
           {t('asset.upcoming.open_renewals')}
           <ArrowUpRight className="h-3 w-3" />
         </Link>
       </div>
-      <ul className="mt-3 divide-y divide-slate-100">
+      <ul className="mt-3 divide-y divide-slate-800/70">
         {periods.map((p) => (
           <li
             key={p.key}
             className="flex flex-wrap items-center justify-between gap-2 py-2.5"
           >
             <div className="min-w-0">
-              <p className="text-sm font-medium text-slate-900">{p.label}</p>
+              <p className="text-sm font-medium text-slate-100">{p.label}</p>
               <p className="text-xs text-slate-500">
                 {t(kindKey(p.kind))} ·{' '}
                 {t('renewals.ends_on', { date: formatDate(p.endsAt) })}

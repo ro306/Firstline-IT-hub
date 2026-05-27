@@ -79,7 +79,7 @@ export function ReportsPage() {
           <button
             type="button"
             onClick={() => downloadAssetsCsv(assets)}
-            className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             <Download className="h-4 w-4" />
             {t('reports_page.export_csv')}
@@ -140,7 +140,7 @@ export function ReportsPage() {
                   className="flex items-center justify-between text-xs"
                 >
                   <StatusBadge state={state as AssetLifecycleState} />
-                  <span className="font-medium text-slate-700">{count}</span>
+                  <span className="font-medium text-slate-300">{count}</span>
                 </li>
               ))}
           </ul>
@@ -151,16 +151,16 @@ export function ReportsPage() {
         </Section>
 
         <Section title={t('reports_page.section.depreciation')}>
-          <p className="text-3xl font-semibold text-slate-900">
+          <p className="text-3xl font-semibold text-slate-100">
             {formatMoney({ amount: bookValue, currency: 'DKK' })}
           </p>
           <p className="mt-1 text-xs text-slate-500">
             {Math.round((bookValue / Math.max(totalValue, 1)) * 100)}% af
             købsværdi
           </p>
-          <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
+          <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800">
             <div
-              className="h-full rounded-full bg-brand-500"
+              className="h-full rounded-full bg-brand-400/100"
               style={{
                 width: `${Math.round((bookValue / Math.max(totalValue, 1)) * 100)}%`,
               }}
@@ -177,10 +177,10 @@ export function ReportsPage() {
                   key={status}
                   className="flex items-center justify-between text-xs"
                 >
-                  <span className="text-slate-700">
+                  <span className="text-slate-300">
                     {t(`maintenance_page.status.${status}`)}
                   </span>
-                  <span className="font-medium text-slate-700">{count}</span>
+                  <span className="font-medium text-slate-300">{count}</span>
                 </li>
               ))}
             {tickets.length === 0 && (
@@ -198,19 +198,19 @@ export function ReportsPage() {
             </p>
           ) : (
             <>
-              <p className="text-3xl font-semibold text-slate-900">
+              <p className="text-3xl font-semibold text-slate-100">
                 {usedSeats} / {totalSeats}
               </p>
               <p className="mt-1 text-xs text-slate-500">
                 {Math.round((usedSeats / totalSeats) * 100)}% udnyttelse
               </p>
-              <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-100">
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800">
                 <div
                   className={cn(
                     'h-full rounded-full',
                     usedSeats / totalSeats > 0.85
-                      ? 'bg-amber-500'
-                      : 'bg-brand-500',
+                      ? 'bg-amber-950/400'
+                      : 'bg-brand-400/100',
                   )}
                   style={{ width: `${(usedSeats / totalSeats) * 100}%` }}
                 />
@@ -242,12 +242,12 @@ function Stat({
   tone?: 'neutral' | 'amber' | 'rose'
 }) {
   const valueClass = {
-    neutral: 'text-slate-900',
-    amber: 'text-amber-700',
-    rose: 'text-rose-700',
+    neutral: 'text-slate-100',
+    amber: 'text-amber-300',
+    rose: 'text-rose-300',
   }[tone]
   return (
-    <div className="rounded-xl border border-slate-200/70 bg-white p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
+    <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
       <p className="text-[13px] font-medium text-slate-500">{label}</p>
       <p className={`mt-2 text-[28px] font-semibold tracking-tight tabular-nums ${valueClass}`}>{value}</p>
     </div>
@@ -262,8 +262,8 @@ function Section({
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
-      <h3 className="mb-4 text-sm font-semibold tracking-tight text-slate-900">{title}</h3>
+    <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
+      <h3 className="mb-4 text-sm font-semibold tracking-tight text-slate-100">{title}</h3>
       {children}
     </div>
   )
@@ -286,12 +286,12 @@ function BarList({
       {entries.map(([key, count]) => (
         <li key={key}>
           <div className="flex items-center justify-between text-xs">
-            <span className="text-slate-700">{renderLabel(key)}</span>
-            <span className="font-medium text-slate-900">{count}</span>
+            <span className="text-slate-300">{renderLabel(key)}</span>
+            <span className="font-medium text-slate-100">{count}</span>
           </div>
-          <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-100">
+          <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-800">
             <div
-              className="h-full rounded-full bg-brand-500"
+              className="h-full rounded-full bg-brand-400/100"
               style={{ width: `${(count / max) * 100}%` }}
             />
           </div>

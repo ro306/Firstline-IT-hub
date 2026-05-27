@@ -31,12 +31,12 @@ export function RecurringCheckList({
         return (
           <li
             key={c.id}
-            className="group flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200/70 bg-white p-3 transition-all hover:border-slate-300 hover:shadow-elevated"
+            className="group flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-800/70 bg-slate-900 p-3 transition-all hover:border-slate-700 hover:shadow-elevated"
           >
             <div className="flex min-w-0 flex-1 items-start gap-3">
-              <ClipboardCheck className="mt-0.5 h-5 w-5 flex-shrink-0 text-slate-400" />
+              <ClipboardCheck className="mt-0.5 h-5 w-5 flex-shrink-0 text-slate-500" />
               <div className="min-w-0">
-                <p className="text-sm font-medium text-slate-900">{c.label}</p>
+                <p className="text-sm font-medium text-slate-100">{c.label}</p>
                 <p className="text-xs text-slate-500">
                   {t(`recurring_check_kind.${c.kind}`)} ·{' '}
                   {t('asset_detail.check_interval', { n: c.intervalMonths })}
@@ -45,16 +45,16 @@ export function RecurringCheckList({
                   <span
                     className={
                       overdue
-                        ? 'font-medium text-rose-700'
+                        ? 'font-medium text-rose-300'
                         : soon
-                          ? 'font-medium text-amber-700'
-                          : 'text-slate-600'
+                          ? 'font-medium text-amber-300'
+                          : 'text-slate-500'
                     }
                   >
                     {t('asset_detail.check_due', { date: formatDate(c.nextDueAt) })}
                   </span>
                   {c.lastCompletedAt && (
-                    <span className="ml-2 text-slate-400">
+                    <span className="ml-2 text-slate-500">
                       ·{' '}
                       {t('asset_detail.check_completed', {
                         date: formatDate(c.lastCompletedAt),
@@ -71,7 +71,7 @@ export function RecurringCheckList({
                   onClick={() => onComplete(c)}
                   aria-label={t('check_form.complete')}
                   title={t('check_form.complete')}
-                  className="rounded-md p-1.5 text-emerald-600 hover:bg-emerald-50"
+                  className="rounded-md p-1.5 text-emerald-600 hover:bg-emerald-950/40"
                 >
                   <CheckCircle2 className="h-4 w-4" />
                 </button>
@@ -81,7 +81,7 @@ export function RecurringCheckList({
                   type="button"
                   onClick={() => onEdit(c)}
                   aria-label={t('asset_actions.edit')}
-                  className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100"
+                  className="rounded-md p-1.5 text-slate-500 hover:bg-slate-800"
                 >
                   <Pencil className="h-4 w-4" />
                 </button>
@@ -91,7 +91,7 @@ export function RecurringCheckList({
                   type="button"
                   onClick={() => onDelete(c)}
                   aria-label={t('asset_actions.delete')}
-                  className="rounded-md p-1.5 text-rose-500 hover:bg-rose-50"
+                  className="rounded-md p-1.5 text-rose-500 hover:bg-rose-950/40"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>

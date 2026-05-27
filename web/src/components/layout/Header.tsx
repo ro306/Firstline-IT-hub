@@ -46,15 +46,15 @@ export function Header() {
   }, [assets, rules, store.alerts])
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200/70 bg-white/70 px-6 backdrop-blur-xl">
+    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-800/70 bg-slate-900/70 px-6 backdrop-blur-xl">
       <button
         type="button"
         onClick={() => setSearchOpen(true)}
-        className="group flex w-full max-w-md items-center gap-2.5 rounded-lg border border-slate-200 bg-white/80 py-1.5 pr-2 pl-3 text-sm text-slate-400 shadow-sm transition-all hover:border-slate-300 hover:text-slate-600 hover:shadow"
+        className="group flex w-full max-w-md items-center gap-2.5 rounded-lg border border-slate-800 bg-slate-900/80 py-1.5 pr-2 pl-3 text-sm text-slate-500 shadow-sm transition-all hover:border-slate-700 hover:text-slate-500 hover:shadow"
       >
         <Search className="h-4 w-4 transition-colors group-hover:text-slate-500" />
         <span className="flex-1 text-left">{t('header.search_placeholder')}</span>
-        <kbd className="hidden items-center gap-0.5 rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[10px] font-medium text-slate-500 sm:inline-flex">
+        <kbd className="hidden items-center gap-0.5 rounded border border-slate-800 bg-slate-900/50 px-1.5 py-0.5 text-[10px] font-medium text-slate-500 sm:inline-flex">
           ⌘K
         </kbd>
       </button>
@@ -62,7 +62,7 @@ export function Header() {
         <LanguageSwitcher />
         <Link
           to="/renewals"
-          className="relative rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
+          className="relative rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-800 hover:text-slate-300"
           aria-label={t('header.notifications_aria', { count: openCount })}
         >
           <Bell className="h-[18px] w-[18px]" />
@@ -72,13 +72,13 @@ export function Header() {
             </span>
           )}
         </Link>
-        <div className="flex items-center gap-2.5 border-l border-slate-200/70 pl-3">
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-brand-100 to-brand-200 text-sm font-semibold text-brand-700">
+        <div className="flex items-center gap-2.5 border-l border-slate-800/70 pl-3">
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-brand-100 to-brand-200 text-sm font-semibold text-brand-300">
             {initials ?? '?'}
             <span className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/40" />
           </div>
           <div className="hidden flex-col leading-tight sm:flex">
-            <span className="text-sm font-medium text-slate-900">
+            <span className="text-sm font-medium text-slate-100">
               {user?.name}
             </span>
             <span className="text-[11px] text-slate-500">{user?.email}</span>

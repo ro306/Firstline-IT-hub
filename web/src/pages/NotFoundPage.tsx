@@ -5,8 +5,8 @@ export function NotFoundPage() {
   const { t } = useTranslation()
   return (
     <div className="flex h-full min-h-[60vh] flex-col items-center justify-center text-center">
-      <p className="text-sm font-semibold text-brand-600">404</p>
-      <h1 className="mt-2 text-2xl font-semibold text-slate-900">
+      <p className="text-sm font-semibold text-brand-400">404</p>
+      <h1 className="mt-2 text-2xl font-semibold text-slate-100">
         {t('not_found.title')}
       </h1>
       <p className="mt-2 text-sm text-slate-500">

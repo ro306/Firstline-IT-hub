@@ -59,7 +59,7 @@ export function LicensesPage() {
         />
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-elevated">
+      <div className="mt-6 overflow-hidden rounded-xl border border-slate-800/70 bg-slate-900 shadow-elevated">
         {store.licenses.length === 0 ? (
           <div className="p-10 text-center text-sm text-slate-500">
             {t('licenses_page.empty')}
@@ -67,7 +67,7 @@ export function LicensesPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50/60 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+              <thead className="bg-slate-900/40 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
                 <tr>
                   <th className="px-4 py-3">{t('licenses_page.table.name')}</th>
                   <th className="px-4 py-3">{t('licenses_page.table.kind')}</th>
@@ -77,28 +77,28 @@ export function LicensesPage() {
                   <th className="px-4 py-3"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-800/70">
                 {store.licenses.map((lic) => {
                   const pct = lic.seatsTotal
                     ? Math.round((lic.seatsUsed / lic.seatsTotal) * 100)
                     : 0
                   const overuse = lic.seatsUsed > lic.seatsTotal
                   return (
-                    <tr key={lic.id} className="group transition-colors hover:bg-slate-50/70">
+                    <tr key={lic.id} className="group transition-colors hover:bg-slate-800/40">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-100 text-slate-500">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-800 text-slate-500">
                             <KeyRound className="h-4 w-4" />
                           </div>
                           <div>
-                            <p className="font-medium text-slate-900">
+                            <p className="font-medium text-slate-100">
                               {lic.name}
                             </p>
                             <p className="text-xs text-slate-500">{lic.vendor}</p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-xs text-slate-600">
+                      <td className="px-4 py-3 text-xs text-slate-500">
                         {t(`licenses_page.kind.${lic.kind}`)}
                       </td>
                       <td className="px-4 py-3">
@@ -106,7 +106,7 @@ export function LicensesPage() {
                           <span
                             className={cn(
                               'text-xs',
-                              overuse ? 'font-medium text-rose-700' : 'text-slate-700',
+                              overuse ? 'font-medium text-rose-300' : 'text-slate-300',
                             )}
                           >
                             {t('licenses_page.seats_label', {
@@ -114,22 +114,22 @@ export function LicensesPage() {
                               total: lic.seatsTotal,
                             })}
                           </span>
-                          <div className="h-1.5 w-24 overflow-hidden rounded-full bg-slate-100">
+                          <div className="h-1.5 w-24 overflow-hidden rounded-full bg-slate-800">
                             <div
                               className={cn(
                                 'h-full rounded-full',
                                 overuse
-                                  ? 'bg-rose-500'
+                                  ? 'bg-rose-950/400'
                                   : pct > 85
-                                    ? 'bg-amber-500'
-                                    : 'bg-brand-500',
+                                    ? 'bg-amber-950/400'
+                                    : 'bg-brand-400/100',
                               )}
                               style={{ width: `${Math.min(100, pct)}%` }}
                             />
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-sm text-slate-700">
+                      <td className="px-4 py-3 text-sm text-slate-300">
                         {lic.costPerSeatPerYear
                           ? formatMoney({
                               amount:
@@ -138,7 +138,7 @@ export function LicensesPage() {
                             })
                           : '—'}
                       </td>
-                      <td className="px-4 py-3 text-sm text-slate-700">
+                      <td className="px-4 py-3 text-sm text-slate-300">
                         {lic.renewsAt ? formatDate(lic.renewsAt) : '—'}
                       </td>
                       <td className="px-4 py-3 text-right">
@@ -147,7 +147,7 @@ export function LicensesPage() {
                             type="button"
                             onClick={() => setEditing(lic)}
                             aria-label={t('asset_actions.edit')}
-                            className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100"
+                            className="rounded-md p-1.5 text-slate-500 hover:bg-slate-800"
                           >
                             <Pencil className="h-4 w-4" />
                           </button>
@@ -155,7 +155,7 @@ export function LicensesPage() {
                             type="button"
                             onClick={() => setDeleting(lic)}
                             aria-label={t('asset_actions.delete')}
-                            className="rounded-md p-1.5 text-rose-500 hover:bg-rose-50"
+                            className="rounded-md p-1.5 text-rose-500 hover:bg-rose-950/40"
                           >
                             <Trash2 className="h-4 w-4" />
                           </button>
@@ -192,9 +192,9 @@ function Stat({
   value: number | string
 }) {
   return (
-    <div className="rounded-xl border border-slate-200/70 bg-white p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
+    <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
       <p className="text-sm font-medium text-slate-500">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-slate-900">{value}</p>
+      <p className="mt-2 text-2xl font-semibold text-slate-100">{value}</p>
     </div>
   )
 }
@@ -265,7 +265,7 @@ function LicenseDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -444,7 +444,7 @@ function DeleteLicenseDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -461,7 +461,7 @@ function DeleteLicenseDialog({
         </>
       }
     >
-      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800">
+      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-950/40 p-3 text-sm text-rose-800">
         <AlertTriangle className="h-5 w-5 flex-shrink-0" />
         <p>
           {t('licenses_page.form.delete_warning', { name: license.name })}
@@ -472,8 +472,8 @@ function DeleteLicenseDialog({
 }
 
 function Label({ children }: { children: React.ReactNode }) {
-  return <label className="text-xs font-medium text-slate-700">{children}</label>
+  return <label className="text-xs font-medium text-slate-300">{children}</label>
 }
 
 const inputCls =
-  'mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none'
+  'mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none'

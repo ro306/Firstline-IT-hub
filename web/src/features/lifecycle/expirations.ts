@@ -212,8 +212,8 @@ export const EXPIRATION_KINDS: ExpirationKind[] = [
 export const SEVERITIES: Severity[] = ['info', 'warning', 'urgent', 'expired']
 
 export const SEVERITY_BADGE: Record<Severity, string> = {
-  info: 'bg-sky-50 text-sky-700 ring-sky-600/20',
-  warning: 'bg-amber-50 text-amber-700 ring-amber-600/20',
-  urgent: 'bg-orange-50 text-orange-700 ring-orange-600/20',
-  expired: 'bg-rose-50 text-rose-700 ring-rose-600/20',
+  info: 'bg-sky-950/40 text-sky-300 ring-sky-600/20',
+  warning: 'bg-amber-950/40 text-amber-300 ring-amber-600/20',
+  urgent: 'bg-orange-950/40 text-orange-300 ring-orange-600/20',
+  expired: 'bg-rose-950/40 text-rose-300 ring-rose-600/20',
 }

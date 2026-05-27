@@ -61,11 +61,11 @@ function DetailRow({
   value: React.ReactNode
 }) {
   return (
-    <div className="flex flex-col gap-1 border-b border-slate-100 py-3 last:border-0 sm:flex-row sm:items-center sm:gap-6">
+    <div className="flex flex-col gap-1 border-b border-slate-800/70 py-3 last:border-0 sm:flex-row sm:items-center sm:gap-6">
       <dt className="text-xs font-medium tracking-wide text-slate-500 uppercase sm:w-40">
         {label}
       </dt>
-      <dd className="text-sm text-slate-900">{value}</dd>
+      <dd className="text-sm text-slate-100">{value}</dd>
     </div>
   )
 }
@@ -113,13 +113,13 @@ export function AssetDetailPage() {
       <div>
         <Link
           to="/assets"
-          className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+          className="inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-300"
         >
           <ArrowLeft className="h-4 w-4" />
           {t('asset.back_to_assets')}
         </Link>
-        <div className="mt-6 rounded-xl border border-slate-200/70 bg-white p-10 shadow-elevated text-center">
-          <h2 className="text-lg font-semibold text-slate-900">
+        <div className="mt-6 rounded-xl border border-slate-800/70 bg-slate-900 p-10 shadow-elevated text-center">
+          <h2 className="text-lg font-semibold text-slate-100">
             {t('asset.not_found_title')}
           </h2>
           <p className="mt-1 text-sm text-slate-500">
@@ -134,7 +134,7 @@ export function AssetDetailPage() {
     <div>
       <Link
         to="/assets"
-        className="mb-3 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="mb-3 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-300"
       >
         <ArrowLeft className="h-4 w-4" />
         {t('asset.back_to_assets')}
@@ -151,7 +151,7 @@ export function AssetDetailPage() {
             <button
               type="button"
               onClick={() => setChangingState(true)}
-              className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+              className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
             >
               {t('asset.change_state')}
             </button>
@@ -159,7 +159,7 @@ export function AssetDetailPage() {
               <button
                 type="button"
                 onClick={() => setMenuOpen((v) => !v)}
-                className="rounded-md border border-slate-200 bg-white p-2 text-slate-500 hover:bg-slate-50"
+                className="rounded-md border border-slate-800 bg-slate-900 p-2 text-slate-500 hover:bg-slate-900/50"
                 aria-label={t('asset.more_actions')}
                 aria-haspopup="menu"
                 aria-expanded={menuOpen}
@@ -169,7 +169,7 @@ export function AssetDetailPage() {
               {menuOpen && (
                 <div
                   role="menu"
-                  className="absolute right-0 z-30 mt-1 w-44 overflow-hidden rounded-md border border-slate-200 bg-white shadow-lg"
+                  className="absolute right-0 z-30 mt-1 w-44 overflow-hidden rounded-md border border-slate-800 bg-slate-900 shadow-lg"
                 >
                   <button
                     type="button"
@@ -178,7 +178,7 @@ export function AssetDetailPage() {
                       setMenuOpen(false)
                       setEditing(true)
                     }}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50"
+                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-slate-300 hover:bg-slate-900/50"
                   >
                     <Pencil className="h-4 w-4" />
                     {t('asset_actions.edit')}
@@ -190,7 +190,7 @@ export function AssetDetailPage() {
                       setMenuOpen(false)
                       setDeleting(true)
                     }}
-                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-rose-700 hover:bg-rose-50"
+                    className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-rose-300 hover:bg-rose-950/40"
                   >
                     <Trash2 className="h-4 w-4" />
                     {t('asset_actions.delete')}
@@ -202,14 +202,14 @@ export function AssetDetailPage() {
         }
       />
 
-      <div className="mb-6 rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
+      <div className="mb-6 rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
         <h3 className="mb-4 text-xs font-semibold tracking-wide text-slate-500 uppercase">
           {t('asset.section_lifecycle')}
         </h3>
         <LifecycleStepper state={asset.lifecycleState} />
       </div>
 
-      <div className="mb-4 flex gap-1 border-b border-slate-200">
+      <div className="mb-4 flex gap-1 border-b border-slate-800">
         {TABS.map((id) => (
           <button
             key={id}
@@ -218,8 +218,8 @@ export function AssetDetailPage() {
             className={cn(
               '-mb-px border-b-2 px-4 py-2 text-sm font-medium transition-colors',
               tab === id
-                ? 'border-brand-600 text-brand-700'
-                : 'border-transparent text-slate-500 hover:text-slate-700',
+                ? 'border-brand-600 text-brand-300'
+                : 'border-transparent text-slate-500 hover:text-slate-300',
             )}
           >
             {t(`asset.tab.${id}`)}
@@ -233,8 +233,8 @@ export function AssetDetailPage() {
             <AssetUpcomingPanel asset={asset} />
           </div>
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated lg:col-span-2">
-              <h3 className="text-sm font-semibold text-slate-900">
+            <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated lg:col-span-2">
+              <h3 className="text-sm font-semibold text-slate-100">
                 {t('asset.details.title')}
               </h3>
               <dl className="mt-2">
@@ -263,7 +263,7 @@ export function AssetDetailPage() {
                       <div>
                         {asset.currentAssignment ? (
                           <>
-                            <p className="font-medium text-slate-900">
+                            <p className="font-medium text-slate-100">
                               {asset.currentAssignment.assigneeName}
                             </p>
                             {asset.currentAssignment.assigneeEmail && (
@@ -273,7 +273,7 @@ export function AssetDetailPage() {
                             )}
                           </>
                         ) : (
-                          <span className="text-slate-400">
+                          <span className="text-slate-500">
                             {t('asset.details.unassigned')}
                           </span>
                         )}
@@ -282,7 +282,7 @@ export function AssetDetailPage() {
                         <button
                           type="button"
                           onClick={() => setReturningAssignment(true)}
-                          className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                          className="inline-flex items-center gap-1 rounded-md border border-slate-800 bg-slate-900 px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-900/50"
                         >
                           <UserMinus className="h-3.5 w-3.5" />
                           {t('asset_detail.return_asset')}
@@ -303,8 +303,8 @@ export function AssetDetailPage() {
               </dl>
             </div>
 
-            <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
-              <h3 className="text-sm font-semibold text-slate-900">
+            <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
+              <h3 className="text-sm font-semibold text-slate-100">
                 {t('asset.lifecycle_dates.title')}
               </h3>
               <dl className="mt-3 space-y-2 text-sm">
@@ -312,7 +312,7 @@ export function AssetDetailPage() {
                   <dt className="text-slate-500">
                     {t('asset.lifecycle_dates.requested')}
                   </dt>
-                  <dd className="text-slate-900">
+                  <dd className="text-slate-100">
                     {formatDate(asset.requestedAt)}
                   </dd>
                 </div>
@@ -320,7 +320,7 @@ export function AssetDetailPage() {
                   <dt className="text-slate-500">
                     {t('asset.lifecycle_dates.ordered')}
                   </dt>
-                  <dd className="text-slate-900">
+                  <dd className="text-slate-100">
                     {formatDate(asset.orderedAt)}
                   </dd>
                 </div>
@@ -328,7 +328,7 @@ export function AssetDetailPage() {
                   <dt className="text-slate-500">
                     {t('asset.lifecycle_dates.received')}
                   </dt>
-                  <dd className="text-slate-900">
+                  <dd className="text-slate-100">
                     {formatDate(asset.receivedAt)}
                   </dd>
                 </div>
@@ -336,7 +336,7 @@ export function AssetDetailPage() {
                   <dt className="text-slate-500">
                     {t('asset.lifecycle_dates.deployed')}
                   </dt>
-                  <dd className="text-slate-900">
+                  <dd className="text-slate-100">
                     {formatDate(asset.deployedAt)}
                   </dd>
                 </div>
@@ -344,7 +344,7 @@ export function AssetDetailPage() {
                   <dt className="text-slate-500">
                     {t('asset.lifecycle_dates.retired')}
                   </dt>
-                  <dd className="text-slate-900">
+                  <dd className="text-slate-100">
                     {formatDate(asset.retiredAt)}
                   </dd>
                 </div>
@@ -352,7 +352,7 @@ export function AssetDetailPage() {
                   <dt className="text-slate-500">
                     {t('asset.lifecycle_dates.disposed')}
                   </dt>
-                  <dd className="text-slate-900">
+                  <dd className="text-slate-100">
                     {formatDate(asset.disposedAt)}
                   </dd>
                 </div>
@@ -360,9 +360,9 @@ export function AssetDetailPage() {
             </div>
           </div>
 
-          <div className="mt-6 rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
+          <div className="mt-6 rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-slate-900">
+              <h3 className="text-sm font-semibold text-slate-100">
                 {t('asset_detail.recurring_checks_title')}
               </h3>
               <button
@@ -386,15 +386,15 @@ export function AssetDetailPage() {
 
       {tab === 'history' && (
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
+          <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="text-sm font-semibold text-slate-900">
+              <h3 className="text-sm font-semibold text-slate-100">
                 {t('asset.history.timeline_title')}
               </h3>
               <button
                 type="button"
                 onClick={() => setAddingNote(true)}
-                className="inline-flex items-center gap-1 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                className="inline-flex items-center gap-1 rounded-md border border-slate-800 bg-slate-900 px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-900/50"
               >
                 <FileText className="h-3.5 w-3.5" />
                 {t('asset_detail.add_note')}
@@ -402,8 +402,8 @@ export function AssetDetailPage() {
             </div>
             <LifecycleTimeline events={asset.events} />
           </div>
-          <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
-            <h3 className="mb-4 text-sm font-semibold text-slate-900">
+          <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
+            <h3 className="mb-4 text-sm font-semibold text-slate-100">
               {t('asset.history.assignment_title')}
             </h3>
             <AssignmentHistory assignments={asset.assignments} />
@@ -412,9 +412,9 @@ export function AssetDetailPage() {
       )}
 
       {tab === 'warranties' && (
-        <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
+        <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
           <div className="mb-4 flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-900">
+            <h3 className="text-sm font-semibold text-slate-100">
               {t('asset.section_warranties')}
             </h3>
             <button

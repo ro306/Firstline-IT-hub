@@ -4,35 +4,43 @@
 @import "@fontsource-variable/jetbrains-mono/wght.css";
 
 @theme {
-  /* Refined indigo brand — sophisticated without being playful. */
-  --color-brand-50: #eef2ff;
-  --color-brand-100: #e0e7ff;
-  --color-brand-200: #c7d2fe;
-  --color-brand-400: #818cf8;
-  --color-brand-500: #6366f1;
-  --color-brand-600: #4f46e5;
-  --color-brand-700: #4338ca;
-  --color-brand-900: #312e81;
+  /* Cyan/indigo accent palette — feels at home on dark surfaces. */
+  --color-brand-50: #ecfeff;
+  --color-brand-100: #cffafe;
+  --color-brand-200: #a5f3fc;
+  --color-brand-300: #67e8f9;
+  --color-brand-400: #22d3ee;
+  --color-brand-500: #06b6d4;
+  --color-brand-600: #0891b2;
+  --color-brand-700: #0e7490;
+  --color-brand-900: #164e63;
 
-  /* Layered surfaces — each level slightly elevated from the previous. */
-  --color-surface-base: #f8fafc;
-  --color-surface-tint: #f1f5f9;
-  --color-surface-card: #ffffff;
+  /* Dark surface layer system. Each step is roughly a percentage point
+     lighter so panels nest cleanly without harsh contrast. */
+  --color-surface-base: #0a0e1a;
+  --color-surface-1: #111827;
+  --color-surface-2: #1a2235;
+  --color-surface-3: #232c44;
+
+  --color-border-subtle: #1f2937;
+  --color-border-strong: #334155;
 
   --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace,
     "SF Mono", Menlo, Consolas, monospace;
 
-  /* Soft elevation layered shadows — feels like Linear/Vercel cards. */
+  /* Glow shadows for the dark aesthetic. */
   --shadow-elevated:
-    0 1px 0 0 rgb(15 23 42 / 0.04),
-    0 1px 3px 0 rgb(15 23 42 / 0.04),
-    0 8px 24px -6px rgb(15 23 42 / 0.06);
+    0 1px 0 0 rgb(0 0 0 / 0.4),
+    0 4px 16px -2px rgb(0 0 0 / 0.4);
   --shadow-lift:
-    0 1px 0 0 rgb(15 23 42 / 0.05),
-    0 4px 6px -1px rgb(15 23 42 / 0.06),
-    0 16px 32px -8px rgb(15 23 42 / 0.10);
+    0 1px 0 0 rgb(0 0 0 / 0.5),
+    0 8px 32px -4px rgb(0 0 0 / 0.6),
+    0 0 0 1px rgb(34 211 238 / 0.08);
+  --shadow-glow-brand:
+    0 0 0 1px rgb(34 211 238 / 0.3),
+    0 4px 24px -4px rgb(34 211 238 / 0.25);
 }
 
 html,
@@ -43,46 +51,46 @@ body,
 
 html {
   font-feature-settings: "cv11", "ss01", "ss03";
+  color-scheme: dark;
 }
 
 body {
   font-family: var(--font-sans);
-  color: theme(colors.slate.900);
+  color: theme(colors.slate.100);
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.005em;
 
-  /* Subtle mesh gradient — gives the canvas depth without distracting. */
-  background-color: #f8fafc;
+  /* Deep navy base with subtle mesh glow from top corners — gives the
+     "monitoring console" depth without distracting from data. */
+  background-color: #0a0e1a;
   background-image:
     radial-gradient(
       ellipse 60% 80% at 20% 0%,
-      rgb(99 102 241 / 0.06) 0%,
+      rgb(34 211 238 / 0.10) 0%,
       transparent 50%
     ),
     radial-gradient(
       ellipse 60% 80% at 100% 0%,
-      rgb(168 85 247 / 0.04) 0%,
+      rgb(99 102 241 / 0.08) 0%,
       transparent 50%
     ),
     radial-gradient(
       ellipse 100% 100% at 50% 100%,
-      rgb(59 130 246 / 0.03) 0%,
-      transparent 50%
+      rgb(244 63 94 / 0.04) 0%,
+      transparent 60%
     );
   background-attachment: fixed;
 }
 
-/* Numeric tabular alignment for tables and stat cards. */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* Custom scrollbar — slim, neutral, doesn't intrude. */
 * {
   scrollbar-width: thin;
-  scrollbar-color: theme(colors.slate.300) transparent;
+  scrollbar-color: theme(colors.slate.700) transparent;
 }
 
 *::-webkit-scrollbar {
@@ -95,19 +103,18 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: theme(colors.slate.300);
+  background: theme(colors.slate.700);
   border-radius: 999px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: theme(colors.slate.400);
+  background: theme(colors.slate.600);
   background-clip: padding-box;
   border: 2px solid transparent;
 }
 
-/* Code/mono — always tabular for asset tags and IDs. */
 .font-mono,
 code,
 kbd {
@@ -116,13 +123,12 @@ kbd {
   font-feature-settings: "calt" 0;
 }
 
-/* Subtle pulse for active notifications — quiet, not distracting. */
 @keyframes badge-pulse {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgb(244 63 94 / 0.5);
+    box-shadow: 0 0 0 0 rgb(244 63 94 / 0.6);
   }
   50% {
-    box-shadow: 0 0 0 4px rgb(244 63 94 / 0);
+    box-shadow: 0 0 0 5px rgb(244 63 94 / 0);
   }
 }
 
@@ -130,7 +136,14 @@ kbd {
   animation: badge-pulse 2s ease-out infinite;
 }
 
-/* Respect users who prefer reduced motion. */
+/* Tiny grid overlay on charts/surfaces — extra "tech HUD" texture. */
+.bg-grid {
+  background-image:
+    linear-gradient(rgb(148 163 184 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(148 163 184 / 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -139,4 +152,19 @@ kbd {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Recharts dark theming */
+.recharts-cartesian-axis-tick-value {
+  fill: theme(colors.slate.500) !important;
+  font-size: 11px;
+}
+.recharts-cartesian-grid line {
+  stroke: rgb(148 163 184 / 0.08) !important;
+}
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: rgb(26 34 53 / 0.95) !important;
+  border: 1px solid rgb(51 65 85) !important;
+  border-radius: 8px !important;
+  backdrop-filter: blur(8px);
 }

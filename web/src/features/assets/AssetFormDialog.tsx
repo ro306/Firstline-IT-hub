@@ -147,7 +147,7 @@ export function AssetFormDialog({ onClose, asset }: Props) {
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -340,7 +340,7 @@ export function AssetFormDialog({ onClose, asset }: Props) {
                       e.target.value as NewAssetInput['priceCurrency'],
                     )
                   }
-                  className="rounded-md border border-slate-200 px-2 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+                  className="rounded-md border border-slate-800 px-2 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
                 >
                   {CURRENCIES.map((c) => (
                     <option key={c} value={c}>
@@ -362,7 +362,7 @@ function inputCls(hasError: boolean): string {
     'mt-1 w-full rounded-md border px-3 py-2 text-sm focus:ring-2 focus:outline-none',
     hasError
       ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/20'
-      : 'border-slate-200 focus:border-brand-500 focus:ring-brand-500/20',
+      : 'border-slate-800 focus:border-brand-500 focus:ring-brand-500/20',
   ].join(' ')
 }
 
@@ -400,7 +400,7 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label className="text-xs font-medium text-slate-700">{label}</label>
+      <label className="text-xs font-medium text-slate-300">{label}</label>
       {children}
       {error && <p className="mt-1 text-xs text-rose-600">{error}</p>}
     </div>

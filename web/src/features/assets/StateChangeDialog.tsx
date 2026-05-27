@@ -37,7 +37,7 @@ export function StateChangeDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -54,7 +54,7 @@ export function StateChangeDialog({
     >
       <div className="space-y-4">
         <div>
-          <p className="text-xs font-medium text-slate-700">
+          <p className="text-xs font-medium text-slate-300">
             {t('state_change.current')}
           </p>
           <div className="mt-1">
@@ -63,7 +63,7 @@ export function StateChangeDialog({
         </div>
 
         <div>
-          <p className="text-xs font-medium text-slate-700">
+          <p className="text-xs font-medium text-slate-300">
             {t('state_change.next')}
           </p>
           {allowed.length === 0 ? (
@@ -79,8 +79,8 @@ export function StateChangeDialog({
                   onClick={() => setNext(s)}
                   className={
                     next === s
-                      ? 'rounded-md border-2 border-brand-500 bg-brand-50 px-3 py-2 text-left text-sm font-medium text-brand-700'
-                      : 'rounded-md border border-slate-200 bg-white px-3 py-2 text-left text-sm text-slate-700 hover:bg-slate-50'
+                      ? 'rounded-md border-2 border-brand-500 bg-brand-400/10 px-3 py-2 text-left text-sm font-medium text-brand-300'
+                      : 'rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-left text-sm text-slate-300 hover:bg-slate-900/50'
                   }
                 >
                   {t(lifecycleStateKey(s))}
@@ -91,7 +91,7 @@ export function StateChangeDialog({
         </div>
 
         <div>
-          <label className="text-xs font-medium text-slate-700">
+          <label className="text-xs font-medium text-slate-300">
             {t('dialog.notes_label')}
           </label>
           <textarea
@@ -99,7 +99,7 @@ export function StateChangeDialog({
             onChange={(e) => setNotes(e.target.value)}
             rows={3}
             placeholder={t('state_change.notes_placeholder')}
-            className="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+            className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
           />
         </div>
       </div>

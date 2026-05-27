@@ -11,67 +11,67 @@ type StateConfig = {
 export const LIFECYCLE_STATE_CONFIG: Record<AssetLifecycleState, StateConfig> =
   {
     requested: {
-      badge: 'bg-violet-50 text-violet-700 ring-violet-600/20',
+      badge: 'bg-violet-950/40 text-violet-300 ring-violet-600/20',
       stage: 0,
       terminal: false,
     },
     ordered: {
-      badge: 'bg-indigo-50 text-indigo-700 ring-indigo-600/20',
+      badge: 'bg-indigo-950/40 text-indigo-300 ring-indigo-600/20',
       stage: 1,
       terminal: false,
     },
     in_stock: {
-      badge: 'bg-sky-50 text-sky-700 ring-sky-600/20',
+      badge: 'bg-sky-950/40 text-sky-300 ring-sky-600/20',
       stage: 2,
       terminal: false,
     },
     assigned: {
-      badge: 'bg-cyan-50 text-cyan-700 ring-cyan-600/20',
+      badge: 'bg-cyan-950/40 text-cyan-300 ring-cyan-600/20',
       stage: 3,
       terminal: false,
     },
     in_use: {
-      badge: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
+      badge: 'bg-emerald-950/40 text-emerald-300 ring-emerald-600/20',
       stage: 4,
       terminal: false,
     },
     in_maintenance: {
-      badge: 'bg-amber-50 text-amber-700 ring-amber-600/20',
+      badge: 'bg-amber-950/40 text-amber-300 ring-amber-600/20',
       stage: 4,
       terminal: false,
     },
     leased_in: {
-      badge: 'bg-teal-50 text-teal-700 ring-teal-600/20',
+      badge: 'bg-teal-950/40 text-teal-300 ring-teal-600/20',
       stage: 4,
       terminal: false,
     },
     leased_out: {
-      badge: 'bg-fuchsia-50 text-fuchsia-700 ring-fuchsia-600/20',
+      badge: 'bg-fuchsia-950/40 text-fuchsia-300 ring-fuchsia-600/20',
       stage: 4,
       terminal: false,
     },
     retired: {
-      badge: 'bg-slate-100 text-slate-700 ring-slate-500/20',
+      badge: 'bg-slate-800 text-slate-300 ring-slate-500/20',
       stage: 5,
       terminal: false,
     },
     disposed: {
-      badge: 'bg-zinc-100 text-zinc-600 ring-zinc-500/20',
+      badge: 'bg-zinc-800/60 text-zinc-300 ring-zinc-500/20',
       stage: 6,
       terminal: true,
     },
     returned_to_vendor: {
-      badge: 'bg-stone-100 text-stone-700 ring-stone-500/20',
+      badge: 'bg-stone-800/60 text-stone-300 ring-stone-500/20',
       stage: 6,
       terminal: true,
     },
     lost: {
-      badge: 'bg-rose-50 text-rose-700 ring-rose-600/20',
+      badge: 'bg-rose-950/40 text-rose-300 ring-rose-600/20',
       stage: null,
       terminal: true,
     },
     stolen: {
-      badge: 'bg-red-50 text-red-700 ring-red-600/20',
+      badge: 'bg-red-950/40 text-red-300 ring-red-600/20',
       stage: null,
       terminal: true,
     },

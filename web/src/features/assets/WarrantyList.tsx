@@ -9,18 +9,18 @@ function statusFor(w: AssetWarranty, t: TranslateFn) {
   if (days < 0)
     return {
       label: t('asset.warranties.status.expired'),
-      tone: 'text-rose-700 bg-rose-50 ring-rose-600/20',
+      tone: 'text-rose-300 bg-rose-950/40 ring-rose-600/20',
       Icon: ShieldOff,
     }
   if (days <= 60)
     return {
       label: t('asset.warranties.status.ends_in', { n: days }),
-      tone: 'text-amber-700 bg-amber-50 ring-amber-600/20',
+      tone: 'text-amber-300 bg-amber-950/40 ring-amber-600/20',
       Icon: ShieldAlert,
     }
   return {
     label: t('asset.warranties.status.active'),
-    tone: 'text-emerald-700 bg-emerald-50 ring-emerald-600/20',
+    tone: 'text-emerald-300 bg-emerald-950/40 ring-emerald-600/20',
     Icon: ShieldCheck,
   }
 }
@@ -48,11 +48,11 @@ export function WarrantyList({
         return (
           <li
             key={w.id}
-            className="group rounded-lg border border-slate-200/70 bg-white p-4 transition-all hover:border-slate-300 hover:shadow-elevated"
+            className="group rounded-lg border border-slate-800/70 bg-slate-900 p-4 transition-all hover:border-slate-700 hover:shadow-elevated"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-sm font-medium text-slate-900">
+                <p className="text-sm font-medium text-slate-100">
                   {t(`asset.warranties.kind.${w.kind}`)}
                 </p>
                 <p className="text-xs text-slate-500">
@@ -74,7 +74,7 @@ export function WarrantyList({
                     type="button"
                     onClick={() => onEdit(w)}
                     aria-label={t('asset_actions.edit')}
-                    className="rounded-md p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                    className="rounded-md p-1 text-slate-500 hover:bg-slate-800 hover:text-slate-300"
                   >
                     <Pencil className="h-4 w-4" />
                   </button>
@@ -84,7 +84,7 @@ export function WarrantyList({
                     type="button"
                     onClick={() => onDelete(w)}
                     aria-label={t('asset_actions.delete')}
-                    className="rounded-md p-1 text-rose-500 hover:bg-rose-50"
+                    className="rounded-md p-1 text-rose-500 hover:bg-rose-950/40"
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -94,15 +94,15 @@ export function WarrantyList({
             <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
               <div>
                 <p className="text-slate-500">{t('asset.warranties.starts')}</p>
-                <p className="text-slate-900">{formatDate(w.startsAt)}</p>
+                <p className="text-slate-100">{formatDate(w.startsAt)}</p>
               </div>
               <div>
                 <p className="text-slate-500">{t('asset.warranties.ends')}</p>
-                <p className="text-slate-900">{formatDate(w.endsAt)}</p>
+                <p className="text-slate-100">{formatDate(w.endsAt)}</p>
               </div>
             </div>
             {w.coverageNotes && (
-              <p className="mt-3 text-xs text-slate-600 italic">
+              <p className="mt-3 text-xs text-slate-500 italic">
                 {w.coverageNotes}
               </p>
             )}

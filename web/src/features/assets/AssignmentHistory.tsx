@@ -33,22 +33,22 @@ export function AssignmentHistory({
             <th className="pb-2">{t('asset.assignment.notes')}</th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y divide-slate-800/70">
           {sorted.map((a) => (
             <tr key={a.id}>
               <td className="py-2">
-                <p className="font-medium text-slate-900">{a.assigneeName}</p>
+                <p className="font-medium text-slate-100">{a.assigneeName}</p>
                 {a.assigneeEmail && (
                   <p className="text-xs text-slate-500">{a.assigneeEmail}</p>
                 )}
               </td>
-              <td className="py-2 text-slate-700">{a.location}</td>
-              <td className="py-2 text-slate-700">{formatDate(a.assignedAt)}</td>
-              <td className="py-2 text-slate-700">
+              <td className="py-2 text-slate-300">{a.location}</td>
+              <td className="py-2 text-slate-300">{formatDate(a.assignedAt)}</td>
+              <td className="py-2 text-slate-300">
                 {a.returnedAt ? (
                   formatDate(a.returnedAt)
                 ) : (
-                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
+                  <span className="inline-flex items-center rounded-full bg-emerald-950/40 px-2 py-0.5 text-xs font-medium text-emerald-300 ring-1 ring-inset ring-emerald-600/20">
                     {t('asset.assignment.current')}
                   </span>
                 )}

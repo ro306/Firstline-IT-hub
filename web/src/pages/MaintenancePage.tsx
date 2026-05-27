@@ -25,19 +25,19 @@ const STATUSES: TicketStatus[] = [
 const PRIORITIES: TicketPriority[] = ['low', 'normal', 'high', 'urgent']
 
 const STATUS_BADGE: Record<TicketStatus, string> = {
-  open: 'bg-sky-50 text-sky-700 ring-sky-600/20',
-  in_progress: 'bg-amber-50 text-amber-700 ring-amber-600/20',
-  awaiting_parts: 'bg-violet-50 text-violet-700 ring-violet-600/20',
-  awaiting_user: 'bg-fuchsia-50 text-fuchsia-700 ring-fuchsia-600/20',
-  resolved: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
-  cancelled: 'bg-slate-100 text-slate-600 ring-slate-500/20',
+  open: 'bg-sky-950/40 text-sky-300 ring-sky-600/20',
+  in_progress: 'bg-amber-950/40 text-amber-300 ring-amber-600/20',
+  awaiting_parts: 'bg-violet-950/40 text-violet-300 ring-violet-600/20',
+  awaiting_user: 'bg-fuchsia-950/40 text-fuchsia-300 ring-fuchsia-600/20',
+  resolved: 'bg-emerald-950/40 text-emerald-300 ring-emerald-600/20',
+  cancelled: 'bg-slate-800 text-slate-500 ring-slate-500/20',
 }
 
 const PRIORITY_BADGE: Record<TicketPriority, string> = {
-  low: 'bg-slate-50 text-slate-600 ring-slate-500/20',
-  normal: 'bg-sky-50 text-sky-700 ring-sky-600/20',
-  high: 'bg-orange-50 text-orange-700 ring-orange-600/20',
-  urgent: 'bg-rose-50 text-rose-700 ring-rose-600/20',
+  low: 'bg-slate-900/50 text-slate-500 ring-slate-500/20',
+  normal: 'bg-sky-950/40 text-sky-300 ring-sky-600/20',
+  high: 'bg-orange-950/40 text-orange-300 ring-orange-600/20',
+  urgent: 'bg-rose-950/40 text-rose-300 ring-rose-600/20',
 }
 
 type FilterKind = 'all' | 'active' | 'resolved'
@@ -124,8 +124,8 @@ export function MaintenancePage() {
         />
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-elevated">
-        <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 p-4">
+      <div className="mt-6 overflow-hidden rounded-xl border border-slate-800/70 bg-slate-900 shadow-elevated">
+        <div className="flex flex-wrap items-center gap-2 border-b border-slate-800 p-4">
           {FILTERS.map((f) => (
             <button
               key={f}
@@ -133,8 +133,8 @@ export function MaintenancePage() {
               onClick={() => setFilter(f)}
               className={
                 filter === f
-                  ? 'rounded-md bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700'
-                  : 'rounded-md px-3 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100'
+                  ? 'rounded-md bg-brand-400/10 px-3 py-1 text-xs font-medium text-brand-300'
+                  : 'rounded-md px-3 py-1 text-xs font-medium text-slate-500 hover:bg-slate-800'
               }
             >
               {t(`maintenance_page.filter.${f}`)}
@@ -149,7 +149,7 @@ export function MaintenancePage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50/60 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
+              <thead className="bg-slate-900/40 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
                 <tr>
                   <th className="px-4 py-3">
                     {t('maintenance_page.table.title')}
@@ -172,16 +172,16 @@ export function MaintenancePage() {
                   <th className="px-4 py-3"></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-800/70">
                 {filtered.map((ticket) => (
-                  <tr key={ticket.id} className="group transition-colors hover:bg-slate-50/70">
+                  <tr key={ticket.id} className="group transition-colors hover:bg-slate-800/40">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-100 text-slate-500">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-800 text-slate-500">
                           <Wrench className="h-4 w-4" />
                         </div>
                         <div>
-                          <p className="font-medium text-slate-900">
+                          <p className="font-medium text-slate-100">
                             {ticket.title}
                           </p>
                           {ticket.ticketRef && (
@@ -196,12 +196,12 @@ export function MaintenancePage() {
                       {ticket.assetId ? (
                         <Link
                           to={`/assets/${ticket.assetId}`}
-                          className="text-brand-700 hover:underline"
+                          className="text-brand-300 hover:underline"
                         >
                           {ticket.assetName ?? ticket.assetId}
                         </Link>
                       ) : (
-                        <span className="text-slate-400">—</span>
+                        <span className="text-slate-500">—</span>
                       )}
                     </td>
                     <td className="px-4 py-3">
@@ -214,10 +214,10 @@ export function MaintenancePage() {
                         {t(`maintenance_page.priority.${ticket.priority}`)}
                       </Badge>
                     </td>
-                    <td className="px-4 py-3 text-sm text-slate-700">
-                      {ticket.assignedTo ?? <span className="text-slate-400">—</span>}
+                    <td className="px-4 py-3 text-sm text-slate-300">
+                      {ticket.assignedTo ?? <span className="text-slate-500">—</span>}
                     </td>
-                    <td className="px-4 py-3 text-sm text-slate-700">
+                    <td className="px-4 py-3 text-sm text-slate-300">
                       {formatDate(ticket.createdAt)}
                     </td>
                     <td className="px-4 py-3 text-right">
@@ -226,7 +226,7 @@ export function MaintenancePage() {
                           type="button"
                           onClick={() => setEditing(ticket)}
                           aria-label={t('asset_actions.edit')}
-                          className="rounded-md p-1.5 text-slate-500 hover:bg-slate-100"
+                          className="rounded-md p-1.5 text-slate-500 hover:bg-slate-800"
                         >
                           <Pencil className="h-4 w-4" />
                         </button>
@@ -234,7 +234,7 @@ export function MaintenancePage() {
                           type="button"
                           onClick={() => setDeleting(ticket)}
                           aria-label={t('asset_actions.delete')}
-                          className="rounded-md p-1.5 text-rose-500 hover:bg-rose-50"
+                          className="rounded-md p-1.5 text-rose-500 hover:bg-rose-950/40"
                         >
                           <Trash2 className="h-4 w-4" />
                         </button>
@@ -275,16 +275,16 @@ function Stat({
   tone: 'sky' | 'amber' | 'violet' | 'emerald'
 }) {
   const toneClasses = {
-    sky: 'bg-sky-50 text-sky-700',
-    amber: 'bg-amber-50 text-amber-700',
-    violet: 'bg-violet-50 text-violet-700',
-    emerald: 'bg-emerald-50 text-emerald-700',
+    sky: 'bg-sky-950/40 text-sky-300',
+    amber: 'bg-amber-950/40 text-amber-300',
+    violet: 'bg-violet-950/40 text-violet-300',
+    emerald: 'bg-emerald-950/40 text-emerald-300',
   }[tone]
   return (
-    <div className="flex items-start justify-between rounded-xl border border-slate-200/70 bg-white p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
+    <div className="flex items-start justify-between rounded-xl border border-slate-800/70 bg-slate-900 p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
       <div>
         <p className="text-sm font-medium text-slate-500">{label}</p>
-        <p className="mt-2 text-2xl font-semibold text-slate-900">{value}</p>
+        <p className="mt-2 text-2xl font-semibold text-slate-100">{value}</p>
       </div>
       <div className={`rounded-md px-2 py-1 text-xs font-medium ${toneClasses}`}>
         ●
@@ -374,7 +374,7 @@ function TicketDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -555,7 +555,7 @@ function DeleteTicketDialog({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             {t('common.cancel')}
           </button>
@@ -572,7 +572,7 @@ function DeleteTicketDialog({
         </>
       }
     >
-      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800">
+      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-950/40 p-3 text-sm text-rose-800">
         <AlertTriangle className="h-5 w-5 flex-shrink-0" />
         <p>
           {t('maintenance_page.form.delete_warning', { title: ticket.title })}
@@ -583,8 +583,8 @@ function DeleteTicketDialog({
 }
 
 function Label({ children }: { children: React.ReactNode }) {
-  return <label className="text-xs font-medium text-slate-700">{children}</label>
+  return <label className="text-xs font-medium text-slate-300">{children}</label>
 }
 
 const inputCls =
-  'mt-1 w-full rounded-md border border-slate-200 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none'
+  'mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none'

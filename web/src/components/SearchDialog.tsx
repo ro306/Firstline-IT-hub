@@ -75,15 +75,15 @@ function SearchDialogInner({ onClose }: { onClose: () => void }) {
       onClick={onClose}
     >
       <motion.div
-        className="w-full max-w-xl overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-[0_24px_60px_-15px_rgb(15_23_42_/_0.30)]"
+        className="w-full max-w-xl overflow-hidden rounded-xl border border-slate-800/70 bg-slate-900 shadow-[0_24px_60px_-15px_rgb(15_23_42_/_0.30)]"
         initial={{ opacity: 0, scale: 0.97, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.98, y: 4 }}
         transition={{ type: 'spring', stiffness: 380, damping: 30, mass: 0.7 }}
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-2.5 border-b border-slate-200/70 px-4 py-3">
-          <Search className="h-4 w-4 text-slate-400" />
+        <div className="flex items-center gap-2.5 border-b border-slate-800/70 px-4 py-3">
+          <Search className="h-4 w-4 text-slate-500" />
           <input
             type="search"
             value={query}
@@ -93,12 +93,12 @@ function SearchDialogInner({ onClose }: { onClose: () => void }) {
             }}
             placeholder={t('header.search_placeholder')}
             autoFocus
-            className="flex-1 bg-transparent text-sm placeholder-slate-400 focus:outline-none"
+            className="flex-1 bg-transparent text-sm placeholder-slate-600 focus:outline-none"
           />
           <button
             type="button"
             onClick={onClose}
-            className="rounded-md p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-700"
+            className="rounded-md p-1 text-slate-500 transition-colors hover:bg-slate-800 hover:text-slate-300"
             aria-label={t('common.close')}
           >
             <X className="h-4 w-4" />
@@ -106,7 +106,7 @@ function SearchDialogInner({ onClose }: { onClose: () => void }) {
         </div>
         <div className="max-h-96 overflow-y-auto p-2">
           {!query.trim() && (
-            <p className="px-3 py-1.5 text-[10px] font-semibold tracking-wider text-slate-400 uppercase">
+            <p className="px-3 py-1.5 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
               {t('header.search_recent')}
             </p>
           )}
@@ -128,8 +128,8 @@ function SearchDialogInner({ onClose }: { onClose: () => void }) {
                     className={cn(
                       'group flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-left transition-colors',
                       highlight === idx
-                        ? 'bg-brand-50/80 text-brand-900'
-                        : 'hover:bg-slate-50',
+                        ? 'bg-brand-400/15 text-brand-900'
+                        : 'hover:bg-slate-900/50',
                     )}
                   >
                     <div className="min-w-0 flex-1">
@@ -151,7 +151,7 @@ function SearchDialogInner({ onClose }: { onClose: () => void }) {
                       className={cn(
                         'h-3.5 w-3.5 transition-all',
                         highlight === idx
-                          ? 'translate-x-0 text-brand-600 opacity-100'
+                          ? 'translate-x-0 text-brand-400 opacity-100'
                           : '-translate-x-1 text-slate-300 opacity-0 group-hover:translate-x-0 group-hover:opacity-100',
                       )}
                     />
@@ -161,21 +161,21 @@ function SearchDialogInner({ onClose }: { onClose: () => void }) {
             </ul>
           )}
         </div>
-        <div className="flex items-center justify-between border-t border-slate-200/70 bg-slate-50/60 px-4 py-2 text-[11px] text-slate-500">
+        <div className="flex items-center justify-between border-t border-slate-800/70 bg-slate-900/40 px-4 py-2 text-[11px] text-slate-500">
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1">
-              <kbd className="rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[10px]">↑↓</kbd>
+              <kbd className="rounded border border-slate-800 bg-slate-900 px-1.5 py-0.5 text-[10px]">↑↓</kbd>
               navigate
             </span>
             <span className="inline-flex items-center gap-1">
-              <kbd className="rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[10px]">
+              <kbd className="rounded border border-slate-800 bg-slate-900 px-1.5 py-0.5 text-[10px]">
                 <CornerDownLeft className="inline h-2.5 w-2.5" />
               </kbd>
               open
             </span>
           </div>
           <span className="inline-flex items-center gap-1">
-            <kbd className="rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[10px]">esc</kbd>
+            <kbd className="rounded border border-slate-800 bg-slate-900 px-1.5 py-0.5 text-[10px]">esc</kbd>
             close
           </span>
         </div>

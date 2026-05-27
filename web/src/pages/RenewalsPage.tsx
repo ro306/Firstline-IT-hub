@@ -118,7 +118,7 @@ export function RenewalsPage() {
         actions={
           <Link
             to="/settings"
-            className="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
           >
             <ListChecks className="h-4 w-4" />
             {t('renewals.workflow_rules_button')}
@@ -161,8 +161,8 @@ export function RenewalsPage() {
         />
       </div>
 
-      <div className="mt-6 overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-elevated">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 p-4">
+      <div className="mt-6 overflow-hidden rounded-xl border border-slate-800/70 bg-slate-900 shadow-elevated">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800/70 p-4">
           <div className="flex flex-wrap items-center gap-3">
             <FilterRow
               label={t('renewals.filter.kind_label')}
@@ -194,8 +194,8 @@ export function RenewalsPage() {
             onClick={() => setStatusFilter('all')}
             className={
               statusFilter === 'all'
-                ? 'rounded-md bg-brand-50 px-3 py-1 text-xs font-medium text-brand-700'
-                : 'rounded-md px-3 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100'
+                ? 'rounded-md bg-brand-400/10 px-3 py-1 text-xs font-medium text-brand-300'
+                : 'rounded-md px-3 py-1 text-xs font-medium text-slate-500 hover:bg-slate-800'
             }
           >
             {t('renewals.filter.show_all_statuses')}
@@ -207,32 +207,32 @@ export function RenewalsPage() {
             {t('renewals.empty')}
           </div>
         ) : (
-          <ul className="divide-y divide-slate-100">
+          <ul className="divide-y divide-slate-800/70">
             {filtered.map((period) => {
               const Icon = KIND_ICONS[period.kind]
               const status = effectiveStatus(store.alerts[period.key])
               return (
                 <li
                   key={period.key}
-                  className="group flex flex-wrap items-center gap-4 p-4 transition-colors hover:bg-slate-50/70"
+                  className="group flex flex-wrap items-center gap-4 p-4 transition-colors hover:bg-slate-800/40"
                 >
-                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-500">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-slate-800 text-slate-500">
                     <Icon className="h-5 w-5" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
                       <Link
                         to={`/assets/${period.assetId}`}
-                        className="text-sm font-medium text-slate-900 hover:text-brand-700"
+                        className="text-sm font-medium text-slate-100 hover:text-brand-300"
                       >
                         {period.assetName}
                       </Link>
-                      <span className="font-mono text-xs text-slate-400">
+                      <span className="font-mono text-xs text-slate-500">
                         {period.assetTag}
                       </span>
                       <SeverityBadge severity={period.severity} />
                       {status !== 'open' && (
-                        <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                        <span className="inline-flex items-center rounded-full bg-slate-800 px-2 py-0.5 text-xs font-medium text-slate-500">
                           {t(`renewals.status.${status}`)}
                         </span>
                       )}
@@ -242,7 +242,7 @@ export function RenewalsPage() {
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-slate-900">
+                    <p className="text-sm font-medium text-slate-100">
                       {daysLabel(period.daysUntil, t)}
                     </p>
                     <p className="text-xs text-slate-500">
@@ -304,10 +304,10 @@ function StatCard({
   onClick: () => void
 }) {
   const toneClasses = {
-    brand: 'bg-gradient-to-br from-brand-50 to-brand-100/60 text-brand-700 ring-brand-100',
-    amber: 'bg-gradient-to-br from-amber-50 to-amber-100/60 text-amber-700 ring-amber-100',
-    sky: 'bg-gradient-to-br from-sky-50 to-sky-100/60 text-sky-700 ring-sky-100',
-    emerald: 'bg-gradient-to-br from-emerald-50 to-emerald-100/60 text-emerald-700 ring-emerald-100',
+    brand: 'bg-gradient-to-br from-brand-50 to-brand-100/60 text-brand-300 ring-brand-400/30',
+    amber: 'bg-gradient-to-br from-amber-50 to-amber-100/60 text-amber-300 ring-amber-100',
+    sky: 'bg-gradient-to-br from-sky-50 to-sky-100/60 text-sky-300 ring-sky-100',
+    emerald: 'bg-gradient-to-br from-emerald-50 to-emerald-100/60 text-emerald-300 ring-emerald-100',
   }[tone]
   return (
     <button
@@ -315,13 +315,13 @@ function StatCard({
       onClick={onClick}
       className={
         active
-          ? 'group flex items-start justify-between rounded-xl border border-brand-500 bg-white p-5 text-left shadow-elevated ring-2 ring-brand-500/15 transition-all'
-          : 'group flex items-start justify-between rounded-xl border border-slate-200/70 bg-white p-5 text-left shadow-elevated transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lift'
+          ? 'group flex items-start justify-between rounded-xl border border-brand-500 bg-slate-900 p-5 text-left shadow-elevated ring-2 ring-brand-500/15 transition-all'
+          : 'group flex items-start justify-between rounded-xl border border-slate-800/70 bg-slate-900 p-5 text-left shadow-elevated transition-all hover:-translate-y-0.5 hover:border-slate-700 hover:shadow-lift'
       }
     >
       <div>
         <p className="text-[13px] font-medium text-slate-500">{label}</p>
-        <p className="mt-2 text-[28px] font-semibold tracking-tight text-slate-900 tabular-nums">
+        <p className="mt-2 text-[28px] font-semibold tracking-tight text-slate-100 tabular-nums">
           <AnimatedNumberSpan value={value} />
         </p>
       </div>
@@ -347,7 +347,7 @@ function ActionButton({
     <button
       type="button"
       onClick={onClick}
-      className="rounded-md border border-slate-200/70 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 transition-all hover:-translate-y-px hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm active:translate-y-0"
+      className="rounded-md border border-slate-800/70 bg-slate-900 px-2.5 py-1 text-xs font-medium text-slate-300 transition-all hover:-translate-y-px hover:border-slate-700 hover:bg-slate-900/50 hover:shadow-sm active:translate-y-0"
     >
       {children}
     </button>
@@ -375,8 +375,8 @@ function FilterRow({
           onClick={() => onChange(o.value)}
           className={
             value === o.value
-              ? 'rounded-md bg-brand-50 px-2.5 py-1 text-xs font-medium text-brand-700'
-              : 'rounded-md px-2.5 py-1 text-xs font-medium text-slate-600 hover:bg-slate-100'
+              ? 'rounded-md bg-brand-400/10 px-2.5 py-1 text-xs font-medium text-brand-300'
+              : 'rounded-md px-2.5 py-1 text-xs font-medium text-slate-500 hover:bg-slate-800'
           }
         >
           {o.label}

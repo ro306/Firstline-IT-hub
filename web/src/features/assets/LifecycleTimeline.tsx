@@ -91,20 +91,20 @@ export function LifecycleTimeline({
   )
 
   return (
-    <ol className="relative space-y-6 border-l border-slate-200 pl-6">
+    <ol className="relative space-y-6 border-l border-slate-800 pl-6">
       {sorted.map((event) => {
         const Icon = ICONS[event.kind] ?? FileText
         const detail = renderEventDetail(event, t)
         return (
           <li key={event.id} className="relative">
-            <span className="absolute -left-[33px] flex h-6 w-6 items-center justify-center rounded-full bg-white ring-1 ring-slate-200">
+            <span className="absolute -left-[33px] flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 ring-1 ring-slate-700">
               <Icon className="h-3.5 w-3.5 text-slate-500" />
             </span>
             <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
-              <p className="text-sm font-medium text-slate-900">
+              <p className="text-sm font-medium text-slate-100">
                 {t(eventKindKey(event.kind))}
                 {detail && (
-                  <span className="ml-2 text-sm font-normal text-slate-600">
+                  <span className="ml-2 text-sm font-normal text-slate-500">
                     {detail}
                   </span>
                 )}
@@ -117,7 +117,7 @@ export function LifecycleTimeline({
               {t('asset.history.by')} {event.actor}
             </p>
             {event.notes && (
-              <p className="mt-1 rounded-md bg-slate-50 px-3 py-2 text-xs text-slate-600">
+              <p className="mt-1 rounded-md bg-slate-900/50 px-3 py-2 text-xs text-slate-500">
                 {event.notes}
               </p>
             )}
