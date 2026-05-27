@@ -247,9 +247,9 @@ function Stat({
     rose: 'text-rose-700',
   }[tone]
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-5">
-      <p className="text-sm font-medium text-slate-500">{label}</p>
-      <p className={`mt-2 text-2xl font-semibold ${valueClass}`}>{value}</p>
+    <div className="rounded-xl border border-slate-200/70 bg-white p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
+      <p className="text-[13px] font-medium text-slate-500">{label}</p>
+      <p className={`mt-2 text-[28px] font-semibold tracking-tight tabular-nums ${valueClass}`}>{value}</p>
     </div>
   )
 }
@@ -262,8 +262,8 @@ function Section({
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-6">
-      <h3 className="mb-4 text-sm font-semibold text-slate-900">{title}</h3>
+    <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
+      <h3 className="mb-4 text-sm font-semibold tracking-tight text-slate-900">{title}</h3>
       {children}
     </div>
   )

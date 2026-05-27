@@ -48,7 +48,7 @@ export function WarrantyList({
         return (
           <li
             key={w.id}
-            className="rounded-md border border-slate-200 bg-white p-4"
+            className="group rounded-lg border border-slate-200/70 bg-white p-4 transition-all hover:border-slate-300 hover:shadow-elevated"
           >
             <div className="flex items-start justify-between gap-3">
               <div>

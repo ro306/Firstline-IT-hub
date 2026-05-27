@@ -9,6 +9,7 @@ import {
   BellRing,
   CheckSquare,
 } from 'lucide-react'
+import * as motion from 'motion/react-client'
 import { cn } from '@/lib/cn'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { usePreferences } from '@/lib/usePreferences'
@@ -37,19 +38,20 @@ export function Sidebar() {
   const brandSubtitle = prefs.brandSubtitle || t('nav.brand_subtitle')
   const initial = brandTitle.trim().charAt(0).toUpperCase() || 'J'
   return (
-    <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-slate-200 md:bg-white">
-      <div className="flex h-16 items-center gap-2 border-b border-slate-200 px-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-brand-600 text-white font-semibold">
+    <aside className="hidden md:flex md:w-64 md:flex-col md:border-r md:border-slate-200/70 md:bg-white/60 md:backdrop-blur-xl">
+      <div className="flex h-16 items-center gap-2.5 border-b border-slate-200/70 px-5">
+        <div className="relative flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-semibold text-white shadow-[0_4px_12px_-2px_rgb(99_102_241_/_0.35)]">
           {initial}
+          <span className="absolute inset-0 rounded-lg ring-1 ring-inset ring-white/20" />
         </div>
         <div className="flex flex-col leading-tight">
-          <span className="text-sm font-semibold text-slate-900">
+          <span className="text-sm font-semibold tracking-tight text-slate-900">
             {brandTitle}
           </span>
-          <span className="text-xs text-slate-500">{brandSubtitle}</span>
+          <span className="text-[11px] text-slate-500">{brandSubtitle}</span>
         </div>
       </div>
-      <nav className="flex-1 space-y-1 px-3 py-4">
+      <nav className="flex-1 space-y-0.5 px-2.5 py-4">
         {NAV_ITEMS.map(({ to, labelKey, icon: Icon }) => (
           <NavLink
             key={to}
@@ -57,19 +59,41 @@ export function Sidebar() {
             end={to === '/'}
             className={({ isActive }) =>
               cn(
-                'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
+                'group relative flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors',
                 isActive
-                  ? 'bg-brand-50 text-brand-700'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+                  ? 'text-brand-700'
+                  : 'text-slate-600 hover:text-slate-900',
               )
             }
           >
-            <Icon className="h-4 w-4" />
-            <span>{t(labelKey)}</span>
+            {({ isActive }) => (
+              <>
+                {isActive && (
+                  <motion.span
+                    layoutId="sidebar-active"
+                    className="absolute inset-0 rounded-md bg-brand-50 ring-1 ring-inset ring-brand-100"
+                    transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                  />
+                )}
+                <span
+                  className={cn(
+                    'absolute inset-0 rounded-md transition-colors',
+                    !isActive && 'group-hover:bg-slate-100/70',
+                  )}
+                />
+                <Icon
+                  className={cn(
+                    'relative h-4 w-4 transition-transform group-hover:scale-110',
+                    isActive ? 'text-brand-600' : 'text-slate-400',
+                  )}
+                />
+                <span className="relative">{t(labelKey)}</span>
+              </>
+            )}
           </NavLink>
         ))}
       </nav>
-      <div className="border-t border-slate-200 px-6 py-4 text-xs text-slate-400">
+      <div className="border-t border-slate-200/70 px-5 py-3.5 text-[11px] text-slate-400">
         {t('nav.footer_version')}
       </div>
     </aside>

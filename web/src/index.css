@@ -1,15 +1,38 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter/wght.css";
+@import "@fontsource-variable/inter/wght-italic.css";
+@import "@fontsource-variable/jetbrains-mono/wght.css";
 
 @theme {
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-900: #1e3a8a;
+  /* Refined indigo brand — sophisticated without being playful. */
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-900: #312e81;
 
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  /* Layered surfaces — each level slightly elevated from the previous. */
+  --color-surface-base: #f8fafc;
+  --color-surface-tint: #f1f5f9;
+  --color-surface-card: #ffffff;
+
+  --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono Variable", "JetBrains Mono", ui-monospace,
+    "SF Mono", Menlo, Consolas, monospace;
+
+  /* Soft elevation layered shadows — feels like Linear/Vercel cards. */
+  --shadow-elevated:
+    0 1px 0 0 rgb(15 23 42 / 0.04),
+    0 1px 3px 0 rgb(15 23 42 / 0.04),
+    0 8px 24px -6px rgb(15 23 42 / 0.06);
+  --shadow-lift:
+    0 1px 0 0 rgb(15 23 42 / 0.05),
+    0 4px 6px -1px rgb(15 23 42 / 0.06),
+    0 16px 32px -8px rgb(15 23 42 / 0.10);
 }
 
 html,
@@ -18,7 +41,102 @@ body,
   height: 100%;
 }
 
+html {
+  font-feature-settings: "cv11", "ss01", "ss03";
+}
+
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  font-family: var(--font-sans);
+  color: theme(colors.slate.900);
   margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.005em;
+
+  /* Subtle mesh gradient — gives the canvas depth without distracting. */
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(
+      ellipse 60% 80% at 20% 0%,
+      rgb(99 102 241 / 0.06) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 80% at 100% 0%,
+      rgb(168 85 247 / 0.04) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 100% 100% at 50% 100%,
+      rgb(59 130 246 / 0.03) 0%,
+      transparent 50%
+    );
+  background-attachment: fixed;
+}
+
+/* Numeric tabular alignment for tables and stat cards. */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom scrollbar — slim, neutral, doesn't intrude. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: theme(colors.slate.300) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: theme(colors.slate.300);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: theme(colors.slate.400);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+
+/* Code/mono — always tabular for asset tags and IDs. */
+.font-mono,
+code,
+kbd {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "calt" 0;
+}
+
+/* Subtle pulse for active notifications — quiet, not distracting. */
+@keyframes badge-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgb(244 63 94 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgb(244 63 94 / 0);
+  }
+}
+
+.animate-badge-pulse {
+  animation: badge-pulse 2s ease-out infinite;
+}
+
+/* Respect users who prefer reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

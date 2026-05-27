@@ -29,6 +29,7 @@ export function Header() {
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [])
+
   const initials = user?.name
     .split(' ')
     .map((part) => part[0])
@@ -45,41 +46,42 @@ export function Header() {
   }, [assets, rules, store.alerts])
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6">
+    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-slate-200/70 bg-white/70 px-6 backdrop-blur-xl">
       <button
         type="button"
         onClick={() => setSearchOpen(true)}
-        className="group flex w-full max-w-md items-center gap-2 rounded-md border border-slate-200 bg-slate-50 py-2 pr-3 pl-3 text-sm text-slate-400 hover:bg-white hover:text-slate-600"
+        className="group flex w-full max-w-md items-center gap-2.5 rounded-lg border border-slate-200 bg-white/80 py-1.5 pr-2 pl-3 text-sm text-slate-400 shadow-sm transition-all hover:border-slate-300 hover:text-slate-600 hover:shadow"
       >
-        <Search className="h-4 w-4" />
+        <Search className="h-4 w-4 transition-colors group-hover:text-slate-500" />
         <span className="flex-1 text-left">{t('header.search_placeholder')}</span>
-        <kbd className="hidden rounded border border-slate-200 bg-white px-1.5 py-0.5 text-xs text-slate-500 sm:inline">
+        <kbd className="hidden items-center gap-0.5 rounded border border-slate-200 bg-slate-50 px-1.5 py-0.5 text-[10px] font-medium text-slate-500 sm:inline-flex">
           ⌘K
         </kbd>
       </button>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
         <LanguageSwitcher />
         <Link
           to="/renewals"
-          className="relative rounded-md p-2 text-slate-500 hover:bg-slate-100 hover:text-slate-700"
+          className="relative rounded-lg p-2 text-slate-500 transition-colors hover:bg-slate-100 hover:text-slate-700"
           aria-label={t('header.notifications_aria', { count: openCount })}
         >
-          <Bell className="h-5 w-5" />
+          <Bell className="h-[18px] w-[18px]" />
           {openCount > 0 && (
-            <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-white">
+            <span className="animate-badge-pulse absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-semibold text-white tabular-nums">
               {openCount > 9 ? '9+' : openCount}
             </span>
           )}
         </Link>
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 text-sm font-semibold text-brand-700">
+        <div className="flex items-center gap-2.5 border-l border-slate-200/70 pl-3">
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-brand-100 to-brand-200 text-sm font-semibold text-brand-700">
             {initials ?? '?'}
+            <span className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/40" />
           </div>
           <div className="hidden flex-col leading-tight sm:flex">
             <span className="text-sm font-medium text-slate-900">
               {user?.name}
             </span>
-            <span className="text-xs text-slate-500">{user?.email}</span>
+            <span className="text-[11px] text-slate-500">{user?.email}</span>
           </div>
         </div>
       </div>

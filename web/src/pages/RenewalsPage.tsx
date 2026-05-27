@@ -28,6 +28,7 @@ import { useAlertStore } from '@/features/lifecycle/useAlertStore'
 import { effectiveStatus } from '@/features/lifecycle/alertStoreContext'
 import { useAssetStore } from '@/features/assets/useAssetStore'
 import { useRulesStore } from '@/features/lifecycle/useRulesStore'
+import { AnimatedNumber } from '@/components/motion/AnimatedNumber'
 import { formatDate } from '@/features/assets/finance'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import type { TranslateFn } from '@/lib/i18n/i18nContext'
@@ -160,8 +161,8 @@ export function RenewalsPage() {
         />
       </div>
 
-      <div className="mt-6 rounded-lg border border-slate-200 bg-white">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 p-4">
+      <div className="mt-6 overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-elevated">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200/70 p-4">
           <div className="flex flex-wrap items-center gap-3">
             <FilterRow
               label={t('renewals.filter.kind_label')}
@@ -213,7 +214,7 @@ export function RenewalsPage() {
               return (
                 <li
                   key={period.key}
-                  className="flex flex-wrap items-center gap-4 p-4 hover:bg-slate-50/60"
+                  className="group flex flex-wrap items-center gap-4 p-4 transition-colors hover:bg-slate-50/70"
                 >
                   <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-500">
                     <Icon className="h-5 w-5" />
@@ -303,10 +304,10 @@ function StatCard({
   onClick: () => void
 }) {
   const toneClasses = {
-    brand: 'bg-brand-50 text-brand-700',
-    amber: 'bg-amber-50 text-amber-700',
-    sky: 'bg-sky-50 text-sky-700',
-    emerald: 'bg-emerald-50 text-emerald-700',
+    brand: 'bg-gradient-to-br from-brand-50 to-brand-100/60 text-brand-700 ring-brand-100',
+    amber: 'bg-gradient-to-br from-amber-50 to-amber-100/60 text-amber-700 ring-amber-100',
+    sky: 'bg-gradient-to-br from-sky-50 to-sky-100/60 text-sky-700 ring-sky-100',
+    emerald: 'bg-gradient-to-br from-emerald-50 to-emerald-100/60 text-emerald-700 ring-emerald-100',
   }[tone]
   return (
     <button
@@ -314,19 +315,25 @@ function StatCard({
       onClick={onClick}
       className={
         active
-          ? 'flex items-start justify-between rounded-lg border border-brand-500 bg-white p-5 text-left ring-2 ring-brand-500/20'
-          : 'flex items-start justify-between rounded-lg border border-slate-200 bg-white p-5 text-left hover:border-slate-300'
+          ? 'group flex items-start justify-between rounded-xl border border-brand-500 bg-white p-5 text-left shadow-elevated ring-2 ring-brand-500/15 transition-all'
+          : 'group flex items-start justify-between rounded-xl border border-slate-200/70 bg-white p-5 text-left shadow-elevated transition-all hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-lift'
       }
     >
       <div>
-        <p className="text-sm font-medium text-slate-500">{label}</p>
-        <p className="mt-2 text-2xl font-semibold text-slate-900">{value}</p>
+        <p className="text-[13px] font-medium text-slate-500">{label}</p>
+        <p className="mt-2 text-[28px] font-semibold tracking-tight text-slate-900 tabular-nums">
+          <AnimatedNumberSpan value={value} />
+        </p>
       </div>
-      <div className={`rounded-md p-2 ${toneClasses}`}>
+      <div className={`rounded-lg p-2 ring-1 ring-inset transition-transform group-hover:scale-110 ${toneClasses}`}>
         <Icon className="h-5 w-5" />
       </div>
     </button>
   )
+}
+
+function AnimatedNumberSpan({ value }: { value: number }) {
+  return <AnimatedNumber value={value} />
 }
 
 function ActionButton({
@@ -340,7 +347,7 @@ function ActionButton({
     <button
       type="button"
       onClick={onClick}
-      className="rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+      className="rounded-md border border-slate-200/70 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 transition-all hover:-translate-y-px hover:border-slate-300 hover:bg-slate-50 hover:shadow-sm active:translate-y-0"
     >
       {children}
     </button>

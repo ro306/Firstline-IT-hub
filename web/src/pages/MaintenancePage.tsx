@@ -124,7 +124,7 @@ export function MaintenancePage() {
         />
       </div>
 
-      <div className="mt-6 rounded-lg border border-slate-200 bg-white">
+      <div className="mt-6 overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-elevated">
         <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 p-4">
           {FILTERS.map((f) => (
             <button
@@ -149,7 +149,7 @@ export function MaintenancePage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50 text-xs font-medium text-slate-500 uppercase">
+              <thead className="bg-slate-50/60 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
                 <tr>
                   <th className="px-4 py-3">
                     {t('maintenance_page.table.title')}
@@ -174,7 +174,7 @@ export function MaintenancePage() {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {filtered.map((ticket) => (
-                  <tr key={ticket.id} className="hover:bg-slate-50">
+                  <tr key={ticket.id} className="group transition-colors hover:bg-slate-50/70">
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-3">
                         <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-100 text-slate-500">
@@ -281,7 +281,7 @@ function Stat({
     emerald: 'bg-emerald-50 text-emerald-700',
   }[tone]
   return (
-    <div className="flex items-start justify-between rounded-lg border border-slate-200 bg-white p-5">
+    <div className="flex items-start justify-between rounded-xl border border-slate-200/70 bg-white p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
       <div>
         <p className="text-sm font-medium text-slate-500">{label}</p>
         <p className="mt-2 text-2xl font-semibold text-slate-900">{value}</p>

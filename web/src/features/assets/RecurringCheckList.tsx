@@ -31,7 +31,7 @@ export function RecurringCheckList({
         return (
           <li
             key={c.id}
-            className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-slate-200 bg-white p-3"
+            className="group flex flex-wrap items-center justify-between gap-3 rounded-lg border border-slate-200/70 bg-white p-3 transition-all hover:border-slate-300 hover:shadow-elevated"
           >
             <div className="flex min-w-0 flex-1 items-start gap-3">
               <ClipboardCheck className="mt-0.5 h-5 w-5 flex-shrink-0 text-slate-400" />

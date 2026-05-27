@@ -118,7 +118,7 @@ export function AssetDetailPage() {
           <ArrowLeft className="h-4 w-4" />
           {t('asset.back_to_assets')}
         </Link>
-        <div className="mt-6 rounded-lg border border-slate-200 bg-white p-10 text-center">
+        <div className="mt-6 rounded-xl border border-slate-200/70 bg-white p-10 shadow-elevated text-center">
           <h2 className="text-lg font-semibold text-slate-900">
             {t('asset.not_found_title')}
           </h2>
@@ -202,7 +202,7 @@ export function AssetDetailPage() {
         }
       />
 
-      <div className="mb-6 rounded-lg border border-slate-200 bg-white p-6">
+      <div className="mb-6 rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
         <h3 className="mb-4 text-xs font-semibold tracking-wide text-slate-500 uppercase">
           {t('asset.section_lifecycle')}
         </h3>
@@ -233,7 +233,7 @@ export function AssetDetailPage() {
             <AssetUpcomingPanel asset={asset} />
           </div>
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <div className="rounded-lg border border-slate-200 bg-white p-6 lg:col-span-2">
+            <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated lg:col-span-2">
               <h3 className="text-sm font-semibold text-slate-900">
                 {t('asset.details.title')}
               </h3>
@@ -303,7 +303,7 @@ export function AssetDetailPage() {
               </dl>
             </div>
 
-            <div className="rounded-lg border border-slate-200 bg-white p-6">
+            <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
               <h3 className="text-sm font-semibold text-slate-900">
                 {t('asset.lifecycle_dates.title')}
               </h3>
@@ -360,7 +360,7 @@ export function AssetDetailPage() {
             </div>
           </div>
 
-          <div className="mt-6 rounded-lg border border-slate-200 bg-white p-6">
+          <div className="mt-6 rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-sm font-semibold text-slate-900">
                 {t('asset_detail.recurring_checks_title')}
@@ -386,7 +386,7 @@ export function AssetDetailPage() {
 
       {tab === 'history' && (
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-          <div className="rounded-lg border border-slate-200 bg-white p-6">
+          <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-sm font-semibold text-slate-900">
                 {t('asset.history.timeline_title')}
@@ -402,7 +402,7 @@ export function AssetDetailPage() {
             </div>
             <LifecycleTimeline events={asset.events} />
           </div>
-          <div className="rounded-lg border border-slate-200 bg-white p-6">
+          <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
             <h3 className="mb-4 text-sm font-semibold text-slate-900">
               {t('asset.history.assignment_title')}
             </h3>
@@ -412,7 +412,7 @@ export function AssetDetailPage() {
       )}
 
       {tab === 'warranties' && (
-        <div className="rounded-lg border border-slate-200 bg-white p-6">
+        <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
           <div className="mb-4 flex items-center justify-between">
             <h3 className="text-sm font-semibold text-slate-900">
               {t('asset.section_warranties')}

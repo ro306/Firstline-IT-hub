@@ -59,7 +59,7 @@ export function LicensesPage() {
         />
       </div>
 
-      <div className="mt-6 rounded-lg border border-slate-200 bg-white">
+      <div className="mt-6 overflow-hidden rounded-xl border border-slate-200/70 bg-white shadow-elevated">
         {store.licenses.length === 0 ? (
           <div className="p-10 text-center text-sm text-slate-500">
             {t('licenses_page.empty')}
@@ -67,7 +67,7 @@ export function LicensesPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="bg-slate-50 text-xs font-medium text-slate-500 uppercase">
+              <thead className="bg-slate-50/60 text-[10px] font-semibold tracking-wider text-slate-500 uppercase">
                 <tr>
                   <th className="px-4 py-3">{t('licenses_page.table.name')}</th>
                   <th className="px-4 py-3">{t('licenses_page.table.kind')}</th>
@@ -84,7 +84,7 @@ export function LicensesPage() {
                     : 0
                   const overuse = lic.seatsUsed > lic.seatsTotal
                   return (
-                    <tr key={lic.id} className="hover:bg-slate-50">
+                    <tr key={lic.id} className="group transition-colors hover:bg-slate-50/70">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-100 text-slate-500">
@@ -192,7 +192,7 @@ function Stat({
   value: number | string
 }) {
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-5">
+    <div className="rounded-xl border border-slate-200/70 bg-white p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
       <p className="text-sm font-medium text-slate-500">{label}</p>
       <p className="mt-2 text-2xl font-semibold text-slate-900">{value}</p>
     </div>

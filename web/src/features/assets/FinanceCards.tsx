@@ -8,7 +8,7 @@ export function DepreciationCard({ asset }: { asset: Asset }) {
   const snapshot = computeDepreciation(asset)
   if (!asset.depreciation || !snapshot) {
     return (
-      <div className="rounded-lg border border-slate-200 bg-white p-6">
+      <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
         <h3 className="text-sm font-semibold text-slate-900">
           {t('asset.finance.depreciation_title')}
         </h3>
@@ -20,7 +20,7 @@ export function DepreciationCard({ asset }: { asset: Asset }) {
   }
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-6">
+    <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
       <div className="flex items-start justify-between">
         <h3 className="text-sm font-semibold text-slate-900">
           {t('asset.finance.depreciation_title')}
@@ -73,7 +73,7 @@ export function DepreciationCard({ asset }: { asset: Asset }) {
 export function PurchaseCard({ asset }: { asset: Asset }) {
   const { t } = useTranslation()
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-6">
+    <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
       <h3 className="text-sm font-semibold text-slate-900">
         {t('asset.finance.purchase_title')}
       </h3>
@@ -112,7 +112,7 @@ export function LeaseCard({ asset }: { asset: Asset }) {
   if (!asset.lease) return null
   const { lease, ownership } = asset
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-6">
+    <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
       <div className="flex items-start justify-between">
         <h3 className="text-sm font-semibold text-slate-900">
           {t('asset.finance.lease_title')} (
@@ -162,7 +162,7 @@ export function DisposalCard({ asset }: { asset: Asset }) {
   if (!asset.disposal) return null
   const d = asset.disposal
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-6">
+    <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
       <div className="flex items-start justify-between">
         <h3 className="text-sm font-semibold text-slate-900">
           {t('asset.finance.disposal_title')}

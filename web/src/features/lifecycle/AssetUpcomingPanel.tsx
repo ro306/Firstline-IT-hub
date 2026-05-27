@@ -22,7 +22,7 @@ export function AssetUpcomingPanel({ asset }: { asset: Asset }) {
   if (periods.length === 0) return null
 
   return (
-    <div className="rounded-lg border border-slate-200 bg-white p-6">
+    <div className="rounded-xl border border-slate-200/70 bg-white p-6 shadow-elevated">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-semibold text-slate-900">
           {t('asset.upcoming.title')}
