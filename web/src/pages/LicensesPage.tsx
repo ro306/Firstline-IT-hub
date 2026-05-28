@@ -119,10 +119,10 @@ export function LicensesPage() {
                               className={cn(
                                 'h-full rounded-full',
                                 overuse
-                                  ? 'bg-rose-950/400'
+                                  ? 'bg-rose-500'
                                   : pct > 85
-                                    ? 'bg-amber-950/400'
-                                    : 'bg-brand-400/100',
+                                    ? 'bg-amber-500'
+                                    : 'bg-brand-500',
                               )}
                               style={{ width: `${Math.min(100, pct)}%` }}
                             />
@@ -461,7 +461,7 @@ function DeleteLicenseDialog({
         </>
       }
     >
-      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-950/40 p-3 text-sm text-rose-800">
+      <div className="flex gap-3 rounded-md border border-rose-500/30 bg-rose-950/40 p-3 text-sm text-rose-300">
         <AlertTriangle className="h-5 w-5 flex-shrink-0" />
         <p>
           {t('licenses_page.form.delete_warning', { name: license.name })}

@@ -19,7 +19,7 @@ export function LifecycleStepper({ state }: { state: AssetLifecycleState }) {
 
   if (isOffFlow) {
     return (
-      <div className="flex items-center gap-3 rounded-lg border border-rose-200 bg-rose-950/40/70 px-4 py-3 text-sm text-rose-800">
+      <div className="flex items-center gap-3 rounded-lg border border-rose-500/30 bg-rose-950/40 px-4 py-3 text-sm text-rose-300">
         <AlertOctagon className="h-5 w-5 flex-shrink-0" />
         <div>
           <p className="font-medium">

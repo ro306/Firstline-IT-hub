@@ -73,9 +73,8 @@ export function Header() {
           )}
         </Link>
         <div className="flex items-center gap-2.5 border-l border-slate-800/70 pl-3">
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-brand-100 to-brand-200 text-sm font-semibold text-brand-300">
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-brand-500/25 to-brand-400/15 text-sm font-semibold text-brand-300 ring-1 ring-inset ring-brand-400/20">
             {initials ?? '?'}
-            <span className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/40" />
           </div>
           <div className="hidden flex-col leading-tight sm:flex">
             <span className="text-sm font-medium text-slate-100">

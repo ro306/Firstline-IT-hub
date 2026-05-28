@@ -168,7 +168,7 @@ export function ReturnAssignmentDialog({
       }
     >
       <div className="space-y-3">
-        <div className="flex gap-3 rounded-md border border-amber-200 bg-amber-950/40 p-3 text-sm text-amber-800">
+        <div className="flex gap-3 rounded-md border border-amber-500/30 bg-amber-950/40 p-3 text-sm text-amber-300">
           <AlertTriangle className="h-5 w-5 flex-shrink-0" />
           <p>
             {t('assignment_form.return_warning', {

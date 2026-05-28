@@ -375,7 +375,7 @@ function DeleteRuleDialog({
         </>
       }
     >
-      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-950/40 p-3 text-sm text-rose-800">
+      <div className="flex gap-3 rounded-md border border-rose-500/30 bg-rose-950/40 p-3 text-sm text-rose-300">
         <AlertTriangle className="h-5 w-5 flex-shrink-0" />
         <p>{t('rule_delete.warning', { name: rule.name })}</p>
       </div>
@@ -417,7 +417,7 @@ function DataTab() {
               () => assets.resetToDemo(),
             )
           }
-          className="inline-flex items-center gap-2 rounded-md border border-amber-200 bg-amber-950/40 px-3 py-2 text-sm font-medium text-amber-800 hover:bg-amber-100"
+          className="inline-flex items-center gap-2 rounded-md border border-amber-500/30 bg-amber-950/40 px-3 py-2 text-sm font-medium text-amber-300 hover:bg-amber-950/60"
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.assets_reset')}

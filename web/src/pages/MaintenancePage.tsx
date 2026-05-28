@@ -572,7 +572,7 @@ function DeleteTicketDialog({
         </>
       }
     >
-      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-950/40 p-3 text-sm text-rose-800">
+      <div className="flex gap-3 rounded-md border border-rose-500/30 bg-rose-950/40 p-3 text-sm text-rose-300">
         <AlertTriangle className="h-5 w-5 flex-shrink-0" />
         <p>
           {t('maintenance_page.form.delete_warning', { title: ticket.title })}

@@ -53,7 +53,7 @@ export function DeleteAssetDialog({
       }
     >
       <div className="space-y-4">
-        <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-950/40 p-3 text-sm text-rose-800">
+        <div className="flex gap-3 rounded-md border border-rose-500/30 bg-rose-950/40 p-3 text-sm text-rose-300">
           <AlertTriangle className="h-5 w-5 flex-shrink-0" />
           <p>{t('delete_asset.warning', { name: asset.name })}</p>
         </div>

@@ -48,7 +48,7 @@ export function DepreciationCard({ asset }: { asset: Asset }) {
         </div>
         <div className="h-2 overflow-hidden rounded-full bg-slate-800">
           <div
-            className="h-full rounded-full bg-brand-400/100"
+            className="h-full rounded-full bg-brand-500"
             style={{ width: `${snapshot.percentDepreciated}%` }}
           />
         </div>

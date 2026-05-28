@@ -128,8 +128,8 @@ function SearchDialogInner({ onClose }: { onClose: () => void }) {
                     className={cn(
                       'group flex w-full items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-left transition-colors',
                       highlight === idx
-                        ? 'bg-brand-400/15 text-brand-900'
-                        : 'hover:bg-slate-900/50',
+                        ? 'bg-brand-400/15 text-slate-100 ring-1 ring-inset ring-brand-400/20'
+                        : 'text-slate-300 hover:bg-slate-800/50',
                     )}
                   >
                     <div className="min-w-0 flex-1">

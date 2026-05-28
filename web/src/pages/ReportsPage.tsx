@@ -160,7 +160,7 @@ export function ReportsPage() {
           </p>
           <div className="mt-3 h-2 overflow-hidden rounded-full bg-slate-800">
             <div
-              className="h-full rounded-full bg-brand-400/100"
+              className="h-full rounded-full bg-brand-500"
               style={{
                 width: `${Math.round((bookValue / Math.max(totalValue, 1)) * 100)}%`,
               }}
@@ -209,8 +209,8 @@ export function ReportsPage() {
                   className={cn(
                     'h-full rounded-full',
                     usedSeats / totalSeats > 0.85
-                      ? 'bg-amber-950/400'
-                      : 'bg-brand-400/100',
+                      ? 'bg-amber-500'
+                      : 'bg-brand-500',
                   )}
                   style={{ width: `${(usedSeats / totalSeats) * 100}%` }}
                 />
@@ -291,7 +291,7 @@ function BarList({
           </div>
           <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-800">
             <div
-              className="h-full rounded-full bg-brand-400/100"
+              className="h-full rounded-full bg-brand-500"
               style={{ width: `${(count / max) * 100}%` }}
             />
           </div>

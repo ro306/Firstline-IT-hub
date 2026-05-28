@@ -232,7 +232,7 @@ export function WarrantyDeleteDialog({
         </>
       }
     >
-      <div className="flex gap-3 rounded-md border border-rose-200 bg-rose-950/40 p-3 text-sm text-rose-800">
+      <div className="flex gap-3 rounded-md border border-rose-500/30 bg-rose-950/40 p-3 text-sm text-rose-300">
         <AlertTriangle className="h-5 w-5 flex-shrink-0" />
         <p>
           {t('warranty_form.delete_warning', { provider: warranty.provider })}
