@@ -7,6 +7,7 @@
     "delete": "Delete",
     "close": "Close",
     "back": "Back",
+    "next": "Next",
     "view_all": "View all",
     "loading": "Loading…",
     "none": "None",
@@ -27,6 +28,7 @@
     "brand_subtitle": "Asset Management",
     "dashboard": "Dashboard",
     "assets": "Assets",
+    "people": "People",
     "renewals": "Renewals",
     "tasks": "Tasks",
     "licenses": "Licenses",
@@ -34,6 +36,79 @@
     "reports": "Reports",
     "settings": "Settings",
     "footer_version": "v0.1.0 · dev build"
+  },
+  "people_page": {
+    "title": "People",
+    "description": "Employees, their assets, licenses, and onboarding status.",
+    "new_person": "Add person",
+    "onboard": "Onboard person",
+    "offboard": "Offboard",
+    "empty": "No people yet.",
+    "delete_title": "Delete person",
+    "delete_warning": "Delete {name}? Their history is lost, but the assets remain assigned.",
+    "field": {
+      "name": "Name",
+      "email": "Email",
+      "department": "Department",
+      "department_placeholder": "e.g. Engineering",
+      "role": "Role",
+      "role_placeholder": "e.g. Backend Developer",
+      "status": "Status",
+      "start_date": "Start date",
+      "end_date": "End date",
+      "notes": "Notes"
+    },
+    "status": {
+      "onboarding": "Onboarding",
+      "active": "Active",
+      "offboarding": "Offboarding",
+      "inactive": "Inactive"
+    },
+    "table": {
+      "name": "Name",
+      "department": "Department / role",
+      "status": "Status",
+      "assets": "Assets",
+      "licenses": "Licenses",
+      "start_date": "Start date"
+    },
+    "form": {
+      "create_title": "Add person",
+      "edit_title": "Edit person"
+    }
+  },
+  "onboarding": {
+    "title": "Onboard new person",
+    "step": {
+      "person": "Personal details",
+      "package": "Pick a package",
+      "preview": "Preview"
+    },
+    "done_subtitle": "Onboarding complete",
+    "no_package": "Pick an onboarding package to continue.",
+    "items_count": "items",
+    "execute": "Run onboarding",
+    "summary_assets": "Assets",
+    "summary_licenses": "License seats",
+    "summary_missing": "Missing",
+    "summary_success": "Person created. Assigned {created} assets, claimed {seats} license seats, {skipped} items could not be provisioned.",
+    "row": {
+      "will_assign": "Will assign",
+      "no_stock": "None in stock",
+      "seat_taken": "Seat {used} / {total}",
+      "license_full": "No free seats",
+      "license_missing": "License not found"
+    }
+  },
+  "offboarding": {
+    "title": "Offboard person",
+    "execute": "Run offboarding",
+    "warning": "You're about to offboard {name}. All assigned assets are returned and license seats are released.",
+    "assets_heading": "Assets to return",
+    "no_assets": "No assets currently assigned.",
+    "licenses_heading": "Licenses to release",
+    "no_licenses": "No licenses tracked on this person.",
+    "summary_success": "Offboarding complete. {returned} assets returned, {released} license seats released."
   },
   "settings": {
     "title": "Settings",

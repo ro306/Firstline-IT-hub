@@ -9,6 +9,7 @@ import { SettingsPage } from '@/pages/SettingsPage'
 import { LicensesPage } from '@/pages/LicensesPage'
 import { MaintenancePage } from '@/pages/MaintenancePage'
 import { ReportsPage } from '@/pages/ReportsPage'
+import { PeoplePage } from '@/pages/PeoplePage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
@@ -21,6 +22,7 @@ export const router = createBrowserRouter([
       { path: 'assets/:id', Component: AssetDetailPage },
       { path: 'renewals', Component: RenewalsPage },
       { path: 'tasks', Component: TasksPage },
+      { path: 'people', Component: PeoplePage },
       { path: 'licenses', Component: LicensesPage },
       { path: 'maintenance', Component: MaintenancePage },
       { path: 'reports', Component: ReportsPage },

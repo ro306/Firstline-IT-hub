@@ -7,6 +7,7 @@
     "delete": "Slet",
     "close": "Luk",
     "back": "Tilbage",
+    "next": "Næste",
     "view_all": "Se alle",
     "loading": "Indlæser…",
     "none": "Ingen",
@@ -27,6 +28,7 @@
     "brand_subtitle": "Asset Management",
     "dashboard": "Oversigt",
     "assets": "Aktiver",
+    "people": "Personer",
     "renewals": "Fornyelser",
     "tasks": "Opgaver",
     "licenses": "Licenser",
@@ -34,6 +36,79 @@
     "reports": "Rapporter",
     "settings": "Indstillinger",
     "footer_version": "v0.1.0 · dev build"
+  },
+  "people_page": {
+    "title": "Personer",
+    "description": "Medarbejdere, deres aktiver, licenser og onboarding-status.",
+    "new_person": "Tilføj person",
+    "onboard": "Onboard person",
+    "offboard": "Offboard",
+    "empty": "Ingen personer endnu.",
+    "delete_title": "Slet person",
+    "delete_warning": "Slet {name}? Personens historik mistes, men aktiverne forbliver tildelt.",
+    "field": {
+      "name": "Navn",
+      "email": "E-mail",
+      "department": "Afdeling",
+      "department_placeholder": "fx Engineering",
+      "role": "Rolle",
+      "role_placeholder": "fx Backend Developer",
+      "status": "Status",
+      "start_date": "Startdato",
+      "end_date": "Slutdato",
+      "notes": "Noter"
+    },
+    "status": {
+      "onboarding": "Onboarding",
+      "active": "Aktiv",
+      "offboarding": "Offboarding",
+      "inactive": "Inaktiv"
+    },
+    "table": {
+      "name": "Navn",
+      "department": "Afdeling / rolle",
+      "status": "Status",
+      "assets": "Aktiver",
+      "licenses": "Licenser",
+      "start_date": "Startdato"
+    },
+    "form": {
+      "create_title": "Tilføj person",
+      "edit_title": "Rediger person"
+    }
+  },
+  "onboarding": {
+    "title": "Onboard ny person",
+    "step": {
+      "person": "Personoplysninger",
+      "package": "Vælg pakke",
+      "preview": "Forhåndsvisning"
+    },
+    "done_subtitle": "Onboarding gennemført",
+    "no_package": "Vælg en onboarding-pakke for at fortsætte.",
+    "items_count": "elementer",
+    "execute": "Kør onboarding",
+    "summary_assets": "Aktiver",
+    "summary_licenses": "Licens-pladser",
+    "summary_missing": "Mangler",
+    "summary_success": "Personen er oprettet. {created} aktiver tildelt, {seats} licens-pladser optaget, {skipped} elementer kunne ikke leveres.",
+    "row": {
+      "will_assign": "Tildeles",
+      "no_stock": "Ingen på lager",
+      "seat_taken": "Plads {used} / {total}",
+      "license_full": "Ingen ledige pladser",
+      "license_missing": "Licens ikke fundet"
+    }
+  },
+  "offboarding": {
+    "title": "Offboard person",
+    "execute": "Kør offboarding",
+    "warning": "Du er ved at offboarde {name}. Alle tildelte aktiver returneres, og licens-pladser frigives.",
+    "assets_heading": "Aktiver der returneres",
+    "no_assets": "Ingen aktiver tildelt.",
+    "licenses_heading": "Licenser der frigives",
+    "no_licenses": "Ingen licenser registreret på personen.",
+    "summary_success": "Offboarding gennemført. {returned} aktiver returneret, {released} licens-pladser frigivet."
   },
   "settings": {
     "title": "Indstillinger",
