@@ -123,6 +123,20 @@ kbd {
   font-feature-settings: "calt" 0;
 }
 
+/* Native <select> renders its option list with the OS/browser theme, which
+   defaults to a white background — unreadable on our dark UI. Force every
+   select and its options to the dark surface palette. */
+select {
+  background-color: theme(colors.slate.900);
+  color: theme(colors.slate.100);
+}
+
+select option,
+select optgroup {
+  background-color: #1a2235;
+  color: #e2e8f0;
+}
+
 @keyframes badge-pulse {
   0%, 100% {
     box-shadow: 0 0 0 0 rgb(244 63 94 / 0.6);
