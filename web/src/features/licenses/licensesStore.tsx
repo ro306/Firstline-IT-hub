@@ -20,7 +20,12 @@ function load(): License[] {
     const raw = window.localStorage.getItem(STORAGE_KEY)
     if (!raw) return MOCK_LICENSES
     const parsed = JSON.parse(raw) as License[]
-    return Array.isArray(parsed) ? parsed : MOCK_LICENSES
+    if (!Array.isArray(parsed)) return MOCK_LICENSES
+    // Backfill serviceType for records saved before cloud services existed.
+    return parsed.map((l) => ({
+      ...l,
+      serviceType: l.serviceType ?? 'license',
+    }))
   } catch {
     return MOCK_LICENSES
   }

@@ -17,6 +17,7 @@ import type {
   Asset,
   AssetAssignment,
   AssetLifecycleEvent,
+  AssetSecurity,
   AssetWarranty,
 } from './types'
 
@@ -461,6 +462,22 @@ export function AssetStoreProvider({ children }: { children: ReactNode }) {
     [actor],
   )
 
+  const updateSecurity = useCallback<AssetStoreValue['updateSecurity']>(
+    (assetId, security: AssetSecurity) => {
+      setAssets((prev) =>
+        prev.map((a) => {
+          if (a.id !== assetId) return a
+          return pushEvent(
+            { ...a, security },
+            { kind: 'note', notes: 'Security & compliance updated' },
+            actor,
+          )
+        }),
+      )
+    },
+    [actor],
+  )
+
   // Suppress eslint exhaustive-deps for completeness — every store fn is
   // listed below, even though several are stable references via useCallback.
   const value = useMemo<AssetStoreValue>(
@@ -483,6 +500,7 @@ export function AssetStoreProvider({ children }: { children: ReactNode }) {
       returnAssignment,
       addNote,
       addEvent,
+      updateSecurity,
     }),
     [
       assets,
@@ -503,6 +521,7 @@ export function AssetStoreProvider({ children }: { children: ReactNode }) {
       returnAssignment,
       addNote,
       addEvent,
+      updateSecurity,
     ],
   )
 

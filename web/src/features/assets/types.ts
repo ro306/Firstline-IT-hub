@@ -145,6 +145,28 @@ export type RecurringCheck = {
   responsibleRole?: string
 }
 
+export type PatchStatus = 'up_to_date' | 'outdated' | 'unknown'
+
+export type ComplianceStatus =
+  | 'compliant'
+  | 'non_compliant'
+  | 'exempt'
+  | 'unknown'
+
+// Security & compliance posture for an asset. All optional — an asset with no
+// security record is treated as "unknown" compliance.
+export type AssetSecurity = {
+  encrypted?: boolean
+  patchStatus?: PatchStatus
+  osName?: string
+  osVersion?: string
+  lastSeenAt?: string
+  complianceStatus?: ComplianceStatus
+  // Frameworks this asset is held to, e.g. 'GDPR', 'ISO27001', 'NIS2'.
+  frameworks?: string[]
+  notes?: string
+}
+
 export type Asset = {
   id: string
   assetTag: string
@@ -173,6 +195,7 @@ export type Asset = {
   disposal?: AssetDisposal
   warranties: AssetWarranty[]
   recurringChecks: RecurringCheck[]
+  security?: AssetSecurity
 
   events: AssetLifecycleEvent[]
 }

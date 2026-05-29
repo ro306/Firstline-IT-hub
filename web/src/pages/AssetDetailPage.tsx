@@ -9,6 +9,9 @@ import {
   UserPlus,
   UserMinus,
   FileText,
+  ShieldCheck,
+  Lock,
+  LockOpen,
 } from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
@@ -39,6 +42,9 @@ import {
   ReturnAssignmentDialog,
   NoteDialog,
 } from '@/features/assets/AssignmentDialog'
+import { SecurityDialog } from '@/features/assets/SecurityDialog'
+import { ComplianceBadge, PatchBadge } from '@/features/assets/ComplianceBadge'
+import { deriveComplianceStatus } from '@/features/assets/security'
 import { useAssetStore } from '@/features/assets/useAssetStore'
 import { AssetUpcomingPanel } from '@/features/lifecycle/AssetUpcomingPanel'
 import { formatDate } from '@/features/assets/finance'
@@ -94,6 +100,7 @@ export function AssetDetailPage() {
   const [assigning, setAssigning] = useState(false)
   const [returningAssignment, setReturningAssignment] = useState(false)
   const [addingNote, setAddingNote] = useState(false)
+  const [editingSecurity, setEditingSecurity] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const asset = id ? getAsset(id) : undefined
 
@@ -381,6 +388,116 @@ export function AssetDetailPage() {
               onComplete={(c) => store.completeCheck(asset.id, c.id)}
             />
           </div>
+
+          <div className="mt-6 rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="flex items-center gap-2 text-sm font-semibold text-slate-100">
+                <ShieldCheck className="h-4 w-4 text-cyan-400" />
+                {t('asset.security.title')}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setEditingSecurity(true)}
+                className="inline-flex items-center gap-1 rounded-md border border-slate-800 bg-slate-900 px-2.5 py-1 text-xs font-medium text-slate-300 hover:bg-slate-800/50"
+              >
+                <Pencil className="h-3.5 w-3.5" />
+                {t('asset.security.edit')}
+              </button>
+            </div>
+            {!asset.security ? (
+              <p className="text-sm text-slate-500">
+                {t('asset.security.none')}
+              </p>
+            ) : (
+              <dl className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                <div className="flex items-center justify-between">
+                  <dt className="text-slate-500">
+                    {t('asset.security.encrypted')}
+                  </dt>
+                  <dd>
+                    <span
+                      className={cn(
+                        'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ring-inset',
+                        asset.security.encrypted
+                          ? 'bg-emerald-950/40 text-emerald-300 ring-emerald-600/20'
+                          : 'bg-rose-950/40 text-rose-300 ring-rose-600/20',
+                      )}
+                    >
+                      {asset.security.encrypted ? (
+                        <Lock className="h-3 w-3" />
+                      ) : (
+                        <LockOpen className="h-3 w-3" />
+                      )}
+                      {asset.security.encrypted
+                        ? t('asset.security.encrypted_yes')
+                        : t('asset.security.encrypted_no')}
+                    </span>
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-slate-500">
+                    {t('asset.security.compliance')}
+                  </dt>
+                  <dd>
+                    <ComplianceBadge status={deriveComplianceStatus(asset)} />
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-slate-500">
+                    {t('asset.security.patch_status')}
+                  </dt>
+                  <dd>
+                    <PatchBadge
+                      status={asset.security.patchStatus ?? 'unknown'}
+                    />
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-slate-500">{t('asset.security.os')}</dt>
+                  <dd className="text-slate-300">
+                    {[asset.security.osName, asset.security.osVersion]
+                      .filter(Boolean)
+                      .join(' ') || '—'}
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-slate-500">
+                    {t('asset.security.last_seen')}
+                  </dt>
+                  <dd className="text-slate-300">
+                    {formatDate(asset.security.lastSeenAt)}
+                  </dd>
+                </div>
+                <div className="flex items-center justify-between">
+                  <dt className="text-slate-500">
+                    {t('asset.security.frameworks')}
+                  </dt>
+                  <dd className="flex flex-wrap justify-end gap-1">
+                    {asset.security.frameworks?.length
+                      ? asset.security.frameworks.map((fw) => (
+                          <span
+                            key={fw}
+                            className="rounded-full bg-slate-800 px-2 py-0.5 font-mono text-[10px] text-slate-300"
+                          >
+                            {fw}
+                          </span>
+                        ))
+                      : '—'}
+                  </dd>
+                </div>
+                {asset.security.notes && (
+                  <div className="col-span-2">
+                    <dt className="text-slate-500">
+                      {t('asset.security.notes')}
+                    </dt>
+                    <dd className="mt-1 rounded-md bg-slate-900/50 px-3 py-2 text-xs text-slate-400 italic">
+                      {asset.security.notes}
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            )}
+          </div>
         </>
       )}
 
@@ -510,6 +627,12 @@ export function AssetDetailPage() {
       )}
       {addingNote && (
         <NoteDialog asset={asset} onClose={() => setAddingNote(false)} />
+      )}
+      {editingSecurity && (
+        <SecurityDialog
+          asset={asset}
+          onClose={() => setEditingSecurity(false)}
+        />
       )}
     </div>
   )

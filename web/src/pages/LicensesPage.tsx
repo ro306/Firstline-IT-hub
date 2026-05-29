@@ -1,12 +1,22 @@
-import { useState } from 'react'
-import { Plus, Pencil, Trash2, AlertTriangle, KeyRound } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { Plus, Pencil, Trash2, AlertTriangle, KeyRound, Cloud } from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { Modal } from '@/components/Modal'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { useLicensesStore } from '@/features/licenses/useLicensesStore'
+import {
+  licenseCompliance,
+  licenseComplianceKey,
+  LICENSE_COMPLIANCE_BADGE,
+} from '@/features/licenses/sam'
 import { formatDate, formatMoney } from '@/features/assets/finance'
 import { cn } from '@/lib/cn'
-import type { License, LicenseKind } from '@/features/licenses/types'
+import type {
+  BillingModel,
+  License,
+  LicenseKind,
+  ServiceType,
+} from '@/features/licenses/types'
 
 const KINDS: LicenseKind[] = [
   'subscription',
@@ -17,20 +27,42 @@ const KINDS: LicenseKind[] = [
 ]
 const CURRENCIES: Array<'DKK' | 'EUR' | 'USD'> = ['DKK', 'EUR', 'USD']
 
+type ServiceFilter = 'all' | 'license' | 'cloud_service'
+const SERVICE_FILTERS: ServiceFilter[] = ['all', 'license', 'cloud_service']
+
+// Annual cost for a license/cloud row: flat monthly ×12, else per-seat × seats.
+function annualCostOf(l: License): number {
+  if (l.billingModel === 'flat_monthly') return (l.monthlyCost ?? 0) * 12
+  return (l.costPerSeatPerYear ?? 0) * l.seatsTotal
+}
+
 export function LicensesPage() {
   const { t } = useTranslation()
   const store = useLicensesStore()
   const [editing, setEditing] = useState<License | undefined>(undefined)
   const [creating, setCreating] = useState(false)
   const [deleting, setDeleting] = useState<License | null>(null)
+  const [serviceFilter, setServiceFilter] = useState<ServiceFilter>('all')
 
-  const totalSeats = store.licenses.reduce((s, l) => s + l.seatsTotal, 0)
-  const usedSeats = store.licenses.reduce((s, l) => s + l.seatsUsed, 0)
-  const freeSeats = totalSeats - usedSeats
-  const annualCost = store.licenses.reduce(
-    (sum, l) => sum + (l.costPerSeatPerYear ?? 0) * l.seatsTotal,
-    0,
+  const visible = useMemo(
+    () =>
+      store.licenses.filter(
+        (l) => serviceFilter === 'all' || l.serviceType === serviceFilter,
+      ),
+    [store.licenses, serviceFilter],
   )
+
+  // SAM compliance only applies to seat-based licenses, not flat cloud.
+  const seatLicenses = store.licenses.filter(
+    (l) => l.serviceType === 'license',
+  )
+  const overLicensed = seatLicenses.filter(
+    (l) => licenseCompliance(l) === 'over',
+  ).length
+  const nearLimit = seatLicenses.filter(
+    (l) => licenseCompliance(l) === 'warning',
+  ).length
+  const annualCost = store.licenses.reduce((sum, l) => sum + annualCostOf(l), 0)
 
   return (
     <div>
@@ -51,8 +83,16 @@ export function LicensesPage() {
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <Stat label={t('licenses_page.stat.total')} value={store.licenses.length} />
-        <Stat label={t('licenses_page.stat.seats_used')} value={usedSeats} />
-        <Stat label={t('licenses_page.stat.seats_free')} value={freeSeats} />
+        <Stat
+          label={t('licenses_page.stat.over_licensed')}
+          value={overLicensed}
+          tone={overLicensed > 0 ? 'rose' : 'neutral'}
+        />
+        <Stat
+          label={t('licenses_page.stat.near_limit')}
+          value={nearLimit}
+          tone={nearLimit > 0 ? 'amber' : 'neutral'}
+        />
         <Stat
           label={t('licenses_page.stat.annual_cost')}
           value={formatMoney({ amount: annualCost, currency: 'DKK' })}
@@ -60,7 +100,23 @@ export function LicensesPage() {
       </div>
 
       <div className="mt-6 overflow-hidden rounded-xl border border-slate-800/70 bg-slate-900 shadow-elevated">
-        {store.licenses.length === 0 ? (
+        <div className="flex flex-wrap items-center gap-2 border-b border-slate-800 p-4">
+          {SERVICE_FILTERS.map((f) => (
+            <button
+              key={f}
+              type="button"
+              onClick={() => setServiceFilter(f)}
+              className={
+                serviceFilter === f
+                  ? 'rounded-md bg-brand-400/10 px-3 py-1 text-xs font-medium text-brand-300'
+                  : 'rounded-md px-3 py-1 text-xs font-medium text-slate-500 hover:bg-slate-800'
+              }
+            >
+              {t(`licenses_page.filter.${f}`)}
+            </button>
+          ))}
+        </div>
+        {visible.length === 0 ? (
           <div className="p-10 text-center text-sm text-slate-500">
             {t('licenses_page.empty')}
           </div>
@@ -72,23 +128,32 @@ export function LicensesPage() {
                   <th className="px-4 py-3">{t('licenses_page.table.name')}</th>
                   <th className="px-4 py-3">{t('licenses_page.table.kind')}</th>
                   <th className="px-4 py-3">{t('licenses_page.table.seats')}</th>
+                  <th className="px-4 py-3">
+                    {t('licenses_page.table.compliance')}
+                  </th>
                   <th className="px-4 py-3">{t('licenses_page.table.cost')}</th>
                   <th className="px-4 py-3">{t('licenses_page.table.renews')}</th>
                   <th className="px-4 py-3"></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/70">
-                {store.licenses.map((lic) => {
+                {visible.map((lic) => {
+                  const isCloud = lic.serviceType === 'cloud_service'
                   const pct = lic.seatsTotal
                     ? Math.round((lic.seatsUsed / lic.seatsTotal) * 100)
                     : 0
                   const overuse = lic.seatsUsed > lic.seatsTotal
+                  const compliance = licenseCompliance(lic)
                   return (
                     <tr key={lic.id} className="group transition-colors hover:bg-slate-800/40">
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           <div className="flex h-9 w-9 items-center justify-center rounded-md bg-slate-800 text-slate-500">
-                            <KeyRound className="h-4 w-4" />
+                            {isCloud ? (
+                              <Cloud className="h-4 w-4" />
+                            ) : (
+                              <KeyRound className="h-4 w-4" />
+                            )}
                           </div>
                           <div>
                             <p className="font-medium text-slate-100">
@@ -102,41 +167,64 @@ export function LicensesPage() {
                         {t(`licenses_page.kind.${lic.kind}`)}
                       </td>
                       <td className="px-4 py-3">
-                        <div className="flex flex-col gap-1">
+                        {isCloud ? (
+                          <span className="text-xs text-slate-600">
+                            {t('licenses_page.not_applicable')}
+                          </span>
+                        ) : (
+                          <div className="flex flex-col gap-1">
+                            <span
+                              className={cn(
+                                'text-xs',
+                                overuse
+                                  ? 'font-medium text-rose-300'
+                                  : 'text-slate-300',
+                              )}
+                            >
+                              {t('licenses_page.seats_label', {
+                                used: lic.seatsUsed,
+                                total: lic.seatsTotal,
+                              })}
+                            </span>
+                            <div className="h-1.5 w-24 overflow-hidden rounded-full bg-slate-800">
+                              <div
+                                className={cn(
+                                  'h-full rounded-full',
+                                  overuse
+                                    ? 'bg-rose-500'
+                                    : pct > 85
+                                      ? 'bg-amber-500'
+                                      : 'bg-brand-500',
+                                )}
+                                style={{ width: `${Math.min(100, pct)}%` }}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </td>
+                      <td className="px-4 py-3">
+                        {isCloud ? (
+                          <span className="text-xs text-slate-600">—</span>
+                        ) : (
                           <span
                             className={cn(
-                              'text-xs',
-                              overuse ? 'font-medium text-rose-300' : 'text-slate-300',
+                              'inline-flex items-center rounded-full px-2 py-0.5 text-[11px] font-medium ring-1 ring-inset',
+                              LICENSE_COMPLIANCE_BADGE[compliance],
                             )}
                           >
-                            {t('licenses_page.seats_label', {
-                              used: lic.seatsUsed,
-                              total: lic.seatsTotal,
-                            })}
+                            {t(licenseComplianceKey(compliance))}
                           </span>
-                          <div className="h-1.5 w-24 overflow-hidden rounded-full bg-slate-800">
-                            <div
-                              className={cn(
-                                'h-full rounded-full',
-                                overuse
-                                  ? 'bg-rose-500'
-                                  : pct > 85
-                                    ? 'bg-amber-500'
-                                    : 'bg-brand-500',
-                              )}
-                              style={{ width: `${Math.min(100, pct)}%` }}
-                            />
-                          </div>
-                        </div>
+                        )}
                       </td>
                       <td className="px-4 py-3 text-sm text-slate-300">
-                        {lic.costPerSeatPerYear
-                          ? formatMoney({
-                              amount:
-                                lic.costPerSeatPerYear * lic.seatsTotal,
-                              currency: lic.currency,
-                            })
-                          : '—'}
+                        {isCloud
+                          ? `${formatMoney({ amount: lic.monthlyCost ?? 0, currency: lic.currency })}${t('licenses_page.per_month_suffix')}`
+                          : lic.costPerSeatPerYear
+                            ? formatMoney({
+                                amount: lic.costPerSeatPerYear * lic.seatsTotal,
+                                currency: lic.currency,
+                              })
+                            : '—'}
                       </td>
                       <td className="px-4 py-3 text-sm text-slate-300">
                         {lic.renewsAt ? formatDate(lic.renewsAt) : '—'}
@@ -187,14 +275,21 @@ export function LicensesPage() {
 function Stat({
   label,
   value,
+  tone = 'neutral',
 }: {
   label: string
   value: number | string
+  tone?: 'neutral' | 'amber' | 'rose'
 }) {
+  const valueClass = {
+    neutral: 'text-slate-100',
+    amber: 'text-amber-300',
+    rose: 'text-rose-300',
+  }[tone]
   return (
     <div className="rounded-xl border border-slate-800/70 bg-slate-900 p-5 shadow-elevated transition-all hover:-translate-y-0.5 hover:shadow-lift">
       <p className="text-sm font-medium text-slate-500">{label}</p>
-      <p className="mt-2 text-2xl font-semibold text-slate-100">{value}</p>
+      <p className={`mt-2 text-2xl font-semibold ${valueClass}`}>{value}</p>
     </div>
   )
 }
@@ -214,6 +309,9 @@ function LicenseDialog({
     name: license?.name ?? '',
     vendor: license?.vendor ?? '',
     kind: license?.kind ?? ('subscription' as LicenseKind),
+    serviceType: license?.serviceType ?? ('license' as ServiceType),
+    billingModel: license?.billingModel ?? ('per_seat' as BillingModel),
+    monthlyCost: license?.monthlyCost ?? 0,
     seatsTotal: license?.seatsTotal ?? 10,
     seatsUsed: license?.seatsUsed ?? 0,
     costPerSeatPerYear: license?.costPerSeatPerYear ?? 0,
@@ -224,6 +322,8 @@ function LicenseDialog({
     notes: license?.notes ?? '',
   })
   const [error, setError] = useState('')
+  const isCloud = form.serviceType === 'cloud_service'
+  const isFlat = isCloud || form.billingModel === 'flat_monthly'
 
   function handleSubmit() {
     if (!form.name.trim() || !form.vendor.trim()) {
@@ -234,9 +334,12 @@ function LicenseDialog({
       name: form.name.trim(),
       vendor: form.vendor.trim(),
       kind: form.kind,
-      seatsTotal: Math.max(0, form.seatsTotal),
-      seatsUsed: Math.max(0, form.seatsUsed),
-      costPerSeatPerYear: form.costPerSeatPerYear || undefined,
+      serviceType: form.serviceType,
+      billingModel: isFlat ? ('flat_monthly' as BillingModel) : ('per_seat' as BillingModel),
+      monthlyCost: isFlat ? Math.max(0, form.monthlyCost) : undefined,
+      seatsTotal: isCloud ? 0 : Math.max(0, form.seatsTotal),
+      seatsUsed: isCloud ? 0 : Math.max(0, form.seatsUsed),
+      costPerSeatPerYear: !isFlat ? form.costPerSeatPerYear || undefined : undefined,
       currency: form.currency,
       owner: form.owner.trim() || undefined,
       acquiredAt: form.acquiredAt,
@@ -281,6 +384,23 @@ function LicenseDialog({
     >
       <div className="space-y-3">
         <div>
+          <Label>{t('licenses_page.form.field.service_type')}</Label>
+          <select
+            value={form.serviceType}
+            onChange={(e) =>
+              setForm({ ...form, serviceType: e.target.value as ServiceType })
+            }
+            className={inputCls}
+          >
+            <option value="license">
+              {t('licenses_page.service_type.license')}
+            </option>
+            <option value="cloud_service">
+              {t('licenses_page.service_type.cloud_service')}
+            </option>
+          </select>
+        </div>
+        <div>
           <Label>{t('licenses_page.form.field.name')}</Label>
           <input
             type="text"
@@ -318,44 +438,51 @@ function LicenseDialog({
             </select>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <Label>{t('licenses_page.form.field.seats_total')}</Label>
-            <input
-              type="number"
-              min={0}
-              value={form.seatsTotal}
-              onChange={(e) =>
-                setForm({ ...form, seatsTotal: Number(e.target.value) })
-              }
-              className={inputCls}
-            />
+        {!isCloud && (
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <Label>{t('licenses_page.form.field.seats_total')}</Label>
+              <input
+                type="number"
+                min={0}
+                value={form.seatsTotal}
+                onChange={(e) =>
+                  setForm({ ...form, seatsTotal: Number(e.target.value) })
+                }
+                className={inputCls}
+              />
+            </div>
+            <div>
+              <Label>{t('licenses_page.form.field.seats_used')}</Label>
+              <input
+                type="number"
+                min={0}
+                value={form.seatsUsed}
+                onChange={(e) =>
+                  setForm({ ...form, seatsUsed: Number(e.target.value) })
+                }
+                className={inputCls}
+              />
+            </div>
           </div>
-          <div>
-            <Label>{t('licenses_page.form.field.seats_used')}</Label>
-            <input
-              type="number"
-              min={0}
-              value={form.seatsUsed}
-              onChange={(e) =>
-                setForm({ ...form, seatsUsed: Number(e.target.value) })
-              }
-              className={inputCls}
-            />
-          </div>
-        </div>
+        )}
         <div className="grid grid-cols-3 gap-3">
           <div className="col-span-2">
-            <Label>{t('licenses_page.form.field.cost_per_seat')}</Label>
+            <Label>
+              {isFlat
+                ? t('licenses_page.form.field.monthly_cost')
+                : t('licenses_page.form.field.cost_per_seat')}
+            </Label>
             <input
               type="number"
               min={0}
-              value={form.costPerSeatPerYear}
+              value={isFlat ? form.monthlyCost : form.costPerSeatPerYear}
               onChange={(e) =>
-                setForm({
-                  ...form,
-                  costPerSeatPerYear: Number(e.target.value),
-                })
+                setForm(
+                  isFlat
+                    ? { ...form, monthlyCost: Number(e.target.value) }
+                    : { ...form, costPerSeatPerYear: Number(e.target.value) },
+                )
               }
               className={inputCls}
             />

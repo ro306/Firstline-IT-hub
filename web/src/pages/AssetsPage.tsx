@@ -5,12 +5,20 @@ import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
 import { AssetFormDialog } from '@/features/assets/AssetFormDialog'
 import { ImportDialog } from '@/features/assets/ImportDialog'
+import { ComplianceBadge } from '@/features/assets/ComplianceBadge'
+import { deriveComplianceStatus, isNonCompliant } from '@/features/assets/security'
 import { useAssetStore } from '@/features/assets/useAssetStore'
 import { downloadAssetsCsv } from '@/features/assets/csvExport'
 import { useTranslation } from '@/lib/i18n/useTranslation'
-import type { AssetLifecycleState } from '@/features/assets/types'
+import type { Asset, AssetLifecycleState } from '@/features/assets/types'
 
-type FilterKind = 'all' | 'active' | 'pipeline' | 'end_of_life' | 'exception'
+type FilterKind =
+  | 'all'
+  | 'active'
+  | 'pipeline'
+  | 'end_of_life'
+  | 'exception'
+  | 'non_compliant'
 
 const FILTERS: FilterKind[] = [
   'all',
@@ -18,6 +26,7 @@ const FILTERS: FilterKind[] = [
   'active',
   'end_of_life',
   'exception',
+  'non_compliant',
 ]
 
 const ACTIVE_STATES: AssetLifecycleState[] = [
@@ -39,7 +48,8 @@ const EOL_STATES: AssetLifecycleState[] = [
 ]
 const EXCEPTION_STATES: AssetLifecycleState[] = ['lost', 'stolen']
 
-function matchesFilter(state: AssetLifecycleState, filter: FilterKind): boolean {
+function matchesFilter(asset: Asset, filter: FilterKind): boolean {
+  const state = asset.lifecycleState
   switch (filter) {
     case 'all':
       return true
@@ -51,6 +61,8 @@ function matchesFilter(state: AssetLifecycleState, filter: FilterKind): boolean 
       return EOL_STATES.includes(state)
     case 'exception':
       return EXCEPTION_STATES.includes(state)
+    case 'non_compliant':
+      return isNonCompliant(asset)
   }
 }
 
@@ -65,7 +77,7 @@ export function AssetsPage() {
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
     return assets.filter((asset) => {
-      if (!matchesFilter(asset.lifecycleState, filter)) return false
+      if (!matchesFilter(asset, filter)) return false
       if (!q) return true
       return (
         asset.name.toLowerCase().includes(q) ||
@@ -159,6 +171,9 @@ export function AssetsPage() {
                 <th className="px-4 py-3">
                   {t('assets_page.table.ownership')}
                 </th>
+                <th className="px-4 py-3">
+                  {t('assets_page.table.compliance')}
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-800/50">
@@ -199,12 +214,15 @@ export function AssetsPage() {
                         ? t('asset.finance.lease_out')
                         : t('asset.ownership.owned')}
                   </td>
+                  <td className="px-4 py-3">
+                    <ComplianceBadge status={deriveComplianceStatus(asset)} />
+                  </td>
                 </tr>
               ))}
               {filtered.length === 0 && (
                 <tr>
                   <td
-                    colSpan={6}
+                    colSpan={7}
                     className="px-4 py-10 text-center text-sm text-slate-500"
                   >
                     {t('assets_page.empty')}

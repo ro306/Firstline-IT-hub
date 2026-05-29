@@ -327,6 +327,45 @@
     "upcoming": {
       "title": "Kommende for dette aktiv",
       "open_renewals": "Åbn fornyelser"
+    },
+    "security": {
+      "title": "Sikkerhed & compliance",
+      "edit": "Rediger",
+      "encrypted": "Kryptering",
+      "encrypted_yes": "Krypteret",
+      "encrypted_no": "Ikke krypteret",
+      "patch_status": "Patch-status",
+      "os": "Styresystem",
+      "compliance": "Compliance",
+      "frameworks": "Rammeværk",
+      "last_seen": "Sidst set",
+      "none": "Ingen sikkerhedsdata registreret endnu.",
+      "notes": "Noter"
+    }
+  },
+  "compliance_status": {
+    "compliant": "Compliant",
+    "non_compliant": "Ikke compliant",
+    "exempt": "Undtaget",
+    "unknown": "Ukendt"
+  },
+  "patch_status": {
+    "up_to_date": "Opdateret",
+    "outdated": "Forældet",
+    "unknown": "Ukendt"
+  },
+  "security_form": {
+    "title": "Rediger sikkerhed & compliance",
+    "field": {
+      "encrypted": "Disken er krypteret",
+      "patch_status": "Patch-status",
+      "compliance_status": "Compliance-status",
+      "os_name": "Styresystem",
+      "os_name_placeholder": "fx Windows 11, macOS 15",
+      "os_version": "Version",
+      "last_seen_at": "Sidst set",
+      "frameworks": "Compliance-rammeværk",
+      "notes": "Noter (valgfri)"
     }
   },
   "warranty_form": {
@@ -477,7 +516,8 @@
       "pipeline": "Pipeline",
       "active": "Aktive",
       "end_of_life": "Slut på levetid",
-      "exception": "Undtagelser"
+      "exception": "Undtagelser",
+      "non_compliant": "Ikke compliant"
     },
     "search_placeholder": "Filtrér rækker…",
     "table": {
@@ -486,7 +526,8 @@
       "lifecycle": "Status",
       "assigned_to": "Tildelt til",
       "location": "Lokation",
-      "ownership": "Ejerskab"
+      "ownership": "Ejerskab",
+      "compliance": "Compliance"
     },
     "unassigned": "Ikke tildelt",
     "empty": "Ingen aktiver matcher de aktive filtre."
@@ -646,39 +687,60 @@
     "settings": "Modul-præferencer. Tenant- og IAM-indstillinger ligger på platformen."
   },
   "licenses_page": {
-    "title": "Licenser",
-    "description": "Software-licenser, tildelinger og fornyelser.",
+    "title": "Licenser & cloud",
+    "description": "Software-licenser, cloud-tjenester, udnyttelse og fornyelser.",
     "new": "Ny licens",
+    "not_applicable": "Ikke relevant",
+    "per_month_suffix": "/md",
     "stat": {
-      "total": "Licenser i alt",
+      "total": "Poster i alt",
       "seats_used": "Pladser i brug",
       "seats_free": "Ledige pladser",
+      "over_licensed": "Over-licenseret",
+      "near_limit": "Tæt på grænsen",
       "annual_cost": "Årlig omkostning"
     },
+    "filter": {
+      "all": "Alle",
+      "license": "Licenser",
+      "cloud_service": "Cloud-tjenester"
+    },
+    "service_type": {
+      "license": "Licens",
+      "cloud_service": "Cloud-tjeneste"
+    },
+    "compliance": {
+      "compliant": "Compliant",
+      "warning": "Tæt på grænsen",
+      "over": "Over-licenseret"
+    },
     "table": {
-      "name": "Licens",
+      "name": "Navn",
       "vendor": "Leverandør",
       "kind": "Type",
       "seats": "Pladser",
+      "compliance": "Compliance",
       "renews": "Fornyes",
       "cost": "Omkostning"
     },
     "seats_label": "{used} / {total}",
-    "empty": "Ingen licenser endnu. Tilføj en for at komme i gang.",
+    "empty": "Ingen poster endnu. Tilføj en for at komme i gang.",
     "form": {
-      "create_title": "Ny licens",
-      "edit_title": "Rediger licens",
-      "delete_title": "Slet licens",
-      "delete_warning": "Slet licensen '{name}'? Det kan ikke fortrydes.",
+      "create_title": "Ny licens / cloud-tjeneste",
+      "edit_title": "Rediger",
+      "delete_title": "Slet",
+      "delete_warning": "Slet '{name}'? Det kan ikke fortrydes.",
       "field": {
+        "service_type": "Type",
         "name": "Navn",
-        "name_placeholder": "fx Microsoft 365 Business Standard",
+        "name_placeholder": "fx Microsoft 365 / Azure",
         "vendor": "Leverandør",
         "vendor_placeholder": "fx Microsoft",
-        "kind": "Type",
+        "kind": "Kategori",
         "seats_total": "Pladser i alt",
         "seats_used": "Pladser i brug",
         "cost_per_seat": "Pris pr. plads pr. år",
+        "monthly_cost": "Månedlig pris",
         "currency": "Valuta",
         "owner": "Ansvarlig (valgfri)",
         "owner_placeholder": "fx IT Admin",
@@ -777,7 +839,8 @@
       "expiring": "Udløber inden for 90 dage",
       "depreciation": "Bogført værdi i dag",
       "tickets": "Vedligeholdelses-status",
-      "licenses": "Licens-udnyttelse"
+      "licenses": "Licens-udnyttelse",
+      "license_compliance": "Licens-compliance"
     },
     "no_data": "Ingen data at vise endnu."
   },

@@ -3,6 +3,7 @@ import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
 import { useAssetStore } from '@/features/assets/useAssetStore'
 import { useLicensesStore } from '@/features/licenses/useLicensesStore'
+import { licenseCompliance } from '@/features/licenses/sam'
 import { useTicketsStore } from '@/features/maintenance/useTicketsStore'
 import { useRulesStore } from '@/features/lifecycle/useRulesStore'
 import { computeExpirations } from '@/features/lifecycle/expirations'
@@ -69,6 +70,11 @@ export function ReportsPage() {
   const ticketCounts = countBy(tickets, (t) => t.status)
   const totalSeats = licenses.reduce((s, l) => s + l.seatsTotal, 0)
   const usedSeats = licenses.reduce((s, l) => s + l.seatsUsed, 0)
+  const seatLicenses = licenses.filter((l) => l.serviceType === 'license')
+  const seatLicenseCount = seatLicenses.length
+  const licenseComplianceCounts = countBy(seatLicenses, (l) =>
+    licenseCompliance(l),
+  )
 
   return (
     <div>
@@ -216,6 +222,28 @@ export function ReportsPage() {
                 />
               </div>
             </>
+          )}
+        </Section>
+
+        <Section title={t('reports_page.section.license_compliance')}>
+          {seatLicenseCount === 0 ? (
+            <p className="text-xs text-slate-500">{t('reports_page.no_data')}</p>
+          ) : (
+            <ul className="space-y-1.5">
+              {(['compliant', 'warning', 'over'] as const).map((c) => (
+                <li
+                  key={c}
+                  className="flex items-center justify-between text-xs"
+                >
+                  <span className="text-slate-300">
+                    {t(`licenses_page.compliance.${c}`)}
+                  </span>
+                  <span className="font-medium text-slate-300 tabular-nums">
+                    {licenseComplianceCounts[c] ?? 0}
+                  </span>
+                </li>
+              ))}
+            </ul>
           )}
         </Section>
       </div>

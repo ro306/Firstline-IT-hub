@@ -327,6 +327,45 @@
     "upcoming": {
       "title": "Upcoming for this asset",
       "open_renewals": "Open renewals"
+    },
+    "security": {
+      "title": "Security & compliance",
+      "edit": "Edit",
+      "encrypted": "Encryption",
+      "encrypted_yes": "Encrypted",
+      "encrypted_no": "Not encrypted",
+      "patch_status": "Patch status",
+      "os": "Operating system",
+      "compliance": "Compliance",
+      "frameworks": "Frameworks",
+      "last_seen": "Last seen",
+      "none": "No security data recorded yet.",
+      "notes": "Notes"
+    }
+  },
+  "compliance_status": {
+    "compliant": "Compliant",
+    "non_compliant": "Non-compliant",
+    "exempt": "Exempt",
+    "unknown": "Unknown"
+  },
+  "patch_status": {
+    "up_to_date": "Up to date",
+    "outdated": "Outdated",
+    "unknown": "Unknown"
+  },
+  "security_form": {
+    "title": "Edit security & compliance",
+    "field": {
+      "encrypted": "Disk is encrypted",
+      "patch_status": "Patch status",
+      "compliance_status": "Compliance status",
+      "os_name": "Operating system",
+      "os_name_placeholder": "e.g. Windows 11, macOS 15",
+      "os_version": "Version",
+      "last_seen_at": "Last seen",
+      "frameworks": "Compliance frameworks",
+      "notes": "Notes (optional)"
     }
   },
   "warranty_form": {
@@ -477,7 +516,8 @@
       "pipeline": "Pipeline",
       "active": "Active",
       "end_of_life": "End of life",
-      "exception": "Exception"
+      "exception": "Exception",
+      "non_compliant": "Non-compliant"
     },
     "search_placeholder": "Filter rows…",
     "table": {
@@ -486,7 +526,8 @@
       "lifecycle": "Lifecycle",
       "assigned_to": "Assigned to",
       "location": "Location",
-      "ownership": "Ownership"
+      "ownership": "Ownership",
+      "compliance": "Compliance"
     },
     "unassigned": "Unassigned",
     "empty": "No assets match the current filters."
@@ -646,39 +687,60 @@
     "settings": "Module preferences. Tenant and IAM settings live in the platform."
   },
   "licenses_page": {
-    "title": "Licenses",
-    "description": "Software licenses, seats, and renewals.",
+    "title": "Licenses & cloud",
+    "description": "Software licenses, cloud services, utilization, and renewals.",
     "new": "New license",
+    "not_applicable": "Not applicable",
+    "per_month_suffix": "/mo",
     "stat": {
-      "total": "Total licenses",
+      "total": "Total items",
       "seats_used": "Seats used",
       "seats_free": "Seats free",
+      "over_licensed": "Over-licensed",
+      "near_limit": "Near limit",
       "annual_cost": "Annual cost"
     },
+    "filter": {
+      "all": "All",
+      "license": "Licenses",
+      "cloud_service": "Cloud services"
+    },
+    "service_type": {
+      "license": "License",
+      "cloud_service": "Cloud service"
+    },
+    "compliance": {
+      "compliant": "Compliant",
+      "warning": "Near limit",
+      "over": "Over-licensed"
+    },
     "table": {
-      "name": "License",
+      "name": "Name",
       "vendor": "Vendor",
       "kind": "Kind",
       "seats": "Seats",
+      "compliance": "Compliance",
       "renews": "Renews",
       "cost": "Cost"
     },
     "seats_label": "{used} / {total}",
-    "empty": "No licenses yet. Add one to get started.",
+    "empty": "No items yet. Add one to get started.",
     "form": {
-      "create_title": "New license",
-      "edit_title": "Edit license",
-      "delete_title": "Delete license",
-      "delete_warning": "Delete the license '{name}'? This cannot be undone.",
+      "create_title": "New license / cloud service",
+      "edit_title": "Edit",
+      "delete_title": "Delete",
+      "delete_warning": "Delete '{name}'? This cannot be undone.",
       "field": {
+        "service_type": "Type",
         "name": "Name",
-        "name_placeholder": "e.g. Microsoft 365 Business Standard",
+        "name_placeholder": "e.g. Microsoft 365 / Azure",
         "vendor": "Vendor",
         "vendor_placeholder": "e.g. Microsoft",
-        "kind": "Kind",
+        "kind": "Category",
         "seats_total": "Total seats",
         "seats_used": "Seats used",
         "cost_per_seat": "Cost per seat per year",
+        "monthly_cost": "Monthly cost",
         "currency": "Currency",
         "owner": "Owner (optional)",
         "owner_placeholder": "e.g. IT Admin",
@@ -777,7 +839,8 @@
       "expiring": "Expiring within 90 days",
       "depreciation": "Book value today",
       "tickets": "Maintenance status",
-      "licenses": "License utilization"
+      "licenses": "License utilization",
+      "license_compliance": "License compliance"
     },
     "no_data": "No data to show yet."
   },

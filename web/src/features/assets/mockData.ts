@@ -74,6 +74,15 @@ export const MOCK_ASSETS: Asset[] = [
         responsibleRole: 'IT Asset Manager',
       },
     ],
+    security: {
+      encrypted: true,
+      patchStatus: 'up_to_date',
+      osName: 'macOS',
+      osVersion: '15.3',
+      lastSeenAt: '2026-05-27',
+      complianceStatus: 'compliant',
+      frameworks: ['GDPR', 'ISO27001'],
+    },
     events: [
       {
         id: 'e1-1',
@@ -182,6 +191,16 @@ export const MOCK_ASSETS: Asset[] = [
         responsibleRole: 'IT Asset Manager',
       },
     ],
+    security: {
+      encrypted: false,
+      patchStatus: 'outdated',
+      osName: 'Windows',
+      osVersion: '11 23H2',
+      lastSeenAt: '2026-05-10',
+      complianceStatus: 'non_compliant',
+      frameworks: ['GDPR'],
+      notes: 'BitLocker ikke aktiveret — afventer IT.',
+    },
     events: [
       {
         id: 'e2-1',
@@ -330,6 +349,15 @@ export const MOCK_ASSETS: Asset[] = [
         responsibleRole: 'IT Security',
       },
     ],
+    security: {
+      encrypted: true,
+      patchStatus: 'up_to_date',
+      osName: 'iOS',
+      osVersion: '18.4',
+      lastSeenAt: '2026-05-26',
+      complianceStatus: 'compliant',
+      frameworks: ['GDPR'],
+    },
     events: [
       {
         id: 'e4-1',
@@ -409,6 +437,15 @@ export const MOCK_ASSETS: Asset[] = [
         responsibleRole: 'IT Security',
       },
     ],
+    security: {
+      encrypted: true,
+      patchStatus: 'outdated',
+      osName: 'Ubuntu Server',
+      osVersion: '22.04 LTS',
+      lastSeenAt: '2026-05-25',
+      complianceStatus: 'compliant',
+      frameworks: ['ISO27001', 'NIS2'],
+    },
     events: [
       {
         id: 'e5-1',

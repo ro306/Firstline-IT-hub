@@ -3,6 +3,7 @@ import type {
   Asset,
   AssetAssignment,
   AssetLifecycleEvent,
+  AssetSecurity,
   AssetWarranty,
   RecurringCheck,
 } from './types'
@@ -37,6 +38,7 @@ export type AssetStoreValue = {
     input: Omit<AssetAssignment, 'id' | 'returnedAt'>,
   ) => void
   returnAssignment: (assetId: string, notes?: string) => void
+  updateSecurity: (assetId: string, security: AssetSecurity) => void
   addNote: (assetId: string, note: string) => void
   // Appends a freeform lifecycle event with optional payload.
   addEvent: (
