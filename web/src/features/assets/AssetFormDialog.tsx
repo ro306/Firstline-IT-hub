@@ -51,6 +51,7 @@ const EMPTY: NewAssetInput = {
   serialNumber: '',
   category: 'laptop',
   location: '',
+  department: '',
   ownership: 'owned',
   lifecycleState: 'in_stock',
   vendor: '',
@@ -67,6 +68,7 @@ function assetToForm(asset: Asset): NewAssetInput {
     serialNumber: asset.serialNumber,
     category: asset.category,
     location: asset.location,
+    department: asset.department ?? '',
     ownership: asset.ownership,
     lifecycleState: asset.lifecycleState,
     vendor: asset.purchase.vendor,
@@ -124,6 +126,7 @@ export function AssetFormDialog({ onClose, asset }: Props) {
       assetTag: form.assetTag.trim(),
       serialNumber: form.serialNumber.trim(),
       location: form.location.trim(),
+      department: form.department?.trim() || undefined,
       vendor: form.vendor.trim(),
       purchaseOrder: form.purchaseOrder?.trim() || undefined,
     }
@@ -232,6 +235,20 @@ export function AssetFormDialog({ onClose, asset }: Props) {
                 onChange={(e) => set('location', e.target.value)}
                 placeholder={t('asset_form.field.location_placeholder')}
                 className={inputCls(!!errors.location)}
+              />
+            </Field>
+          </Row>
+          <Row>
+            <Field
+              label={t('asset_form.field.department')}
+              className="col-span-2"
+            >
+              <input
+                type="text"
+                value={form.department ?? ''}
+                onChange={(e) => set('department', e.target.value)}
+                placeholder={t('asset_form.field.department_placeholder')}
+                className={inputCls(false)}
               />
             </Field>
           </Row>

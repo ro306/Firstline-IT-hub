@@ -87,6 +87,7 @@ function buildAsset(input: NewAssetInput, actor: string): Asset {
     ownership: input.ownership,
     serialNumber: input.serialNumber,
     location: input.location,
+    department: input.department,
     ...baseDates,
     assignments: [],
     purchase: {
@@ -117,6 +118,7 @@ function patchAsset(asset: Asset, patch: AssetPatch): Asset {
   if (patch.serialNumber !== undefined) next.serialNumber = patch.serialNumber
   if (patch.category !== undefined) next.category = patch.category
   if (patch.location !== undefined) next.location = patch.location
+  if (patch.department !== undefined) next.department = patch.department
   if (patch.ownership !== undefined) next.ownership = patch.ownership
   if (patch.lifecycleState !== undefined)
     next.lifecycleState = patch.lifecycleState

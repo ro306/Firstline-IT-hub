@@ -177,6 +177,7 @@ export type Asset = {
 
   serialNumber: string
   location: string
+  department?: string
 
   // Lifecycle date markers (the latest occurrence of each milestone).
   requestedAt?: string

@@ -53,6 +53,7 @@ export type NewAssetInput = {
   serialNumber: string
   category: Asset['category']
   location: string
+  department?: string
   ownership: Asset['ownership']
   lifecycleState: Asset['lifecycleState']
   vendor: string

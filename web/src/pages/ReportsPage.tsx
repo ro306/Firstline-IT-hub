@@ -5,6 +5,8 @@ import { useAssetStore } from '@/features/assets/useAssetStore'
 import { useLicensesStore } from '@/features/licenses/useLicensesStore'
 import { licenseCompliance } from '@/features/licenses/sam'
 import { useTicketsStore } from '@/features/maintenance/useTicketsStore'
+import { useBudgetsStore } from '@/features/budgets/useBudgetsStore'
+import { tcoByDepartment } from '@/features/budgets/tco'
 import { useRulesStore } from '@/features/lifecycle/useRulesStore'
 import { computeExpirations } from '@/features/lifecycle/expirations'
 import {
@@ -28,7 +30,11 @@ export function ReportsPage() {
   const { assets } = useAssetStore()
   const { licenses } = useLicensesStore()
   const { tickets } = useTicketsStore()
+  const { budgets } = useBudgetsStore()
   const { rules } = useRulesStore()
+
+  const tcoByDept = tcoByDepartment(assets, tickets)
+  const grandTotalTco = tcoByDept.reduce((s, d) => s + d.spend, 0)
 
   const liveAssets = assets.filter((a) => !TERMINAL.has(a.lifecycleState))
   const totalValue = assets.reduce(
@@ -243,6 +249,62 @@ export function ReportsPage() {
                   </span>
                 </li>
               ))}
+            </ul>
+          )}
+        </Section>
+
+        <Section title={t('reports_page.section.tco_by_department')}>
+          {tcoByDept.length === 0 ? (
+            <p className="text-xs text-slate-500">{t('reports_page.no_data')}</p>
+          ) : (
+            <ul className="space-y-2">
+              {tcoByDept.map((row) => {
+                const budget = budgets.find(
+                  (b) =>
+                    b.department.toLowerCase() === row.department.toLowerCase(),
+                )
+                const max = budget?.annualBudget ?? grandTotalTco
+                const pct = max > 0 ? Math.min(100, (row.spend / max) * 100) : 0
+                const overBudget =
+                  budget !== undefined && row.spend > budget.annualBudget
+                return (
+                  <li key={row.department} className="space-y-1">
+                    <div className="flex items-baseline justify-between text-xs">
+                      <span className="text-slate-300">
+                        {row.department}
+                        <span className="ml-1.5 text-slate-500 tabular-nums">
+                          · {row.assetCount}
+                        </span>
+                      </span>
+                      <span className="font-medium text-slate-300 tabular-nums">
+                        {formatMoney({ amount: row.spend, currency: 'DKK' })}
+                        {budget && (
+                          <span className="ml-1 text-[10px] text-slate-500">
+                            /{' '}
+                            {formatMoney({
+                              amount: budget.annualBudget,
+                              currency: budget.currency,
+                            })}
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                    <div className="h-1.5 overflow-hidden rounded-full bg-slate-800">
+                      <div
+                        className={cn(
+                          'h-full rounded-full transition-all',
+                          overBudget
+                            ? 'bg-rose-500'
+                            : pct > 85
+                              ? 'bg-amber-500'
+                              : 'bg-brand-500',
+                        )}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </li>
+                )
+              })}
             </ul>
           )}
         </Section>

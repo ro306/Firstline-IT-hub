@@ -9,6 +9,7 @@ import { AssetStoreProvider } from '@/features/assets/assetStore'
 import { LicensesStoreProvider } from '@/features/licenses/licensesStore'
 import { TicketsStoreProvider } from '@/features/maintenance/ticketsStore'
 import { PeopleStoreProvider } from '@/features/people/peopleStore'
+import { BudgetsStoreProvider } from '@/features/budgets/budgetsStore'
 import { queryClient } from '@/lib/queryClient'
 import { router } from '@/routes'
 
@@ -22,11 +23,13 @@ export default function App() {
               <LicensesStoreProvider>
                 <TicketsStoreProvider>
                   <PeopleStoreProvider>
-                    <RulesStoreProvider>
-                      <AlertStoreProvider>
-                        <RouterProvider router={router} />
-                      </AlertStoreProvider>
-                    </RulesStoreProvider>
+                    <BudgetsStoreProvider>
+                      <RulesStoreProvider>
+                        <AlertStoreProvider>
+                          <RouterProvider router={router} />
+                        </AlertStoreProvider>
+                      </RulesStoreProvider>
+                    </BudgetsStoreProvider>
                   </PeopleStoreProvider>
                 </TicketsStoreProvider>
               </LicensesStoreProvider>

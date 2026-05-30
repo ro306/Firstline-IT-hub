@@ -329,6 +329,8 @@ function TicketDialog({
     ticketRef: ticket?.ticketRef ?? '',
     scheduledFor: ticket?.scheduledFor ?? '',
     resolutionNotes: ticket?.resolutionNotes ?? '',
+    costEstimate: ticket?.costEstimate ?? 0,
+    costCurrency: ticket?.costCurrency ?? ('DKK' as 'DKK' | 'EUR' | 'USD'),
   })
   const [error, setError] = useState('')
 
@@ -351,6 +353,8 @@ function TicketDialog({
       ticketRef: form.ticketRef.trim() || undefined,
       scheduledFor: form.scheduledFor || undefined,
       resolutionNotes: form.resolutionNotes.trim() || undefined,
+      costEstimate: form.costEstimate > 0 ? form.costEstimate : undefined,
+      costCurrency: form.costEstimate > 0 ? form.costCurrency : undefined,
     }
     if (editing && ticket) {
       store.updateTicket(ticket.id, payload)
@@ -506,16 +510,47 @@ function TicketDialog({
             />
           </div>
         </div>
-        <div>
-          <Label>{t('maintenance_page.form.field.scheduled_for')}</Label>
-          <input
-            type="date"
-            value={form.scheduledFor}
-            onChange={(e) =>
-              setForm({ ...form, scheduledFor: e.target.value })
-            }
-            className={inputCls}
-          />
+        <div className="grid grid-cols-3 gap-3">
+          <div>
+            <Label>{t('maintenance_page.form.field.scheduled_for')}</Label>
+            <input
+              type="date"
+              value={form.scheduledFor}
+              onChange={(e) =>
+                setForm({ ...form, scheduledFor: e.target.value })
+              }
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <Label>{t('maintenance_page.form.field.cost_estimate')}</Label>
+            <input
+              type="number"
+              min={0}
+              value={form.costEstimate}
+              onChange={(e) =>
+                setForm({ ...form, costEstimate: Number(e.target.value) })
+              }
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <Label>{t('maintenance_page.form.field.cost_currency')}</Label>
+            <select
+              value={form.costCurrency}
+              onChange={(e) =>
+                setForm({
+                  ...form,
+                  costCurrency: e.target.value as 'DKK' | 'EUR' | 'USD',
+                })
+              }
+              className={inputCls}
+            >
+              <option value="DKK">DKK</option>
+              <option value="EUR">EUR</option>
+              <option value="USD">USD</option>
+            </select>
+          </div>
         </div>
         {(form.status === 'resolved' || form.status === 'cancelled') && (
           <div>

@@ -8,6 +8,7 @@ import { useAssetStore } from '@/features/assets/useAssetStore'
 import { useAlertStore } from '@/features/lifecycle/useAlertStore'
 import { useLicensesStore } from '@/features/licenses/useLicensesStore'
 import { useTicketsStore } from '@/features/maintenance/useTicketsStore'
+import { useBudgetsStore } from '@/features/budgets/useBudgetsStore'
 import { RuleEditorDialog } from '@/features/lifecycle/RuleEditorDialog'
 import { SeverityBadge } from '@/features/lifecycle/SeverityBadge'
 import { kindKey } from '@/features/lifecycle/expirations'
@@ -22,7 +23,7 @@ import type {
 } from '@/features/lifecycle/types'
 import { Bell, Mail, ClipboardList } from 'lucide-react'
 
-type Tab = 'general' | 'workflows' | 'data'
+type Tab = 'general' | 'workflows' | 'budgets' | 'data'
 
 export function SettingsPage() {
   const { t } = useTranslation()
@@ -45,6 +46,9 @@ export function SettingsPage() {
         >
           {t('settings.tab.workflows')}
         </TabButton>
+        <TabButton active={tab === 'budgets'} onClick={() => setTab('budgets')}>
+          {t('settings.tab.budgets')}
+        </TabButton>
         <TabButton active={tab === 'data'} onClick={() => setTab('data')}>
           {t('settings.tab.data')}
         </TabButton>
@@ -52,6 +56,7 @@ export function SettingsPage() {
 
       {tab === 'general' && <GeneralTab />}
       {tab === 'workflows' && <WorkflowsTab />}
+      {tab === 'budgets' && <BudgetsTab />}
       {tab === 'data' && <DataTab />}
     </div>
   )
@@ -383,6 +388,111 @@ function DeleteRuleDialog({
   )
 }
 
+// ───────────────────────── Budgets tab ─────────────────────────
+
+function BudgetsTab() {
+  const { t } = useTranslation()
+  const store = useBudgetsStore()
+  const [draft, setDraft] = useState<Record<string, number>>(() =>
+    Object.fromEntries(store.budgets.map((b) => [b.id, b.annualBudget])),
+  )
+  const [newDept, setNewDept] = useState('')
+  const [newAmount, setNewAmount] = useState(0)
+
+  function saveRow(id: string, department: string) {
+    const value = draft[id]
+    if (typeof value === 'number' && value >= 0) {
+      store.setBudget(department, value, 'DKK')
+    }
+  }
+
+  function addBudget() {
+    if (!newDept.trim() || newAmount <= 0) return
+    store.setBudget(newDept.trim(), newAmount, 'DKK')
+    setNewDept('')
+    setNewAmount(0)
+  }
+
+  return (
+    <div className="space-y-4">
+      <Card
+        title={t('settings.budgets.title')}
+        description={t('settings.budgets.description')}
+      >
+        <div className="space-y-2">
+          {store.budgets.length === 0 ? (
+            <p className="text-xs text-slate-500">
+              {t('settings.budgets.empty')}
+            </p>
+          ) : (
+            <ul className="divide-y divide-slate-800/70">
+              {store.budgets.map((b) => (
+                <li key={b.id} className="flex items-center gap-3 py-2">
+                  <span className="min-w-0 flex-1 text-sm text-slate-100">
+                    {b.department}
+                  </span>
+                  <input
+                    type="number"
+                    min={0}
+                    value={draft[b.id] ?? b.annualBudget}
+                    onChange={(e) =>
+                      setDraft({ ...draft, [b.id]: Number(e.target.value) })
+                    }
+                    onBlur={() => saveRow(b.id, b.department)}
+                    className="w-32 rounded-md border border-slate-800 bg-slate-900 px-3 py-1.5 text-right text-sm tabular-nums focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+                  />
+                  <span className="w-10 text-xs text-slate-500">
+                    {b.currency}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => store.deleteBudget(b.id)}
+                    className="rounded-md p-1.5 text-rose-500 hover:bg-rose-950/40"
+                    aria-label={t('asset_actions.delete')}
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </Card>
+
+      <Card
+        title={t('settings.budgets.add_title')}
+        description={t('settings.budgets.add_description')}
+      >
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={newDept}
+            onChange={(e) => setNewDept(e.target.value)}
+            placeholder={t('settings.budgets.add_placeholder')}
+            className="flex-1 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+          />
+          <input
+            type="number"
+            min={0}
+            value={newAmount}
+            onChange={(e) => setNewAmount(Number(e.target.value))}
+            className="w-32 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-right text-sm tabular-nums focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+          />
+          <button
+            type="button"
+            onClick={addBudget}
+            disabled={!newDept.trim() || newAmount <= 0}
+            className="inline-flex items-center gap-1 rounded-md bg-brand-600 px-3 py-2 text-sm font-medium text-white hover:bg-brand-700 disabled:bg-slate-700 disabled:text-slate-500"
+          >
+            <Plus className="h-4 w-4" />
+            {t('settings.budgets.add_button')}
+          </button>
+        </div>
+      </Card>
+    </div>
+  )
+}
+
 // ───────────────────────── Data tab ─────────────────────────
 
 function DataTab() {
@@ -392,6 +502,7 @@ function DataTab() {
   const rules = useRulesStore()
   const licenses = useLicensesStore()
   const tickets = useTicketsStore()
+  const budgets = useBudgetsStore()
   const [pending, setPending] = useState<null | (() => void)>(null)
   const [pendingMessage, setPendingMessage] = useState('')
   const [pendingLabel, setPendingLabel] = useState('')
@@ -529,6 +640,26 @@ function DataTab() {
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.tickets_reset')}
+        </button>
+      </Card>
+
+      <Card
+        title={t('settings.data.budgets_title')}
+        description={t('settings.data.budgets_description')}
+      >
+        <button
+          type="button"
+          onClick={() =>
+            confirm(
+              t('settings.data.budgets_description'),
+              t('settings.data.budgets_reset'),
+              () => budgets.resetToDemo(),
+            )
+          }
+          className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
+        >
+          <RotateCcw className="h-4 w-4" />
+          {t('settings.data.budgets_reset')}
         </button>
       </Card>
 

@@ -116,7 +116,17 @@
     "tab": {
       "general": "Generelt",
       "workflows": "Workflow-regler",
+      "budgets": "Budgetter",
       "data": "Data"
+    },
+    "budgets": {
+      "title": "Afdelings-budgetter",
+      "description": "Årligt IT-budget pr. afdeling. Bruges i TCO-rapporten til at vise forbrug vs. budget.",
+      "empty": "Ingen budgetter endnu.",
+      "add_title": "Tilføj eller opdatér budget",
+      "add_description": "Skriv afdelingsnavn og beløb. Findes afdelingen allerede, opdateres beløbet.",
+      "add_placeholder": "Afdeling (fx Engineering)",
+      "add_button": "Tilføj"
     },
     "general": {
       "language_title": "Sprog",
@@ -155,6 +165,9 @@
       "tickets_title": "Vedligeholdelses-tickets",
       "tickets_description": "Nulstil ticket-listen til demo-data.",
       "tickets_reset": "Nulstil tickets",
+      "budgets_title": "Afdelings-budgetter",
+      "budgets_description": "Nulstil afdelings-budgetterne til demo-data.",
+      "budgets_reset": "Nulstil budgetter",
       "danger_zone": "Farezone"
     }
   },
@@ -525,6 +538,8 @@
       "category": "Kategori",
       "location": "Lokation",
       "location_placeholder": "fx Copenhagen HQ",
+      "department": "Afdeling",
+      "department_placeholder": "fx Engineering",
       "ownership": "Ejerskab",
       "lifecycle_state": "Status ved oprettelse",
       "vendor": "Leverandør",
@@ -875,7 +890,9 @@
         "vendor": "Leverandør (valgfri)",
         "ticket_ref": "Ekstern reference",
         "scheduled_for": "Planlagt til",
-        "resolution_notes": "Løsningsnoter"
+        "resolution_notes": "Løsningsnoter",
+        "cost_estimate": "Estimeret omkostning",
+        "cost_currency": "Valuta"
       }
     },
     "status": {
@@ -915,7 +932,8 @@
       "depreciation": "Bogført værdi i dag",
       "tickets": "Vedligeholdelses-status",
       "licenses": "Licens-udnyttelse",
-      "license_compliance": "Licens-compliance"
+      "license_compliance": "Licens-compliance",
+      "tco_by_department": "TCO pr. afdeling vs. budget"
     },
     "no_data": "Ingen data at vise endnu."
   },

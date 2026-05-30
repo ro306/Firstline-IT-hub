@@ -27,4 +27,7 @@ export type MaintenanceTicket = {
   scheduledFor?: string
   resolvedAt?: string
   resolutionNotes?: string
+  // Estimated cost for this ticket; rolled into TCO if set.
+  costEstimate?: number
+  costCurrency?: 'DKK' | 'EUR' | 'USD'
 }

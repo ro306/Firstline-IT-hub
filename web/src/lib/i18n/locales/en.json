@@ -116,7 +116,17 @@
     "tab": {
       "general": "General",
       "workflows": "Workflow rules",
+      "budgets": "Budgets",
       "data": "Data"
+    },
+    "budgets": {
+      "title": "Department budgets",
+      "description": "Annual IT budget per department. Used by the TCO report to show spend vs. budget.",
+      "empty": "No budgets yet.",
+      "add_title": "Add or update budget",
+      "add_description": "Enter a department name and amount. If the department already exists, the amount is updated.",
+      "add_placeholder": "Department (e.g. Engineering)",
+      "add_button": "Add"
     },
     "general": {
       "language_title": "Language",
@@ -155,6 +165,9 @@
       "tickets_title": "Maintenance tickets",
       "tickets_description": "Reset ticket list to demo data.",
       "tickets_reset": "Reset tickets",
+      "budgets_title": "Department budgets",
+      "budgets_description": "Reset department budgets to demo data.",
+      "budgets_reset": "Reset budgets",
       "danger_zone": "Danger zone"
     }
   },
@@ -525,6 +538,8 @@
       "category": "Category",
       "location": "Location",
       "location_placeholder": "e.g. Copenhagen HQ",
+      "department": "Department",
+      "department_placeholder": "e.g. Engineering",
       "ownership": "Ownership",
       "lifecycle_state": "Initial state",
       "vendor": "Vendor",
@@ -875,7 +890,9 @@
         "vendor": "Vendor (optional)",
         "ticket_ref": "External reference",
         "scheduled_for": "Scheduled for",
-        "resolution_notes": "Resolution notes"
+        "resolution_notes": "Resolution notes",
+        "cost_estimate": "Estimated cost",
+        "cost_currency": "Currency"
       }
     },
     "status": {
@@ -915,7 +932,8 @@
       "depreciation": "Book value today",
       "tickets": "Maintenance status",
       "licenses": "License utilization",
-      "license_compliance": "License compliance"
+      "license_compliance": "License compliance",
+      "tco_by_department": "TCO by department vs. budget"
     },
     "no_data": "No data to show yet."
   },

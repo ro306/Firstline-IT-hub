@@ -16,6 +16,8 @@ export const MOCK_TICKETS: MaintenanceTicket[] = [
     ticketRef: 'INC-2026-0042',
     createdAt: '2026-05-20T08:30:00Z',
     scheduledFor: '2026-05-28',
+    costEstimate: 1800,
+    costCurrency: 'DKK',
   },
   {
     id: 't-2',
@@ -41,6 +43,8 @@ export const MOCK_TICKETS: MaintenanceTicket[] = [
     assignedTo: 'Infra Team',
     createdAt: '2026-05-18T09:00:00Z',
     scheduledFor: '2026-06-01',
+    costEstimate: 12500,
+    costCurrency: 'DKK',
   },
   {
     id: 't-4',
@@ -57,5 +61,7 @@ export const MOCK_TICKETS: MaintenanceTicket[] = [
     createdAt: '2026-05-02T11:00:00Z',
     resolvedAt: '2026-05-10',
     resolutionNotes: 'Tastatur udskiftet under garanti.',
+    costEstimate: 0,
+    costCurrency: 'DKK',
   },
 ]
