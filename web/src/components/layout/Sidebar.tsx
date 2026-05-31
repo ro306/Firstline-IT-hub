@@ -9,6 +9,7 @@ import {
   BellRing,
   CheckSquare,
   Users,
+  ShieldCheck,
 } from 'lucide-react'
 import * as motion from 'motion/react-client'
 import { cn } from '@/lib/cn'
@@ -26,6 +27,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/assets', labelKey: 'nav.assets', icon: Boxes },
   { to: '/people', labelKey: 'nav.people', icon: Users },
   { to: '/renewals', labelKey: 'nav.renewals', icon: BellRing },
+  { to: '/approvals', labelKey: 'nav.approvals', icon: ShieldCheck },
   { to: '/tasks', labelKey: 'nav.tasks', icon: CheckSquare },
   { to: '/licenses', labelKey: 'nav.licenses', icon: KeyRound },
   { to: '/maintenance', labelKey: 'nav.maintenance', icon: Wrench },

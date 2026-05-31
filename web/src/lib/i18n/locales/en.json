@@ -30,12 +30,38 @@
     "assets": "Assets",
     "people": "People",
     "renewals": "Renewals",
+    "approvals": "Approvals",
     "tasks": "Tasks",
     "licenses": "Licenses",
     "maintenance": "Maintenance",
     "reports": "Reports",
     "settings": "Settings",
     "footer_version": "v0.1.0 · dev build"
+  },
+  "approvals_page": {
+    "title": "Approvals",
+    "description": "Requests awaiting sign-off, plus history.",
+    "empty": "No requests match the current filters.",
+    "filter": {
+      "pending": "Pending",
+      "decided": "Decided",
+      "all": "All"
+    },
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "kind": {
+      "order": "Order",
+      "dispose": "Disposal",
+      "license_increase": "License increase",
+      "other": "Other"
+    },
+    "requested_by": "Requested by {name}",
+    "decided_by": "Decided by {name} · {date}",
+    "approve": "Approve",
+    "reject": "Reject"
   },
   "people_page": {
     "title": "People",
@@ -303,6 +329,7 @@
     "section_warranties": "Warranties & service contracts",
     "not_found_title": "Asset not found",
     "not_found_description": "The asset with id {id} doesn't exist.",
+    "pending_approval": "Pending approval: {subject}. Click to open the approvals queue.",
     "tab": {
       "overview": "Overview",
       "history": "Lifecycle history",
@@ -561,7 +588,10 @@
     "current": "Current state",
     "next": "New state",
     "no_transitions": "No allowed transitions from this state.",
-    "notes_placeholder": "Why the change?"
+    "notes_placeholder": "Why the change?",
+    "approval_required": "This transition requires approval. A request will be created and sent to the approvals queue.",
+    "request_approval": "Request approval",
+    "approval_default_subject": "Change {asset} to {state}"
   },
   "delete_asset": {
     "title": "Delete asset",

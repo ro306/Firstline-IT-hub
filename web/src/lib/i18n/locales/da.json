@@ -30,12 +30,38 @@
     "assets": "Aktiver",
     "people": "Personer",
     "renewals": "Fornyelser",
+    "approvals": "Godkendelser",
     "tasks": "Opgaver",
     "licenses": "Licenser",
     "maintenance": "Vedligehold",
     "reports": "Rapporter",
     "settings": "Indstillinger",
     "footer_version": "v0.1.0 · dev build"
+  },
+  "approvals_page": {
+    "title": "Godkendelser",
+    "description": "Anmodninger der venter på sign-off, plus historik.",
+    "empty": "Ingen anmodninger matcher de aktive filtre.",
+    "filter": {
+      "pending": "Afventer",
+      "decided": "Afgjorte",
+      "all": "Alle"
+    },
+    "status": {
+      "pending": "Afventer",
+      "approved": "Godkendt",
+      "rejected": "Afvist"
+    },
+    "kind": {
+      "order": "Indkøb",
+      "dispose": "Bortskaffelse",
+      "license_increase": "Licens-udvidelse",
+      "other": "Andet"
+    },
+    "requested_by": "Anmodet af {name}",
+    "decided_by": "Afgjort af {name} · {date}",
+    "approve": "Godkend",
+    "reject": "Afvis"
   },
   "people_page": {
     "title": "Personer",
@@ -303,6 +329,7 @@
     "section_warranties": "Garantier & servicekontrakter",
     "not_found_title": "Aktiv ikke fundet",
     "not_found_description": "Aktivet med id {id} findes ikke.",
+    "pending_approval": "Afventer godkendelse: {subject}. Klik for at gå til godkendelser.",
     "tab": {
       "overview": "Oversigt",
       "history": "Historik",
@@ -561,7 +588,10 @@
     "current": "Nuværende status",
     "next": "Ny status",
     "no_transitions": "Ingen tilladte overgange fra denne status.",
-    "notes_placeholder": "Hvorfor ændres status?"
+    "notes_placeholder": "Hvorfor ændres status?",
+    "approval_required": "Denne overgang kræver godkendelse. Anmodningen oprettes og sendes til godkendelses-køen.",
+    "request_approval": "Anmod om godkendelse",
+    "approval_default_subject": "Skift {asset} til {state}"
   },
   "delete_asset": {
     "title": "Slet aktiv",

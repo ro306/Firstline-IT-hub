@@ -10,6 +10,7 @@ import { LicensesPage } from '@/pages/LicensesPage'
 import { MaintenancePage } from '@/pages/MaintenancePage'
 import { ReportsPage } from '@/pages/ReportsPage'
 import { PeoplePage } from '@/pages/PeoplePage'
+import { ApprovalsPage } from '@/pages/ApprovalsPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
       { path: 'renewals', Component: RenewalsPage },
       { path: 'tasks', Component: TasksPage },
       { path: 'people', Component: PeoplePage },
+      { path: 'approvals', Component: ApprovalsPage },
       { path: 'licenses', Component: LicensesPage },
       { path: 'maintenance', Component: MaintenancePage },
       { path: 'reports', Component: ReportsPage },

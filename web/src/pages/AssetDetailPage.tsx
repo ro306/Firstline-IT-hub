@@ -10,6 +10,7 @@ import {
   UserMinus,
   FileText,
   ShieldCheck,
+  ShieldAlert,
   Lock,
   LockOpen,
 } from 'lucide-react'
@@ -46,6 +47,7 @@ import { SecurityDialog } from '@/features/assets/SecurityDialog'
 import { ComplianceBadge, PatchBadge } from '@/features/assets/ComplianceBadge'
 import { deriveComplianceStatus } from '@/features/assets/security'
 import { useAssetStore } from '@/features/assets/useAssetStore'
+import { useApprovalsStore } from '@/features/approvals/useApprovalsStore'
 import { AssetUpcomingPanel } from '@/features/lifecycle/AssetUpcomingPanel'
 import { formatDate } from '@/features/assets/finance'
 import { useTranslation } from '@/lib/i18n/useTranslation'
@@ -81,6 +83,7 @@ export function AssetDetailPage() {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
   const store = useAssetStore()
+  const approvals = useApprovalsStore()
   const getAsset = store.getAsset
   const [tab, setTab] = useState<Tab>('overview')
   const [editing, setEditing] = useState(false)
@@ -103,6 +106,7 @@ export function AssetDetailPage() {
   const [editingSecurity, setEditingSecurity] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const asset = id ? getAsset(id) : undefined
+  const pendingApproval = asset ? approvals.pendingForAsset(asset.id) : undefined
 
   useEffect(() => {
     if (!menuOpen) return
@@ -208,6 +212,18 @@ export function AssetDetailPage() {
           </>
         }
       />
+
+      {pendingApproval && (
+        <Link
+          to="/approvals"
+          className="mb-6 flex items-center gap-3 rounded-lg border border-amber-500/30 bg-amber-950/40 px-4 py-3 text-sm text-amber-200 transition-colors hover:bg-amber-950/60"
+        >
+          <ShieldAlert className="h-5 w-5 flex-shrink-0" />
+          <span>
+            {t('asset.pending_approval', { subject: pendingApproval.subject })}
+          </span>
+        </Link>
+      )}
 
       <div className="mb-6 rounded-xl border border-slate-800/70 bg-slate-900 p-6 shadow-elevated">
         <h3 className="mb-4 text-xs font-semibold tracking-wide text-slate-500 uppercase">

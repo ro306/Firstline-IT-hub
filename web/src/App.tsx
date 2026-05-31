@@ -10,6 +10,7 @@ import { LicensesStoreProvider } from '@/features/licenses/licensesStore'
 import { TicketsStoreProvider } from '@/features/maintenance/ticketsStore'
 import { PeopleStoreProvider } from '@/features/people/peopleStore'
 import { BudgetsStoreProvider } from '@/features/budgets/budgetsStore'
+import { ApprovalsStoreProvider } from '@/features/approvals/approvalsStore'
 import { queryClient } from '@/lib/queryClient'
 import { router } from '@/routes'
 
@@ -24,11 +25,13 @@ export default function App() {
                 <TicketsStoreProvider>
                   <PeopleStoreProvider>
                     <BudgetsStoreProvider>
-                      <RulesStoreProvider>
-                        <AlertStoreProvider>
-                          <RouterProvider router={router} />
-                        </AlertStoreProvider>
-                      </RulesStoreProvider>
+                      <ApprovalsStoreProvider>
+                        <RulesStoreProvider>
+                          <AlertStoreProvider>
+                            <RouterProvider router={router} />
+                          </AlertStoreProvider>
+                        </RulesStoreProvider>
+                      </ApprovalsStoreProvider>
                     </BudgetsStoreProvider>
                   </PeopleStoreProvider>
                 </TicketsStoreProvider>

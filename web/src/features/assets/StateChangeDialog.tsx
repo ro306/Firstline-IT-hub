@@ -1,10 +1,20 @@
 import { useState } from 'react'
+import { ShieldAlert } from 'lucide-react'
 import { Modal } from '@/components/Modal'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { useAssetStore } from './useAssetStore'
+import { useApprovalsStore } from '@/features/approvals/useApprovalsStore'
+import { useAuth } from '@/lib/auth'
 import { ALLOWED_TRANSITIONS, lifecycleStateKey } from './lifecycle'
 import { StatusBadge } from './StatusBadge'
 import type { Asset, AssetLifecycleState } from './types'
+
+// Transitions requiring sign-off from a second person before the state is
+// applied. Disposal is the canonical risky / irreversible action.
+const APPROVAL_REQUIRED: AssetLifecycleState[] = [
+  'disposed',
+  'returned_to_vendor',
+]
 
 export function StateChangeDialog({
   asset,
@@ -14,15 +24,35 @@ export function StateChangeDialog({
   onClose: () => void
 }) {
   const { t } = useTranslation()
+  const { user } = useAuth()
   const store = useAssetStore()
+  const approvals = useApprovalsStore()
   const [next, setNext] = useState<AssetLifecycleState | ''>('')
   const [notes, setNotes] = useState('')
 
   const allowed = ALLOWED_TRANSITIONS[asset.lifecycleState]
+  const needsApproval =
+    next !== '' && APPROVAL_REQUIRED.includes(next as AssetLifecycleState)
 
   function handleConfirm() {
     if (!next) return
-    store.changeState(asset.id, next, notes || undefined)
+    if (needsApproval) {
+      approvals.createApproval({
+        kind: next === 'disposed' ? 'dispose' : 'other',
+        subject:
+          notes ||
+          t('state_change.approval_default_subject', {
+            asset: asset.name,
+            state: t(lifecycleStateKey(next as AssetLifecycleState)),
+          }),
+        assetId: asset.id,
+        assetName: asset.name,
+        proposedState: next as AssetLifecycleState,
+        requestedBy: user?.name ?? 'Unknown',
+      })
+    } else {
+      store.changeState(asset.id, next, notes || undefined)
+    }
     onClose()
   }
 
@@ -47,7 +77,9 @@ export function StateChangeDialog({
             disabled={!next}
             className="rounded-md bg-brand-600 px-3 py-2 text-sm font-medium text-white hover:bg-brand-700 disabled:bg-slate-300"
           >
-            {t('common.confirm')}
+            {needsApproval
+              ? t('state_change.request_approval')
+              : t('common.confirm')}
           </button>
         </>
       }
@@ -89,6 +121,13 @@ export function StateChangeDialog({
             </div>
           )}
         </div>
+
+        {needsApproval && (
+          <div className="flex gap-3 rounded-md border border-amber-500/30 bg-amber-950/40 p-3 text-sm text-amber-300">
+            <ShieldAlert className="h-5 w-5 flex-shrink-0" />
+            <p>{t('state_change.approval_required')}</p>
+          </div>
+        )}
 
         <div>
           <label className="text-xs font-medium text-slate-300">
