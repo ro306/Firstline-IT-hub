@@ -112,6 +112,7 @@
     },
     "done_subtitle": "Onboarding complete",
     "no_package": "Pick an onboarding package to continue.",
+    "no_packages_hint": "No onboarding packages defined. Create one in Settings › Onboarding packages.",
     "items_count": "items",
     "execute": "Run onboarding",
     "summary_assets": "Assets",
@@ -136,14 +137,45 @@
     "no_licenses": "No licenses tracked on this person.",
     "summary_success": "Offboarding complete. {returned} assets returned, {released} license seats released."
   },
+  "package_form": {
+    "create_title": "New onboarding package",
+    "edit_title": "Edit package",
+    "description": "Define the assets and licenses to assign when this package is selected.",
+    "delete_title": "Delete package",
+    "delete_warning": "Are you sure you want to delete the package \"{name}\"?",
+    "items_title": "Contents",
+    "add_asset": "Asset",
+    "add_license": "License",
+    "no_items": "No items yet. Add assets or licenses.",
+    "no_licenses": "No licenses available",
+    "field": {
+      "name": "Name",
+      "name_placeholder": "e.g. Engineering",
+      "description": "Description",
+      "description_placeholder": "e.g. Laptop, extra monitor, dev-stack licenses",
+      "count": "Count"
+    },
+    "validation": {
+      "name_required": "Name is required"
+    }
+  },
   "settings": {
     "title": "Settings",
     "description": "App configuration, automation rules, and data.",
     "tab": {
       "general": "General",
       "workflows": "Workflow rules",
+      "packages": "Onboarding packages",
       "budgets": "Budgets",
       "data": "Data"
+    },
+    "packages": {
+      "title": "Onboarding packages",
+      "description": "Predefined bundles of assets and licenses. Used by the onboarding wizard.",
+      "empty": "No packages yet. Click \"New package\" to create one.",
+      "new": "New package",
+      "reset": "Reset to demo",
+      "reset_warning": "Reset onboarding packages to the demo set? Your customizations will be lost."
     },
     "budgets": {
       "title": "Department budgets",
@@ -194,6 +226,9 @@
       "budgets_title": "Department budgets",
       "budgets_description": "Reset department budgets to demo data.",
       "budgets_reset": "Reset budgets",
+      "packages_title": "Onboarding packages",
+      "packages_description": "Reset onboarding packages to the demo set.",
+      "packages_reset": "Reset packages",
       "danger_zone": "Danger zone"
     }
   },

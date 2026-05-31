@@ -13,7 +13,7 @@ import { useTranslation } from '@/lib/i18n/useTranslation'
 import { useAssetStore } from '@/features/assets/useAssetStore'
 import { useLicensesStore } from '@/features/licenses/useLicensesStore'
 import { usePeopleStore } from './usePeopleStore'
-import { MOCK_PACKAGES } from './mockPeople'
+import { usePackagesStore } from './usePackagesStore'
 import { resolveOnboarding, summarizeResolution } from './onboarding'
 import { cn } from '@/lib/cn'
 import type { OnboardingPackage, PersonStatus } from './types'
@@ -28,6 +28,7 @@ export function OnboardingWizard({ onClose }: { onClose: () => void }) {
   const peopleStore = usePeopleStore()
   const assetStore = useAssetStore()
   const licenseStore = useLicensesStore()
+  const { packages } = usePackagesStore()
   const [step, setStep] = useState<Step>('person')
   const [personForm, setPersonForm] = useState({
     name: '',
@@ -228,7 +229,12 @@ export function OnboardingWizard({ onClose }: { onClose: () => void }) {
 
       {step === 'package' && (
         <div className="mt-5 space-y-2">
-          {MOCK_PACKAGES.map((p) => (
+          {packages.length === 0 && (
+            <p className="rounded-md border border-amber-500/30 bg-amber-950/40 p-3 text-xs text-amber-300">
+              {t('onboarding.no_packages_hint')}
+            </p>
+          )}
+          {packages.map((p) => (
             <button
               key={p.id}
               type="button"

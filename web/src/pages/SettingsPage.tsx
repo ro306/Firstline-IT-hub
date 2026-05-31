@@ -9,6 +9,8 @@ import { useAlertStore } from '@/features/lifecycle/useAlertStore'
 import { useLicensesStore } from '@/features/licenses/useLicensesStore'
 import { useTicketsStore } from '@/features/maintenance/useTicketsStore'
 import { useBudgetsStore } from '@/features/budgets/useBudgetsStore'
+import { usePackagesStore } from '@/features/people/usePackagesStore'
+import { PackageDialog } from '@/features/people/PackageDialog'
 import { RuleEditorDialog } from '@/features/lifecycle/RuleEditorDialog'
 import { SeverityBadge } from '@/features/lifecycle/SeverityBadge'
 import { kindKey } from '@/features/lifecycle/expirations'
@@ -21,9 +23,10 @@ import type {
   WorkflowActionType,
   WorkflowRule,
 } from '@/features/lifecycle/types'
-import { Bell, Mail, ClipboardList } from 'lucide-react'
+import type { OnboardingPackage } from '@/features/people/types'
+import { Bell, Mail, ClipboardList, Package, Boxes, KeyRound } from 'lucide-react'
 
-type Tab = 'general' | 'workflows' | 'budgets' | 'data'
+type Tab = 'general' | 'workflows' | 'packages' | 'budgets' | 'data'
 
 export function SettingsPage() {
   const { t } = useTranslation()
@@ -46,6 +49,12 @@ export function SettingsPage() {
         >
           {t('settings.tab.workflows')}
         </TabButton>
+        <TabButton
+          active={tab === 'packages'}
+          onClick={() => setTab('packages')}
+        >
+          {t('settings.tab.packages')}
+        </TabButton>
         <TabButton active={tab === 'budgets'} onClick={() => setTab('budgets')}>
           {t('settings.tab.budgets')}
         </TabButton>
@@ -56,6 +65,7 @@ export function SettingsPage() {
 
       {tab === 'general' && <GeneralTab />}
       {tab === 'workflows' && <WorkflowsTab />}
+      {tab === 'packages' && <PackagesTab />}
       {tab === 'budgets' && <BudgetsTab />}
       {tab === 'data' && <DataTab />}
     </div>
@@ -388,6 +398,181 @@ function DeleteRuleDialog({
   )
 }
 
+// ───────────────────────── Packages tab ─────────────────────────
+
+function PackagesTab() {
+  const { t } = useTranslation()
+  const store = usePackagesStore()
+  const licenses = useLicensesStore()
+  const [editing, setEditing] = useState<OnboardingPackage | undefined>(
+    undefined,
+  )
+  const [creating, setCreating] = useState(false)
+  const [deleting, setDeleting] = useState<OnboardingPackage | null>(null)
+  const [resetOpen, setResetOpen] = useState(false)
+
+  function licenseName(id: string): string {
+    return licenses.licenses.find((l) => l.id === id)?.name ?? id
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-slate-500">
+          {t('settings.packages.description')}
+        </p>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setResetOpen(true)}
+            className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
+          >
+            <RotateCcw className="h-4 w-4" />
+            {t('settings.packages.reset')}
+          </button>
+          <button
+            type="button"
+            onClick={() => setCreating(true)}
+            className="inline-flex items-center gap-2 rounded-md bg-brand-600 px-3 py-2 text-sm font-medium text-white hover:bg-brand-700"
+          >
+            <Plus className="h-4 w-4" />
+            {t('settings.packages.new')}
+          </button>
+        </div>
+      </div>
+
+      {store.packages.length === 0 ? (
+        <div className="rounded-lg border border-dashed border-slate-800 p-8 text-center">
+          <Package className="mx-auto h-8 w-8 text-slate-600" />
+          <p className="mt-2 text-sm text-slate-500">
+            {t('settings.packages.empty')}
+          </p>
+        </div>
+      ) : (
+        <ul className="space-y-3">
+          {store.packages.map((p) => {
+            const assetCount = p.items.filter(
+              (it) => it.type === 'asset_category',
+            ).length
+            const licenseCount = p.items.filter(
+              (it) => it.type === 'license',
+            ).length
+            return (
+              <li
+                key={p.id}
+                className="rounded-lg border border-slate-800 bg-slate-900 p-4"
+              >
+                <div className="flex items-start gap-3">
+                  <Package className="mt-0.5 h-5 w-5 flex-shrink-0 text-brand-400" />
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-sm font-semibold text-slate-100">
+                        {p.name}
+                      </span>
+                      <span className="inline-flex items-center gap-1 rounded-md bg-emerald-950/40 px-2 py-0.5 text-[11px] font-medium text-emerald-300 ring-1 ring-inset ring-emerald-600/20">
+                        <Boxes className="h-3 w-3" />
+                        {assetCount}
+                      </span>
+                      <span className="inline-flex items-center gap-1 rounded-md bg-brand-950/40 px-2 py-0.5 text-[11px] font-medium text-brand-300 ring-1 ring-inset ring-brand-600/20">
+                        <KeyRound className="h-3 w-3" />
+                        {licenseCount}
+                      </span>
+                    </div>
+                    {p.description && (
+                      <p className="mt-1 text-xs text-slate-500">
+                        {p.description}
+                      </p>
+                    )}
+                    {p.items.length > 0 && (
+                      <ul className="mt-2 flex flex-wrap gap-1">
+                        {p.items.map((it, idx) => (
+                          <li
+                            key={idx}
+                            className="inline-flex items-center gap-1 rounded-md bg-slate-800 px-2 py-0.5 text-[11px] text-slate-300"
+                          >
+                            {it.type === 'asset_category' ? (
+                              <>
+                                <Boxes className="h-3 w-3 text-emerald-400" />
+                                {t(`asset.category.${it.category}`)}
+                                {it.count && it.count > 1 && (
+                                  <span className="text-slate-500">
+                                    × {it.count}
+                                  </span>
+                                )}
+                              </>
+                            ) : (
+                              <>
+                                <KeyRound className="h-3 w-3 text-brand-400" />
+                                {licenseName(it.licenseId)}
+                              </>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  <div className="flex gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setEditing(p)}
+                      aria-label={t('asset_actions.edit')}
+                      className="rounded-md border border-slate-800 bg-slate-900 p-2 text-slate-400 hover:bg-slate-800/50"
+                    >
+                      <Pencil className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDeleting(p)}
+                      aria-label={t('asset_actions.delete')}
+                      className="rounded-md border border-slate-800 bg-slate-900 p-2 text-rose-500 hover:bg-rose-950/40"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      )}
+
+      {creating && <PackageDialog onClose={() => setCreating(false)} />}
+      {editing && (
+        <PackageDialog
+          pkg={editing}
+          onClose={() => setEditing(undefined)}
+        />
+      )}
+      {deleting && (
+        <ConfirmDialog
+          title={t('package_form.delete_title')}
+          description={t('package_form.delete_warning', {
+            name: deleting.name,
+          })}
+          confirmLabel={t('common.delete')}
+          onConfirm={() => {
+            store.deletePackage(deleting.id)
+            setDeleting(null)
+          }}
+          onClose={() => setDeleting(null)}
+        />
+      )}
+      {resetOpen && (
+        <ConfirmDialog
+          title={t('settings.packages.reset')}
+          description={t('settings.packages.reset_warning')}
+          confirmLabel={t('settings.packages.reset')}
+          onConfirm={() => {
+            store.resetToDemo()
+            setResetOpen(false)
+          }}
+          onClose={() => setResetOpen(false)}
+        />
+      )}
+    </div>
+  )
+}
+
 // ───────────────────────── Budgets tab ─────────────────────────
 
 function BudgetsTab() {
@@ -503,6 +688,7 @@ function DataTab() {
   const licenses = useLicensesStore()
   const tickets = useTicketsStore()
   const budgets = useBudgetsStore()
+  const packages = usePackagesStore()
   const [pending, setPending] = useState<null | (() => void)>(null)
   const [pendingMessage, setPendingMessage] = useState('')
   const [pendingLabel, setPendingLabel] = useState('')
@@ -660,6 +846,26 @@ function DataTab() {
         >
           <RotateCcw className="h-4 w-4" />
           {t('settings.data.budgets_reset')}
+        </button>
+      </Card>
+
+      <Card
+        title={t('settings.data.packages_title')}
+        description={t('settings.data.packages_description')}
+      >
+        <button
+          type="button"
+          onClick={() =>
+            confirm(
+              t('settings.data.packages_description'),
+              t('settings.data.packages_reset'),
+              () => packages.resetToDemo(),
+            )
+          }
+          className="inline-flex items-center gap-2 rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm font-medium text-slate-300 hover:bg-slate-900/50"
+        >
+          <RotateCcw className="h-4 w-4" />
+          {t('settings.data.packages_reset')}
         </button>
       </Card>
 

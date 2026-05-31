@@ -112,6 +112,7 @@
     },
     "done_subtitle": "Onboarding gennemført",
     "no_package": "Vælg en onboarding-pakke for at fortsætte.",
+    "no_packages_hint": "Der er ingen onboarding-pakker. Opret en pakke under Indstillinger › Onboarding-pakker.",
     "items_count": "elementer",
     "execute": "Kør onboarding",
     "summary_assets": "Aktiver",
@@ -136,14 +137,45 @@
     "no_licenses": "Ingen licenser registreret på personen.",
     "summary_success": "Offboarding gennemført. {returned} aktiver returneret, {released} licens-pladser frigivet."
   },
+  "package_form": {
+    "create_title": "Ny onboarding-pakke",
+    "edit_title": "Rediger pakke",
+    "description": "Definér de aktiver og licenser der skal tildeles, når denne pakke vælges.",
+    "delete_title": "Slet pakke",
+    "delete_warning": "Er du sikker på at du vil slette pakken \"{name}\"?",
+    "items_title": "Indhold",
+    "add_asset": "Aktiv",
+    "add_license": "Licens",
+    "no_items": "Ingen elementer endnu. Tilføj aktiver eller licenser.",
+    "no_licenses": "Ingen licenser tilgængelige",
+    "field": {
+      "name": "Navn",
+      "name_placeholder": "fx Engineering",
+      "description": "Beskrivelse",
+      "description_placeholder": "fx Bærbar, ekstra skærm, dev-stack licenser",
+      "count": "Antal"
+    },
+    "validation": {
+      "name_required": "Navn er påkrævet"
+    }
+  },
   "settings": {
     "title": "Indstillinger",
     "description": "Konfiguration af appen, automatik-regler og data.",
     "tab": {
       "general": "Generelt",
       "workflows": "Workflow-regler",
+      "packages": "Onboarding-pakker",
       "budgets": "Budgetter",
       "data": "Data"
+    },
+    "packages": {
+      "title": "Onboarding-pakker",
+      "description": "Foruddefinerede bundter af aktiver og licenser. Bruges i onboarding-wizarden.",
+      "empty": "Ingen pakker endnu. Klik på \"Ny pakke\" for at oprette én.",
+      "new": "Ny pakke",
+      "reset": "Nulstil til demo",
+      "reset_warning": "Nulstil onboarding-pakkerne til demo-sættet? Dine ændringer går tabt."
     },
     "budgets": {
       "title": "Afdelings-budgetter",
@@ -194,6 +226,9 @@
       "budgets_title": "Afdelings-budgetter",
       "budgets_description": "Nulstil afdelings-budgetterne til demo-data.",
       "budgets_reset": "Nulstil budgetter",
+      "packages_title": "Onboarding-pakker",
+      "packages_description": "Nulstil onboarding-pakkerne til demo-sættet.",
+      "packages_reset": "Nulstil pakker",
       "danger_zone": "Farezone"
     }
   },
