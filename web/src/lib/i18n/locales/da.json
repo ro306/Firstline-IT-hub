@@ -678,6 +678,8 @@
       "all": "Alle",
       "pipeline": "Pipeline",
       "active": "Aktive",
+      "maintenance": "Vedligehold",
+      "leased": "Leasede",
       "end_of_life": "Slut på levetid",
       "exception": "Undtagelser",
       "non_compliant": "Ikke compliant"

@@ -678,6 +678,8 @@
       "all": "All",
       "pipeline": "Pipeline",
       "active": "Active",
+      "maintenance": "Maintenance",
+      "leased": "Leased",
       "end_of_life": "End of life",
       "exception": "Exception",
       "non_compliant": "Non-compliant"

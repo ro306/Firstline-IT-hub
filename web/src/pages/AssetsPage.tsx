@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Plus, Filter, Download, Upload } from 'lucide-react'
 import { PageHeader } from '@/components/PageHeader'
 import { StatusBadge } from '@/features/assets/StatusBadge'
@@ -15,6 +15,8 @@ import type { Asset, AssetLifecycleState } from '@/features/assets/types'
 type FilterKind =
   | 'all'
   | 'active'
+  | 'maintenance'
+  | 'leased'
   | 'pipeline'
   | 'end_of_life'
   | 'exception'
@@ -24,6 +26,8 @@ const FILTERS: FilterKind[] = [
   'all',
   'pipeline',
   'active',
+  'maintenance',
+  'leased',
   'end_of_life',
   'exception',
   'non_compliant',
@@ -55,6 +59,12 @@ function matchesFilter(asset: Asset, filter: FilterKind): boolean {
       return true
     case 'active':
       return ACTIVE_STATES.includes(state)
+    case 'maintenance':
+      return state === 'in_maintenance'
+    case 'leased':
+      return (
+        asset.ownership === 'leased_in' || asset.ownership === 'leased_out'
+      )
     case 'pipeline':
       return PIPELINE_STATES.includes(state)
     case 'end_of_life':
@@ -66,13 +76,36 @@ function matchesFilter(asset: Asset, filter: FilterKind): boolean {
   }
 }
 
+const VALID_FILTERS = new Set<string>(FILTERS)
+
 export function AssetsPage() {
   const { t } = useTranslation()
   const { assets } = useAssetStore()
-  const [filter, setFilter] = useState<FilterKind>('all')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const initialFilter = (() => {
+    const v = searchParams.get('filter')
+    return v && VALID_FILTERS.has(v) ? (v as FilterKind) : 'all'
+  })()
+  const [filter, setFilter] = useState<FilterKind>(initialFilter)
   const [query, setQuery] = useState('')
   const [creating, setCreating] = useState(false)
   const [importing, setImporting] = useState(false)
+
+  // Keep filter and URL in sync — clicking a chip updates the URL so the
+  // back button returns to the previous filter, and pasting a link with
+  // ?filter=… lands on the correct view.
+  useEffect(() => {
+    const current = searchParams.get('filter')
+    if (filter === 'all') {
+      if (current) {
+        searchParams.delete('filter')
+        setSearchParams(searchParams, { replace: true })
+      }
+    } else if (current !== filter) {
+      searchParams.set('filter', filter)
+      setSearchParams(searchParams, { replace: true })
+    }
+  }, [filter, searchParams, setSearchParams])
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()

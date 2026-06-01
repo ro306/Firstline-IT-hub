@@ -71,16 +71,18 @@ function StatCard({
   icon: Icon,
   tone,
   trend,
+  to,
 }: {
   label: string
   value: number
   icon: typeof Boxes
   tone: keyof typeof TONE_CLASSES
   trend?: number[]
+  to?: string
 }) {
   const t = TONE_CLASSES[tone]
-  return (
-    <div className="group relative overflow-hidden rounded-xl border border-slate-800/70 bg-slate-900/60 p-5 shadow-elevated backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-slate-700 hover:shadow-lift">
+  const inner = (
+    <>
       <div className="flex items-start justify-between">
         <div>
           <p className="text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
@@ -101,8 +103,18 @@ function StatCard({
           <Sparkline data={trend} width={220} height={36} stroke={t.spark} className="w-full" />
         </div>
       )}
-    </div>
+    </>
   )
+  const cls =
+    'group relative block overflow-hidden rounded-xl border border-slate-800/70 bg-slate-900/60 p-5 shadow-elevated backdrop-blur-sm transition-all hover:-translate-y-0.5 hover:border-slate-700 hover:shadow-lift'
+  if (to) {
+    return (
+      <Link to={to} className={cls + ' focus:outline-none focus:ring-2 focus:ring-cyan-500/40'}>
+        {inner}
+      </Link>
+    )
+  }
+  return <div className={cls}>{inner}</div>
 }
 
 // Synthetic trend generator — gives the stat cards a believable historical
@@ -189,13 +201,21 @@ export function DashboardPage() {
       />
 
       <StaggerGrid className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-        <StatCard label={t('dashboard.stat.total')} value={total} icon={Boxes} tone="brand" trend={fakeTrend(1, total)} />
+        <StatCard
+          label={t('dashboard.stat.total')}
+          value={total}
+          icon={Boxes}
+          tone="brand"
+          trend={fakeTrend(1, total)}
+          to="/assets"
+        />
         <StatCard
           label={t('dashboard.stat.active')}
           value={active}
           icon={CheckCircle2}
           tone="emerald"
           trend={fakeTrend(2, active)}
+          to="/assets?filter=active"
         />
         <StatCard
           label={t('dashboard.stat.maintenance')}
@@ -203,9 +223,24 @@ export function DashboardPage() {
           icon={AlertTriangle}
           tone="amber"
           trend={fakeTrend(3, maintenance)}
+          to="/assets?filter=maintenance"
         />
-        <StatCard label={t('dashboard.stat.leased')} value={leased} icon={Package} tone="slate" trend={fakeTrend(4, leased)} />
-        <StatCard label={t('dashboard.stat.eol')} value={eol} icon={Trash2} tone="rose" trend={fakeTrend(5, eol)} />
+        <StatCard
+          label={t('dashboard.stat.leased')}
+          value={leased}
+          icon={Package}
+          tone="slate"
+          trend={fakeTrend(4, leased)}
+          to="/assets?filter=leased"
+        />
+        <StatCard
+          label={t('dashboard.stat.eol')}
+          value={eol}
+          icon={Trash2}
+          tone="rose"
+          trend={fakeTrend(5, eol)}
+          to="/assets?filter=end_of_life"
+        />
       </StaggerGrid>
 
       <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
