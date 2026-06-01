@@ -3,6 +3,7 @@ import { AlertTriangle } from 'lucide-react'
 import { Modal } from '@/components/Modal'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { useAssetStore } from './useAssetStore'
+import { usePeopleStore } from '@/features/people/usePeopleStore'
 import type { Asset } from './types'
 
 export function AssignmentDialog({
@@ -14,6 +15,9 @@ export function AssignmentDialog({
 }) {
   const { t } = useTranslation()
   const store = useAssetStore()
+  const peopleStore = usePeopleStore()
+  const activePeople = peopleStore.people.filter((p) => p.status === 'active')
+  const [personId, setPersonId] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [location, setLocation] = useState(asset.location)
@@ -22,6 +26,16 @@ export function AssignmentDialog({
   )
   const [notes, setNotes] = useState('')
   const [error, setError] = useState('')
+
+  function selectPerson(id: string) {
+    setPersonId(id)
+    if (!id) return
+    const person = peopleStore.getPerson(id)
+    if (person) {
+      setName(person.name)
+      setEmail(person.email)
+    }
+  }
 
   function handleSubmit() {
     if (!name.trim()) {
@@ -64,6 +78,29 @@ export function AssignmentDialog({
       }
     >
       <div className="space-y-3">
+        {activePeople.length > 0 && (
+          <div>
+            <label className="text-xs font-medium text-slate-300">
+              {t('assignment_form.field.person')}
+            </label>
+            <select
+              value={personId}
+              onChange={(e) => selectPerson(e.target.value)}
+              className="mt-1 w-full rounded-md border border-slate-800 bg-slate-900 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
+            >
+              <option value="">{t('assignment_form.person_manual')}</option>
+              {activePeople.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                  {p.department ? ` — ${p.department}` : ''}
+                </option>
+              ))}
+            </select>
+            <p className="mt-1 text-[11px] text-slate-500">
+              {t('assignment_form.person_hint')}
+            </p>
+          </div>
+        )}
         <div>
           <label className="text-xs font-medium text-slate-300">
             {t('assignment_form.field.assignee_name')}
@@ -71,7 +108,10 @@ export function AssignmentDialog({
           <input
             type="text"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setName(e.target.value)
+              if (personId) setPersonId('')
+            }}
             className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
           />
           {error && <p className="mt-1 text-xs text-rose-600">{error}</p>}
@@ -83,7 +123,10 @@ export function AssignmentDialog({
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value)
+              if (personId) setPersonId('')
+            }}
             className="mt-1 w-full rounded-md border border-slate-800 px-3 py-2 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none"
           />
         </div>

@@ -555,7 +555,10 @@
     "return_title": "Returnér aktiv",
     "assign_submit": "Tildel",
     "return_submit": "Markér som returneret",
+    "person_manual": "— Skriv manuelt —",
+    "person_hint": "Vælg en oprettet person for at autoudfylde, eller skriv manuelt nedenfor.",
     "field": {
+      "person": "Vælg person",
       "assignee_name": "Tildelt person",
       "assignee_email": "E-mail (valgfri)",
       "location": "Lokation",

@@ -555,7 +555,10 @@
     "return_title": "Return asset",
     "assign_submit": "Assign",
     "return_submit": "Mark as returned",
+    "person_manual": "— Type manually —",
+    "person_hint": "Pick an existing person to auto-fill, or type manually below.",
     "field": {
+      "person": "Pick person",
       "assignee_name": "Assignee",
       "assignee_email": "Email (optional)",
       "location": "Location",
