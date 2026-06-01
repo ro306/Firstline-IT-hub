@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Plus, Trash2, Boxes, KeyRound } from 'lucide-react'
 import { Modal } from '@/components/Modal'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { useLicensesStore } from '@/features/licenses/useLicensesStore'
+import { useAssetStore } from '@/features/assets/useAssetStore'
 import { usePackagesStore } from './usePackagesStore'
 import type { AssetCategory } from '@/features/assets/types'
 import type { OnboardingPackage, PackageItem } from './types'
@@ -32,7 +33,21 @@ export function PackageDialog({
   const { t } = useTranslation()
   const store = usePackagesStore()
   const { licenses } = useLicensesStore()
+  const { assets } = useAssetStore()
   const editing = Boolean(pkg)
+
+  // Distinct model names per category, taken from current inventory so the
+  // dropdown reflects what's actually available to onboard against.
+  const modelsByCategory = useMemo(() => {
+    const map = new Map<AssetCategory, string[]>()
+    for (const a of assets) {
+      const list = map.get(a.category) ?? []
+      if (!list.includes(a.name)) list.push(a.name)
+      map.set(a.category, list)
+    }
+    for (const [k, v] of map) map.set(k, v.sort())
+    return map
+  }, [assets])
 
   const [name, setName] = useState(pkg?.name ?? '')
   const [description, setDescription] = useState(pkg?.description ?? '')
@@ -172,38 +187,70 @@ export function PackageDialog({
                 >
                   {it.type === 'asset_category' ? (
                     <>
-                      <Boxes className="h-4 w-4 flex-shrink-0 text-emerald-400" />
-                      <select
-                        value={it.category}
-                        onChange={(e) =>
-                          updateItem(idx, {
-                            type: 'asset_category',
-                            category: e.target.value as AssetCategory,
-                            count: it.count,
-                          })
-                        }
-                        className="flex-1 rounded-md border border-slate-800 bg-slate-900 px-2 py-1 text-sm focus:border-brand-500 focus:outline-none"
-                      >
-                        {CATEGORIES.map((c) => (
-                          <option key={c} value={c}>
-                            {t(`asset.category.${c}`)}
+                      <Boxes className="mt-2 h-4 w-4 flex-shrink-0 text-emerald-400" />
+                      <div className="grid flex-1 grid-cols-[1fr_1fr_64px] gap-1.5">
+                        <select
+                          value={it.category}
+                          onChange={(e) => {
+                            const nextCategory = e.target.value as AssetCategory
+                            updateItem(idx, {
+                              type: 'asset_category',
+                              category: nextCategory,
+                              count: it.count,
+                              // clear model when changing category so we don't
+                              // keep a stale filter that no longer matches
+                              model: undefined,
+                            })
+                          }}
+                          className="rounded-md border border-slate-800 bg-slate-900 px-2 py-1 text-sm focus:border-brand-500 focus:outline-none"
+                          aria-label={t('package_form.field.category')}
+                        >
+                          {CATEGORIES.map((c) => (
+                            <option key={c} value={c}>
+                              {t(`asset.category.${c}`)}
+                            </option>
+                          ))}
+                        </select>
+                        <select
+                          value={it.model ?? ''}
+                          onChange={(e) =>
+                            updateItem(idx, {
+                              type: 'asset_category',
+                              category: it.category,
+                              count: it.count,
+                              model: e.target.value || undefined,
+                            })
+                          }
+                          className="rounded-md border border-slate-800 bg-slate-900 px-2 py-1 text-sm focus:border-brand-500 focus:outline-none"
+                          aria-label={t('package_form.field.model')}
+                        >
+                          <option value="">
+                            {t('package_form.model_any')}
                           </option>
-                        ))}
-                      </select>
-                      <input
-                        type="number"
-                        min={1}
-                        value={it.count ?? 1}
-                        onChange={(e) =>
-                          updateItem(idx, {
-                            type: 'asset_category',
-                            category: it.category,
-                            count: Math.max(1, Number(e.target.value) || 1),
-                          })
-                        }
-                        className="w-16 rounded-md border border-slate-800 bg-slate-900 px-2 py-1 text-right text-sm tabular-nums focus:border-brand-500 focus:outline-none"
-                        aria-label={t('package_form.field.count')}
-                      />
+                          {(modelsByCategory.get(it.category) ?? []).map(
+                            (m) => (
+                              <option key={m} value={m}>
+                                {m}
+                              </option>
+                            ),
+                          )}
+                        </select>
+                        <input
+                          type="number"
+                          min={1}
+                          value={it.count ?? 1}
+                          onChange={(e) =>
+                            updateItem(idx, {
+                              type: 'asset_category',
+                              category: it.category,
+                              count: Math.max(1, Number(e.target.value) || 1),
+                              model: it.model,
+                            })
+                          }
+                          className="rounded-md border border-slate-800 bg-slate-900 px-2 py-1 text-right text-sm tabular-nums focus:border-brand-500 focus:outline-none"
+                          aria-label={t('package_form.field.count')}
+                        />
+                      </div>
                     </>
                   ) : (
                     <>

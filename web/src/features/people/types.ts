@@ -23,10 +23,17 @@ export type Person = {
 }
 
 // A pre-defined bundle the org applies during onboarding. Items are either a
-// pool of asset categories (we'll pick any available in-stock match) or a
-// specific license to add a seat to.
+// pool of asset categories (we'll pick any available in-stock match — optionally
+// narrowed by model name) or a specific license to add a seat to.
 export type PackageItem =
-  | { type: 'asset_category'; category: AssetCategory; count?: number }
+  | {
+      type: 'asset_category'
+      category: AssetCategory
+      count?: number
+      // Optional model/name filter. When set, the onboarding resolver only
+      // matches assets whose name contains this string (case-insensitive).
+      model?: string
+    }
   | { type: 'license'; licenseId: string }
 
 export type OnboardingPackage = {

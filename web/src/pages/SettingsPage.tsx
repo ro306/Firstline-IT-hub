@@ -494,6 +494,11 @@ function PackagesTab() {
                               <>
                                 <Boxes className="h-3 w-3 text-emerald-400" />
                                 {t(`asset.category.${it.category}`)}
+                                {it.model && (
+                                  <span className="text-slate-400">
+                                    · {it.model}
+                                  </span>
+                                )}
                                 {it.count && it.count > 1 && (
                                   <span className="text-slate-500">
                                     × {it.count}

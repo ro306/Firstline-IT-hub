@@ -27,13 +27,15 @@ export function resolveOnboarding(
   for (const item of pkg.items) {
     if (item.type === 'asset_category') {
       const need = item.count ?? 1
+      const modelFilter = item.model?.trim().toLowerCase()
       for (let i = 0; i < need; i++) {
         const candidate = assets.find(
           (a) =>
             a.category === item.category &&
             TAKEABLE.has(a.lifecycleState) &&
             !a.currentAssignment &&
-            !consumed.has(a.id),
+            !consumed.has(a.id) &&
+            (!modelFilter || a.name.toLowerCase().includes(modelFilter)),
         )
         if (candidate) {
           consumed.add(candidate.id)

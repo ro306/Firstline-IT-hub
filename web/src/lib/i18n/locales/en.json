@@ -148,11 +148,14 @@
     "add_license": "License",
     "no_items": "No items yet. Add assets or licenses.",
     "no_licenses": "No licenses available",
+    "model_any": "Any",
     "field": {
       "name": "Name",
       "name_placeholder": "e.g. Engineering",
       "description": "Description",
       "description_placeholder": "e.g. Laptop, extra monitor, dev-stack licenses",
+      "category": "Category",
+      "model": "Model",
       "count": "Count"
     },
     "validation": {

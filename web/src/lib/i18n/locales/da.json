@@ -148,11 +148,14 @@
     "add_license": "Licens",
     "no_items": "Ingen elementer endnu. Tilføj aktiver eller licenser.",
     "no_licenses": "Ingen licenser tilgængelige",
+    "model_any": "Hvilken som helst",
     "field": {
       "name": "Navn",
       "name_placeholder": "fx Engineering",
       "description": "Beskrivelse",
       "description_placeholder": "fx Bærbar, ekstra skærm, dev-stack licenser",
+      "category": "Kategori",
+      "model": "Model",
       "count": "Antal"
     },
     "validation": {
