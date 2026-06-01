@@ -1,11 +1,13 @@
 import { useMemo, useState } from 'react'
-import { Plus, Trash2, Boxes, KeyRound } from 'lucide-react'
+import { Plus, Trash2, Boxes, KeyRound, Pencil } from 'lucide-react'
 import { Modal } from '@/components/Modal'
 import { useTranslation } from '@/lib/i18n/useTranslation'
 import { useLicensesStore } from '@/features/licenses/useLicensesStore'
 import { useAssetStore } from '@/features/assets/useAssetStore'
+import { LicenseDialog } from '@/features/licenses/LicenseDialog'
 import { usePackagesStore } from './usePackagesStore'
 import type { AssetCategory } from '@/features/assets/types'
+import type { License } from '@/features/licenses/types'
 import type { OnboardingPackage, PackageItem } from './types'
 
 const inputCls =
@@ -53,6 +55,12 @@ export function PackageDialog({
   const [description, setDescription] = useState(pkg?.description ?? '')
   const [items, setItems] = useState<PackageItem[]>(pkg?.items ?? [])
   const [error, setError] = useState('')
+  // Inline license editor — `newLicenseFor` carries the row index to auto-fill
+  // with the newly created license id once it's saved.
+  const [editingLicense, setEditingLicense] = useState<License | null>(null)
+  const [creatingLicenseFor, setCreatingLicenseFor] = useState<number | null>(
+    null,
+  )
 
   function addAssetItem() {
     setItems((prev) => [
@@ -95,6 +103,7 @@ export function PackageDialog({
   }
 
   return (
+    <>
     <Modal
       open={true}
       onClose={onClose}
@@ -277,6 +286,28 @@ export function PackageDialog({
                           ))
                         )}
                       </select>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const lic = licenses.find((l) => l.id === it.licenseId)
+                          if (lic) setEditingLicense(lic)
+                        }}
+                        disabled={!it.licenseId}
+                        aria-label={t('package_form.edit_license')}
+                        title={t('package_form.edit_license')}
+                        className="rounded-md p-1.5 text-slate-400 hover:bg-slate-800 disabled:opacity-30 disabled:hover:bg-transparent"
+                      >
+                        <Pencil className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setCreatingLicenseFor(idx)}
+                        aria-label={t('package_form.new_license')}
+                        title={t('package_form.new_license')}
+                        className="rounded-md p-1.5 text-emerald-400 hover:bg-emerald-950/40"
+                      >
+                        <Plus className="h-3.5 w-3.5" />
+                      </button>
                     </>
                   )}
                   <button
@@ -316,5 +347,29 @@ export function PackageDialog({
         {error && <p className="text-xs text-rose-400">{error}</p>}
       </div>
     </Modal>
+    {editingLicense && (
+      <LicenseDialog
+        license={editingLicense}
+        onClose={() => setEditingLicense(null)}
+      />
+    )}
+    {creatingLicenseFor !== null && (
+      <LicenseDialog
+        onClose={() => setCreatingLicenseFor(null)}
+        onSaved={(lic) => {
+          const targetIdx = creatingLicenseFor
+          if (targetIdx !== null) {
+            setItems((prev) =>
+              prev.map((it, i) =>
+                i === targetIdx
+                  ? { type: 'license', licenseId: lic.id }
+                  : it,
+              ),
+            )
+          }
+        }}
+      />
+    )}
+    </>
   )
 }

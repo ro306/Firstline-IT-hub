@@ -146,6 +146,8 @@
     "items_title": "Indhold",
     "add_asset": "Aktiv",
     "add_license": "Licens",
+    "edit_license": "Rediger licens",
+    "new_license": "Opret ny licens",
     "no_items": "Ingen elementer endnu. Tilføj aktiver eller licenser.",
     "no_licenses": "Ingen licenser tilgængelige",
     "model_any": "Hvilken som helst",

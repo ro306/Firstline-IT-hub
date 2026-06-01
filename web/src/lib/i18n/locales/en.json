@@ -146,6 +146,8 @@
     "items_title": "Contents",
     "add_asset": "Asset",
     "add_license": "License",
+    "edit_license": "Edit license",
+    "new_license": "Create new license",
     "no_items": "No items yet. Add assets or licenses.",
     "no_licenses": "No licenses available",
     "model_any": "Any",
