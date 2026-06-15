@@ -11,9 +11,12 @@ import { MaintenancePage } from '@/pages/MaintenancePage'
 import { ReportsPage } from '@/pages/ReportsPage'
 import { PeoplePage } from '@/pages/PeoplePage'
 import { ApprovalsPage } from '@/pages/ApprovalsPage'
+import { LandingPage } from '@/pages/LandingPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 
 export const router = createBrowserRouter([
+  // Public landing page — no AppShell (no sidebar/header).
+  { path: '/welcome', Component: LandingPage },
   {
     path: '/',
     Component: AppShell,

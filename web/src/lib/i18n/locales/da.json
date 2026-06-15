@@ -103,6 +103,120 @@
       "edit_title": "Rediger person"
     }
   },
+  "landing": {
+    "nav": {
+      "subtitle": "IT Asset Management",
+      "features": "Funktioner",
+      "preview": "Forhåndsvisning",
+      "pilot": "Pilot",
+      "go_to_app": "Gå til app"
+    },
+    "hero": {
+      "badge": "Nu i pilotfase — kontakt os for adgang",
+      "title_pre": "Hold styr på",
+      "title_highlight": "alle dine IT-aktiver",
+      "subtitle": "{brand} samler aktiver, licenser, sikkerhed og onboarding i ét dashboard. Bygget til danske IT-teams der vil have orden uden at drukne i regneark.",
+      "primary_cta": "Anmod om pilot",
+      "secondary_cta": "Prøv demoen",
+      "disclaimer": "Ingen kreditkort. Gratis pilot i 3 måneder."
+    },
+    "trust": {
+      "gdpr": { "title": "GDPR-klar", "subtitle": "Data behandlet i EU" },
+      "iso": { "title": "ISO 27001-mindset", "subtitle": "Sikkerhed indbygget" },
+      "danish": { "title": "Dansk-først", "subtitle": "DA + EN, datoer & valuta" },
+      "fast": { "title": "Lynhurtig", "subtitle": "Tastatur-venlig UI" }
+    },
+    "features": {
+      "title": "Alt det IT-teamet har brug for",
+      "subtitle": "Fra indkøb til bortskaffelse — én platform til hele aktivets livscyklus."
+    },
+    "feature": {
+      "assets": {
+        "title": "Aktiv-inventar",
+        "description": "Sporbar livscyklus, tildelinger, lokationer, garantier og finansielle nøgletal pr. enhed."
+      },
+      "licenses": {
+        "title": "Licenser & cloud",
+        "description": "Hold styr på pladser, fornyelser og over-licensering. SAM-compliance i én visning."
+      },
+      "security": {
+        "title": "Sikkerhed & compliance",
+        "description": "Kryptering, patch-status, OS, GDPR/ISO27001/NIS2 — opfølgning der ikke bliver glemt."
+      },
+      "people": {
+        "title": "Onboarding & offboarding",
+        "description": "Foruddefinerede pakker tildeler aktiver og licenser med ét klik. Offboarding returnerer alt sikkert."
+      },
+      "workflows": {
+        "title": "Automatiske workflows",
+        "description": "Påmindelser, eskaleringer og godkendelser ved kritiske ændringer som bortskaffelse."
+      },
+      "reports": {
+        "title": "TCO & rapporter",
+        "description": "Total ownership-omkostning pr. afdeling, budgetter vs. forbrug og fornyelses-forecast."
+      }
+    },
+    "preview": {
+      "title": "Klart overblik — uden støj",
+      "subtitle": "Dashboardet viser nøgletal, kommende fornyelser og compliance i ét billede.",
+      "chart_title": "Fornyelser de næste 12 måneder",
+      "compliance_title": "Compliance-score",
+      "compliance_delta": "+4% denne måned",
+      "compliant": "Compliant",
+      "stat": {
+        "total": "Total aktiver",
+        "active": "Aktive",
+        "maintenance": "Vedligehold",
+        "leased": "Leasede",
+        "eol": "Slut på levetid"
+      }
+    },
+    "use_cases": {
+      "title": "Bygget til de afdelinger der bruger det",
+      "subtitle": "Samme data — forskellige perspektiver."
+    },
+    "use_case": {
+      "it_team": {
+        "title": "Til IT-teamet",
+        "point_1": "Fuld livscyklus for hver enhed på én side",
+        "point_2": "Garanti- og leasing-varsler før de udløber",
+        "point_3": "Onboarding-pakker pr. afdeling — 1 klik"
+      },
+      "finance": {
+        "title": "Til økonomi",
+        "point_1": "TCO pr. afdeling vs. budget",
+        "point_2": "Leasing- og licensomkostninger samlet",
+        "point_3": "Eksport til Excel når revisor spørger"
+      },
+      "security": {
+        "title": "Til compliance",
+        "point_1": "Kryptering, patch-status og OS pr. aktiv",
+        "point_2": "Frameworks: GDPR, ISO 27001, NIS2",
+        "point_3": "Godkendelse før risikable status-ændringer"
+      }
+    },
+    "pilot": {
+      "badge": "Gratis pilot",
+      "title": "Vær med i pilotfasen",
+      "description": "Vi udvælger et begrænset antal danske virksomheder til at teste platformen gratis i 3 måneder. Du får direkte adgang til produktteamet og indflydelse på roadmappet.",
+      "point_1": "Gratis i 3 måneder — ingen forpligtelser",
+      "point_2": "Onboarding og opsætning sammen med os",
+      "point_3": "Dedikeret Slack-kanal til support og feedback",
+      "point_4": "Mulighed for at fortsætte til reduceret pris bagefter",
+      "cta": "Skriv til os",
+      "email_subject": "Pilot-ansøgning — Juvaro"
+    },
+    "final": {
+      "title": "Klar til at se det i drift?",
+      "subtitle": "Gå direkte ind og prøv demoen — eller skriv til os hvis du vil høre mere.",
+      "cta": "Åbn demoen"
+    },
+    "footer": {
+      "rights": "Alle rettigheder forbeholdes.",
+      "contact": "Kontakt",
+      "app": "Åbn app"
+    }
+  },
   "onboarding": {
     "title": "Onboard ny person",
     "step": {

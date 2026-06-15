@@ -103,6 +103,120 @@
       "edit_title": "Edit person"
     }
   },
+  "landing": {
+    "nav": {
+      "subtitle": "IT Asset Management",
+      "features": "Features",
+      "preview": "Preview",
+      "pilot": "Pilot",
+      "go_to_app": "Open app"
+    },
+    "hero": {
+      "badge": "Now in pilot — get in touch for access",
+      "title_pre": "Stay on top of",
+      "title_highlight": "every IT asset you own",
+      "subtitle": "{brand} pulls assets, licenses, security and onboarding into one dashboard. Built for IT teams that want order without drowning in spreadsheets.",
+      "primary_cta": "Apply for pilot",
+      "secondary_cta": "Try the demo",
+      "disclaimer": "No credit card. Free pilot for 3 months."
+    },
+    "trust": {
+      "gdpr": { "title": "GDPR-ready", "subtitle": "Data processed in the EU" },
+      "iso": { "title": "ISO 27001 mindset", "subtitle": "Security built in" },
+      "danish": { "title": "Danish-first", "subtitle": "DA + EN, dates & currency" },
+      "fast": { "title": "Blazing fast", "subtitle": "Keyboard-friendly UI" }
+    },
+    "features": {
+      "title": "Everything your IT team needs",
+      "subtitle": "From procurement to disposal — one platform for the entire asset lifecycle."
+    },
+    "feature": {
+      "assets": {
+        "title": "Asset inventory",
+        "description": "Tracked lifecycle, assignments, locations, warranties and financial key figures per device."
+      },
+      "licenses": {
+        "title": "Licenses & cloud",
+        "description": "Seats, renewals and over-licensing in one place. SAM compliance at a glance."
+      },
+      "security": {
+        "title": "Security & compliance",
+        "description": "Encryption, patch status, OS, GDPR / ISO27001 / NIS2 — follow-up that doesn't slip."
+      },
+      "people": {
+        "title": "Onboarding & offboarding",
+        "description": "Predefined packages assign assets and licenses with one click. Offboarding returns it all safely."
+      },
+      "workflows": {
+        "title": "Automated workflows",
+        "description": "Reminders, escalations and approval gates for critical changes like disposal."
+      },
+      "reports": {
+        "title": "TCO & reports",
+        "description": "Total cost of ownership per department, budget vs. spend and renewal forecasts."
+      }
+    },
+    "preview": {
+      "title": "A clear view — without the noise",
+      "subtitle": "The dashboard surfaces key numbers, upcoming renewals and compliance in one shot.",
+      "chart_title": "Renewals over the next 12 months",
+      "compliance_title": "Compliance score",
+      "compliance_delta": "+4% this month",
+      "compliant": "Compliant",
+      "stat": {
+        "total": "Total assets",
+        "active": "Active",
+        "maintenance": "Maintenance",
+        "leased": "Leased",
+        "eol": "End of life"
+      }
+    },
+    "use_cases": {
+      "title": "Built for the teams that use it",
+      "subtitle": "Same data — different perspectives."
+    },
+    "use_case": {
+      "it_team": {
+        "title": "For IT",
+        "point_1": "Full lifecycle for each device on one page",
+        "point_2": "Warranty and lease alerts before they expire",
+        "point_3": "Onboarding packages per department — 1 click"
+      },
+      "finance": {
+        "title": "For finance",
+        "point_1": "TCO per department vs. budget",
+        "point_2": "Lease and license cost in one view",
+        "point_3": "Excel export when the auditor calls"
+      },
+      "security": {
+        "title": "For compliance",
+        "point_1": "Encryption, patch status and OS per asset",
+        "point_2": "Frameworks: GDPR, ISO 27001, NIS2",
+        "point_3": "Approval gate before risky state changes"
+      }
+    },
+    "pilot": {
+      "badge": "Free pilot",
+      "title": "Join the pilot",
+      "description": "We're hand-picking a small number of Danish companies to test the platform free of charge for 3 months. You get direct access to the product team and influence on the roadmap.",
+      "point_1": "Free for 3 months — no strings attached",
+      "point_2": "Onboarding and setup together with us",
+      "point_3": "Dedicated Slack channel for support and feedback",
+      "point_4": "Option to continue at a reduced price afterwards",
+      "cta": "Get in touch",
+      "email_subject": "Pilot application — Juvaro"
+    },
+    "final": {
+      "title": "Ready to see it live?",
+      "subtitle": "Jump straight into the demo — or reach out if you'd like to talk first.",
+      "cta": "Open the demo"
+    },
+    "footer": {
+      "rights": "All rights reserved.",
+      "contact": "Contact",
+      "app": "Open app"
+    }
+  },
   "onboarding": {
     "title": "Onboard new person",
     "step": {
